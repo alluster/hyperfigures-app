@@ -123,7 +123,7 @@ const IconContainer = styled.div`
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-	color: ${props => props.theme.colors.primary_100};
+	color: ${props => props.theme.colors.primary_120};
 	height: 24px;
 	min-width: 64px;
 `;
@@ -155,7 +155,7 @@ const LinkContainer = styled(Link)`
 			visibility: visible;
 		}
 		${Icon} {
-			color: ${props => props.theme.colors.fontDark};
+			color: ${props => props.theme.colors.primary_100};
 		}
 		${LinkText} {
 			color: ${props => props.theme.colors.fontDark};
