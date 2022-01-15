@@ -19,7 +19,11 @@
     "react-toastify": "^8.1.0",
     "recharts": "^2.1.8",
     "styled-components": "^5.3.3",
-    "web-vitals": "^2.1.2"
+	"web-vitals": "^2.1.2",
+	"eslint": "^8.6.0",
+    "eslint-plugin-react": "^7.28.0",
+    "eslint-plugin-unused-imports": "^2.0.0",
+    "jest": "^27.3.1"
   },
   "devDependencies": {
     "eslint": "^8.6.0",
