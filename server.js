@@ -6,7 +6,7 @@ const sslRedirect = require('heroku-ssl-redirect');
 const bodyParser = require('body-parser')
 const path = require('path')
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const cert = require('./cert.json'); // the file saved above
+// const cert = require('./cert.json'); // the file saved above
 const {promisify} = require("es6-promisify");
 
 app.use(express.static(path.join(__dirname, 'client/build')));
@@ -17,27 +17,27 @@ app.use(bodyParser.urlencoded({
 
 
 
-const doc = new GoogleSpreadsheet("1bDHTVqRDH_ntYgRJCy6Q2Sn_N1OdrBnW3YZjYAxSRmk");
+// const doc = new GoogleSpreadsheet("1bDHTVqRDH_ntYgRJCy6Q2Sn_N1OdrBnW3YZjYAxSRmk");
 
-const accessSpreadsheet = async (cell) => {
-	await doc.useServiceAccountAuth({
-	  client_email: cert.client_email,
-	  private_key: cert.private_key,
-	});
+// const accessSpreadsheet = async (cell) => {
+// 	await doc.useServiceAccountAuth({
+// 	  client_email: cert.client_email,
+// 	  private_key: cert.private_key,
+// 	});
   
-	await doc.loadInfo(); // loads document properties and worksheets
-	console.log(doc.title);
+// 	await doc.loadInfo(); // loads document properties and worksheets
+// 	console.log(doc.title);
   
-	const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
-	console.log(sheet.title);
-	console.log(sheet.rowCount);
-	await sheet.loadCells('A1:E10')
-	const c6 = sheet.getCellByA1('C10'); // or A1 style notation
-	console.log(c6.value);
-	return(
-		c6.value
-	)
-}	
+// 	const sheet = doc.sheetsByIndex[0]; // or use doc.sheetsById[id]
+// 	console.log(sheet.title);
+// 	console.log(sheet.rowCount);
+// 	await sheet.loadCells('A1:E10')
+// 	const c6 = sheet.getCellByA1('C10'); // or A1 style notation
+// 	console.log(c6.value);
+// 	return(
+// 		c6.value
+// 	)
+// }	
 
   
 app.post('/api', async (req, res) => {
