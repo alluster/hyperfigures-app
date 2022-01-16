@@ -1,7 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
-import Button from '../components/Button';
 import Container from '../components/Container';
 import Content from '../components/Content';
 import { AppContext } from '../context/Context';

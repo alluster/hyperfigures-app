@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSuitcase, faMap, faChessKnight, faDatabase, faColumns, faPhone, faTh, faFileContract, faTasks } from '@fortawesome/free-solid-svg-icons';
+import { faSuitcase, faDatabase, faColumns } from '@fortawesome/free-solid-svg-icons';
 const Wrapper = styled.div`
 	position: fixed;
 	background-color: ${props => props.theme.colors.white};

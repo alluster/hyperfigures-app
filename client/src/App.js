@@ -1,4 +1,4 @@
-import React, { useContext }  from 'react';
+import React, { useContext } from 'react';
 import ReactDOM from 'react-dom';
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
@@ -139,25 +139,25 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => {
 	const PrivateRoute = ({ component: Component, ...rest }) => {
-		const {user} = useContext(AppContext);
+		const { user } = useContext(AppContext);
 
 		return (
-		  <Route
-			{...rest}
-			render={props =>
-			  user.email ? (
-				<Component {...props} />
-			  ) : (
-				<Redirect
-				  to={{
-					pathname: "/loginpage",
-				  }}
-				/>
-			  )
-			}
-		  />
+			<Route
+				{...rest}
+				render={props =>
+					user.email ? (
+						<Component {...props} />
+					) : (
+							<Redirect
+								to={{
+									pathname: '/loginpage',
+								}}
+							/>
+						)
+				}
+			/>
 		);
-	  }
+	};
 	return (
 		<ThemeProvider theme={theme}>
 			<Provider>

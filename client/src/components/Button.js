@@ -117,7 +117,22 @@ const Button = ({style, download, target,  onClick, type, form, children, to, pr
 
 Button.propTypes = {
 	onClick: PropTypes.any,
-	children: PropTypes.any
+	children: PropTypes.any,
+	style: PropTypes.any,
+	download: PropTypes.any,
+	target: PropTypes.any,
+	type: PropTypes.any,
+	form: PropTypes.any,
+	to: PropTypes.any,
+	primary: PropTypes.any,
+	color: PropTypes.any,
+	className: PropTypes.any,
+	textColor: PropTypes.any,
+	small: PropTypes.any,
+	white: PropTypes.any,
+	success: PropTypes.any,
+	alert: PropTypes.any,
+	dividerRight: PropTypes.any
 };
 
 export default Button;
