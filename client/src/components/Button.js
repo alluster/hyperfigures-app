@@ -29,7 +29,7 @@ const StyledButton = styled.button `
 	${({ primary }) => primary && `
 		-webkit-text-fill-color: #ffffff;
 		color: #ffffff;
-		background-color: #0A22FF;	
+		background-color: #000000;	
 	`};	
 	${({ white }) => white && `
 		-webkit-text-fill-color: #252525;
