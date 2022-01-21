@@ -63,7 +63,7 @@ const Login = () => {
 					<Title>You need to sign in to view this!</Title>
 					{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
 					<Ingress>We are looking for new customers to try our product. Get in touch and use this opportunity!</Ingress>
-					<a href="/login">
+					{/* <a href="/login">
 						<Button
 							white
 							type=""
@@ -71,7 +71,7 @@ const Login = () => {
 							Sign in
 						</Button>
 					</a>
-					<h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
+					<h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5> */}
 					<Button primary onClick={handleClick}>Get in touch</Button>
 
 				</WelcomeTitle>

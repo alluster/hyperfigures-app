@@ -76,7 +76,7 @@ const Home = () => {
 					<Ingress>Connect data sources* into one dashboard to gain unseen power over your data!</Ingress>
 					
 					<Button primary onClick={handleClick}>Get in touch</Button>
-					<h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
+					{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
 					<a href="/login">
 						<Button
 							white
@@ -84,7 +84,7 @@ const Home = () => {
 						>
 							Sign in
 						</Button>
-					</a>
+					</a> */}
 					<List>
 						<p>
 							* Google Sheets, Teams Excel

@@ -163,7 +163,7 @@ const App = () => {
 			<Provider>
 				<Router>
 					<SideBar />
-					<TopBar title="Hyperfigures" />
+					{/* <TopBar title="Hyperfigures" /> */}
 					<Notification />
 					<Switch>
 						<Route exact path="/" component={() => <Home />} />
