@@ -171,7 +171,6 @@ const App = () => {
 						<PrivateRoute exact path="/dashboardpage" component={Dashboard} />
 						<PrivateRoute exact path="/error" component={ErrorPage} />
 						<PrivateRoute exact path="/datapoints" component={DataPoints} />
-
 						<Route exact path="/loginpage" component={Login} />
 					</Switch>
 				</Router>

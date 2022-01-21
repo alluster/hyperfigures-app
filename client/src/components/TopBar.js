@@ -50,7 +50,7 @@ const TopBar = () => {
 
 	return (
 		<Wrapper>
-			<Header>{location || ''}</Header>
+			{/* <Header>{location || ''}</Header> */}
 			<Links>
 				{
 					loading ?
