@@ -1,5 +1,6 @@
-import React, { useContext } from 'react';
+import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
@@ -7,18 +8,22 @@ import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-d
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
 import { AppContext } from './context/Context';
+import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 import Provider from './context/Provider';
 
 import SideBar from './components/SideBar';
 import TopBar from './components/TopBar';
 import Notification from './components/Notification';
-import Profile from './pages/Profile';
-import Dashboard from './pages/Dashboard';
-import ErrorPage from './pages/ErrorPage';
-import Home from './pages/Home';
-import Login from './pages/Login';
-import DataPoints from './pages/DataPoints';
+import SpinnerSmall from './components/SpinnerSmall';
+
+//pages
+const Profile = React.lazy(() => import('./pages/Profile'));
+const Dashboard = React.lazy(() => import('./pages/Dashboard'));
+const ErrorPage = React.lazy(() => import('./pages/ErrorPage'));
+const Home = React.lazy(() => import('./pages/Home'));
+const Login = React.lazy(() => import('./pages/Login'));
+const DataPoints = React.lazy(() => import('./pages/DataPoints'));
 
 library.add(fas);
 
@@ -138,45 +143,35 @@ const GlobalStyle = createGlobalStyle`
 `;
 
 const App = () => {
-	const PrivateRoute = ({ component: Component, ...rest }) => {
-		const { user } = useContext(AppContext);
-
-		return (
-			<Route
-				{...rest}
-				render={props =>
-					user.email ? (
-						<Component {...props} />
-					) : (
-							<Redirect
-								to={{
-									pathname: '/loginpage',
-								}}
-							/>
-						)
-				}
-			/>
-		);
-	};
+	const PrivateRoute = ({ component, ...args }) => (
+		<Route
+			component={withAuthenticationRequired(component, {
+				onRedirecting: () => <SpinnerSmall />,
+			})}
+			{...args}
+		/>
+	);
 	return (
-		<ThemeProvider theme={theme}>
-			<Provider>
-				<Router>
-					<SideBar />
-					{/* <TopBar title="Hyperfigures" /> */}
-					<Notification />
-					<Switch>
-						<Route exact path="/" component={() => <Home />} />
-						<PrivateRoute exact path="/profilepage" component={Profile} />
-						<PrivateRoute exact path="/dashboardpage" component={Dashboard} />
-						<PrivateRoute exact path="/error" component={ErrorPage} />
-						<PrivateRoute exact path="/datapoints" component={DataPoints} />
-						<Route exact path="/loginpage" component={Login} />
-					</Switch>
-				</Router>
-				<GlobalStyle />
-			</Provider>
-		</ThemeProvider>
+		<Suspense fallback={<SpinnerSmall />}>
+			<ThemeProvider theme={theme}>
+				<Provider>
+					<Router>
+						<SideBar />
+						{/* <TopBar title="Hyperfigures" /> */}
+						<Notification />
+						<Switch>
+							<Route exact path="/" component={() => <Home />} />
+							<PrivateRoute exact path="/profilepage" component={Profile} />
+							<PrivateRoute exact path="/dashboardpage" component={Dashboard} />
+							<PrivateRoute exact path="/error" component={ErrorPage} />
+							<PrivateRoute exact path="/datapoints" component={DataPoints} />
+							<Route exact path="/loginpage" component={Login} />
+						</Switch>
+					</Router>
+					<GlobalStyle />
+				</Provider>
+			</ThemeProvider>
+		</Suspense>
 	);
 };
 
