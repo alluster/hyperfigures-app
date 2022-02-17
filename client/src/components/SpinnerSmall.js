@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import PulseLoader from 'react-spinners/PulseLoader';
+import ScaleLoader from 'react-spinners/ScaleLoader';
 import { device } from '../device';
 
 const SpinnerContainer = styled.div`
@@ -22,7 +22,7 @@ const SpinnerSmall = () => {
 
 	return (
 		<SpinnerContainer>
-			<PulseLoader color="#BDBDBD"/>
+			<ScaleLoader color="#BDBDBD"/>
 		</SpinnerContainer>
 
 	);
