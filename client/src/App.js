@@ -13,7 +13,6 @@ import { withAuthenticationRequired } from "@auth0/auth0-react";
 import Provider from './context/Provider';
 
 import SideBar from './components/SideBar';
-import TopBar from './components/TopBar';
 import Notification from './components/Notification';
 import SpinnerSmall from './components/SpinnerSmall';
 
@@ -82,7 +81,7 @@ const GlobalStyle = createGlobalStyle`
 	}
 	p {
 		font-weight: ${props => props.theme.fontWeight.regular};
-		font-size: 16px;
+		font-size: 18px;
 		line-height: 24px;
 		margin: 0px;
 
@@ -157,7 +156,6 @@ const App = () => {
 				<Provider>
 					<Router>
 						<SideBar />
-						{/* <TopBar title="Hyperfigures" /> */}
 						<Notification />
 						<Switch>
 							<Route exact path="/" component={() => <Home />} />

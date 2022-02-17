@@ -21,7 +21,7 @@ const Divider = styled.div`
 const Dashboard = () => {
 	const {
 		dashboardData,
-		setLocation,
+		setAppLocation,
 		loading,
 		user
 	} = useContext(AppContext);
@@ -100,7 +100,7 @@ const Dashboard = () => {
 	useEffect(() => {
 		window.scroll(0, 0);
 		GetDashboardData();
-		setLocation('Kokonaiskuva');
+		setAppLocation('Kokonaiskuva');
 	}, []);
 	return (
 		<Content>

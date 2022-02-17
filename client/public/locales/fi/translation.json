@@ -1,0 +1,20 @@
+{
+	"page": {
+		"home": {}
+		},
+	"button": {
+		"register": "Rekisteröidy",
+		"sign-in": "Kirjaudu"
+	},
+	"input": {
+		"email": "Anna email",
+		"password": "Salasana"
+	},
+	"notification": {
+		"already-member": "Oletko jo asiakas?"
+		
+	},		
+	"navigation": {
+		"landing-page": "Koti" 
+	}
+}

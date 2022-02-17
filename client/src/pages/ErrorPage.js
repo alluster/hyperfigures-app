@@ -50,7 +50,7 @@ const ErrorPage = () => {
 	const context = useContext(AppContext);
 
 	useEffect(() => {
-		context.setLocation('Error');
+		context.setAppLocation('Error');
 
 	}, []);
 	return (

@@ -1,0 +1,20 @@
+{
+	"page": {
+		"home": {}
+		},
+	"button": {
+		"register": "Register Now",
+		"sign-in": "Sign In"
+	},
+	"input": {
+		"email": "Please type your email",
+		"password": "Password"
+	},
+	"notification": {
+		"already-member": "Already have an Account?"
+		
+	},		
+	"navigation": {
+		"landing-page": "Home" 
+	}
+}

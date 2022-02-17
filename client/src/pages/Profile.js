@@ -14,7 +14,7 @@ const Profile = () => {
 	const context = useContext(AppContext);
 	useEffect(() => {
 		window.scroll(0, 0);
-		context.setLocation('Profiili');
+		context.setAppLocation('Profiili');
 
 	}, []);
 	return (

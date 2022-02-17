@@ -55,7 +55,7 @@ const Image = styled.img`
 
 const Home = () => {
 	const {
-		setLocation
+		setAppLocation
 	} = useContext(AppContext);
 	const handleClick = () => {
 		window.location = 'mailto:aleksanteri@helau.io';
@@ -63,7 +63,7 @@ const Home = () => {
 
 	useEffect(() => {
 		window.scroll(0, 0);
-		setLocation('Home');
+		setAppLocation('Home');
 	}, []);
 	return (
 		<Container>

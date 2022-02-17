@@ -46,7 +46,7 @@ const Ingress = styled.h3`
 
 const Login = () => {
 	const {
-		setLocation
+		setAppLocation
 	} = useContext(AppContext);
 	const handleClick = () => {
 		window.location = 'mailto:aleksanteri@helau.io';
@@ -54,7 +54,7 @@ const Login = () => {
 
 	useEffect(() => {
 		window.scroll(0, 0);
-		setLocation('Register');
+		setAppLocation('Register');
 	}, []);
 	return (
 		<Container>
