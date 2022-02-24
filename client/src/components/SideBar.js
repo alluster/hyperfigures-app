@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSuitcase, faDatabase, faColumns } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faTh, faColumns, faCog, faUser } from '@fortawesome/free-solid-svg-icons';
 const Wrapper = styled.div`
 	position: fixed;
 	background-color: ${props => props.theme.colors.white};
@@ -23,7 +23,7 @@ const Wrapper = styled.div`
 		-o-transition: width 0.2s ease-in-out;
 		transition: width 0.2s ease-in-out;
 	`}
-	@media ${device.mobileL} {
+	@media ${device.laptop} {
 		display: none;
 	}
 `;
@@ -133,7 +133,7 @@ const Icon = styled(FontAwesomeIcon)`
 // 	min-width: 64px;
 // `;
 const LinkText = styled.h5`
-	color: ${props => props.theme.colors.gray_100};
+	color: ${props => props.theme.colors.gray_fontDark};
 	margin-left: 28px;
 	white-space: nowrap;
 	line-height: 40px;
@@ -167,26 +167,40 @@ const LinkContainer = styled(Link)`
 const SideBar = () => {
 	const routeList = [
 		{
-			link: '/',
-			icon: faSuitcase,
-			title: 'Home',
+			link: '/datapoints',
+			icon: faTh,
+			title: 'Hyperfigures',
 			ingress: 'Welcome to Hyperfigures!',
 			description: 'Business Data Supersets'
 		},
 		{
-			link: '/datapoints',
-			icon: faDatabase,
-			title: 'Data Points',
-			ingress: 'Connect data points!',
+			link: '/dashboards',
+			icon: faColumns,
+			title: 'Dashboards',
+			ingress: 'All data in one view!',
 			description: 'Connect data points from various sources'
 		},
 		{
-			link: '/dashboardpage',
-			icon: faColumns,
-			title: 'Dashboard',
+			link: '/datastreams',
+			icon: faDatabase,
+			title: 'Data Streams',
 			ingress: 'Your Business Data in One View!',
 			description: 'Combined view to your business data'
 		},
+		// {
+		// 	link: '/settings',
+		// 	icon: faCog,
+		// 	title: 'Settings',
+		// 	ingress: 'Your Business Data in One View!',
+		// 	description: 'Combined view to your business data'
+		// },
+		{
+			link: '/user',
+			icon: faUser,
+			title: 'User',
+			ingress: 'Your Business Data in One View!',
+			description: 'Combined view to your business data'
+		}
 		
 	];
 	const [sideBarOpen, setSideBarOpen] = useState(false);

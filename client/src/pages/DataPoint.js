@@ -1,3 +1,5 @@
+
+
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
@@ -32,7 +34,7 @@ const Label = styled.p`
 `
 
 
-const Dashboard = () => {
+const DataPoint = () => {
 	const {
 		dashboardData,
 		setAppLocation,
@@ -53,42 +55,69 @@ const Dashboard = () => {
 		console.log(data)
 
 	};
-
+	useEffect(() => {
+		reset(
+			{
+				imported_value: "1234",
+				sheet: "finances_data.csv",
+				page: "Calculations",
+				cell: "c2",
+				connected_dashboard: "Finance"
+			}
+		)
+	}, [])
 	return (
 		<Container>
 			<ButtonGoBack text="Go Back" />
 			<HeaderText
-				locationText="Dashboard"
-				title="Finance"
-				description="Finance calculations"
+				locationText=""
+				title="Data Point"
+				description="Budget 2022"
 			/>
 			<CardGrid>
-				<Card
-					to={"/datapoints/budget_2022"}
-				>
+				<Card >
 					<TextWithLabel
 						title={CurrencyFormatter.format(34567)}
 						label="Budget 2022"
 					/>
+				</Card>
 
-				</Card>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
-				</Card>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
-				</Card>
 			</CardGrid>
-
+			<form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
+				<Input
+					name="imported_value"
+					label="Imported Value"
+					placeholder="Testi"
+					register={register}
+				/>
+				<Input
+					name="sheet"
+					label="Sheet"
+					placeholder="Testi"
+					register={register}
+				/>
+				<Input
+					name="page"
+					label="Page"
+					placeholder="Testi"
+					register={register}
+				/>
+				<Input
+					name="cell"
+					label="Cell"
+					placeholder="Testi"
+					register={register}
+				/>
+				<Input
+					name="connected_dashboard"
+					label="Connected Dashboard"
+					placeholder="Testi"
+					register={register}
+				/>
+			</form>
 
 		</Container>
 	);
 };
 
-export default Dashboard;
+export default DataPoint;

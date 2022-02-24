@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
-import Content from '../components/Content';
 import { AppContext } from '../context/Context';
 
 const Grid = styled.div`
@@ -48,8 +47,7 @@ const List = styled.div`
 	
 `;	
 const Image = styled.img`
-	height: 300px;
-	margin-bottom: 30px;
+	margin-bottom: ${props => props.theme.grid.divider_8};
 	
 `;	
 
@@ -67,15 +65,13 @@ const Home = () => {
 	}, []);
 	return (
 		<Container>
-			<Content>
 				<WelcomeTitle>
 					<Image src="/logo.svg"/>
 					
 					{/* <Title>Take control over your data!</Title> */}
 					{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
 					<Ingress>Connect data sources* into one dashboard to gain unseen power over your data!</Ingress>
-					
-					<Button primary onClick={handleClick}>Get in touch</Button>
+					<Button primary onClick={handleClick}>Not yet a user? Get in touch</Button>
 					{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
 					<a href="/login">
 						<Button
@@ -95,7 +91,6 @@ const Home = () => {
 
 
 
-			</Content>
 		</Container>
 	);
 };

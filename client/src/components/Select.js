@@ -9,20 +9,23 @@ const Wrapper = styled.div`
 `;
 
 const StyledSelect = styled.select`
-	height: 48px;
-	width: calc(100% + 10px);
-	border: 1px solid ${props => props.theme.colors.gray_80};
-	border-radius: 4px;
+	height: 56px;
+	width: calc(100% - 44px);
+	border: 1px solid ${props => props.theme.colors.fontDark};
+	border-radius: 8px;
 	font-size: 18px;
 	color: ${props => props.theme.colors.fontDark};
-	padding-left: ${props => props.theme.grid.divider_2};
+	padding-left: ${props => props.theme.grid.divider_4};
 	padding-right: ${props => props.theme.grid.divider_2};
-	padding: 0.4%;
-	line-height: 40px;
+	// padding: 0.4%;
+	line-height: 56px;
 	-ms-box-sizing:content-box;
 	-moz-box-sizing:content-box;
 	-webkit-box-sizing:content-box; 
 	box-sizing:content-box;
+	background: url(http://cdn1.iconfinder.com/data/icons/cc_mono_icon_set/blacks/16x16/br_down.png) no-repeat right #ffffff;
+	-webkit-appearance: none;
+    background-position-x: 98%;
 	${({ disabled }) => disabled && `
 		border: 1px solid gray;
 		background-color: #dddddd;

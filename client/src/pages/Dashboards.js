@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
-import TextWithLabel from '../components/TextWithLabel';
 
 
 const Value = styled.h3`
@@ -32,12 +31,9 @@ const Label = styled.p`
 `
 
 
-const Dashboard = () => {
+const Dashboards = () => {
 	const {
-		dashboardData,
-		setAppLocation,
-		loading,
-		user,
+	
 		something
 	} = useContext(AppContext);
 
@@ -57,38 +53,33 @@ const Dashboard = () => {
 	return (
 		<Container>
 			<ButtonGoBack text="Go Back" />
+
 			<HeaderText
-				locationText="Dashboard"
-				title="Finance"
-				description="Finance calculations"
+				locationText="Company Name Oy Inc."
+				title="Dashboards"
+				description="Your organization data dashboards"
 			/>
 			<CardGrid>
-				<Card
-					to={"/datapoints/budget_2022"}
+				<Card 
+					to="/dashboards/finance"
 				>
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
-
+					<h4>Finance</h4>
 				</Card>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
+				<Card
+					to="/dashboards/hr"
+				>
+					<h4>HR</h4>
 				</Card>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
+				<Card
+					to="/dashboards/esg"
+				>
+					<h4>ESG</h4>
 				</Card>
 			</CardGrid>
-
+			
 
 		</Container>
 	);
 };
 
-export default Dashboard;
+export default Dashboards;

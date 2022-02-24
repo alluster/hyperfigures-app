@@ -5,10 +5,16 @@ import axios from 'axios';
 
 const Provider = ({ children }) => {
 	const [notifyMessage, setNotifyMessage] = useState('');
-	const [something, setSomething] = useState([]);
+	const [something, setSomething] = useState([
+		{
+			title: "Hello",
+			id: 1
+
+		}
+	]);
 	const [loading, setLoading] = useState(false);
 	const [appLocation, setAppLocation] = useState("")
-
+const [user, setUser] = useState();
 	// Delete functions 
 
 	const Delete = async () => {
@@ -79,7 +85,10 @@ const Provider = ({ children }) => {
 			value={{
 				appLocation,
 				setAppLocation,
-				notifyMessage
+				notifyMessage,
+				something,
+				user,
+				setUser
 
 			}}
 		>

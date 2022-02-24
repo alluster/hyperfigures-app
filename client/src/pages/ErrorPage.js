@@ -3,9 +3,6 @@ import styled from 'styled-components';
 import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
-import Content from '../components/Content';
-
-
 import { AppContext } from '../context/Context';
 
 const Grid = styled.div`
@@ -55,7 +52,6 @@ const ErrorPage = () => {
 	}, []);
 	return (
 		<Container>
-			<Content>
 				<WelcomeTitle>
 					<Title>Jokin meni pieleen</Title>
 					<Ingress>Selvitämme ongelmaa!</Ingress>
@@ -63,7 +59,6 @@ const ErrorPage = () => {
 				</WelcomeTitle>
 				
 
-			</Content>
 		</Container>
 	);
 };

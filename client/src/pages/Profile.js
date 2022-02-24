@@ -3,7 +3,8 @@ import styled from 'styled-components';
 import { AppContext } from '../context/Context';
 import { device } from '../device';
 import Button from '../components/Button';
-import Content from '../components/Content';
+import Container from '../components/Container';
+import { useAuth0 } from "@auth0/auth0-react";
 
 const Wrapper = styled.div`
 	@media ${device.laptop} {
@@ -11,6 +12,8 @@ const Wrapper = styled.div`
 `;
 
 const Profile = () => {
+	const { logout, loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
+
 	const context = useContext(AppContext);
 	useEffect(() => {
 		window.scroll(0, 0);
@@ -18,40 +21,37 @@ const Profile = () => {
 
 	}, []);
 	return (
-		<Wrapper>
-			<Content>
-				{
-					context.user.success == true ?
-						<div>
-							<p>{context.user.data} </p>
-							<a href="/logout">
-								<Button
-									primary
-									type=""
-									
-								>
-									Kirjaudu ulos palvelusta
-								</Button>
-							</a>
-						</div>
-
-						:
-
-						<a href="/login">
+		<Container>
+		
+			{
+				  isAuthenticated ?
+					<div>
+						<a onClick={() => logout({ returnTo: window.location.origin })}>
 							<Button
 								primary
 								type=""
+
 							>
-								Kirjaudu palveluun
-							</Button>
+								Logout
+								</Button>
 						</a>
+					</div>
+
+					:
+
+					<a onClick={() => loginWithRedirect()}>
+						<Button
+							primary
+							type=""
+						>
+							Login
+							</Button>
+					</a>
 
 
-				}
+			}
 
-			</Content>
-
-		</Wrapper>
+		</Container>
 	);
 };
 

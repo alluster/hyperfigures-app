@@ -1,140 +1,154 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
-import { device } from '../device';
-import Container from '../components/Container';
-import Content from '../components/Content';
 import { AppContext } from '../context/Context';
 import axios from 'axios';
+import Card from '../components/Card';
+import CardGrid from '../components/CardGrid';
+import HeaderText from '../components/HeaderText';
+import Container from '../components/Container';
+import ButtonGoBack from '../components/ButtonGoBack';
+import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
+import Select from '../components/Select';
+import { useForm } from 'react-hook-form';
+import Input from '../components/Input';
+import InputNumber from '../components/InputNumber';
+import InputTextarea from '../components/InputTextarea';
+import TextWithLabel from '../components/TextWithLabel';
 
-const Grid = styled.div`
-	margin-top: ${props => props.theme.grid.divider_12};
-	display: flex;
-	flex-flow: row wrap;
-	align-content: flex-start;
-	row-gap: 48px;
-	column-gap: 48px;
-	width: 100%;
-	
-	@media ${device.laptop} {
-	}
-`;
 
-const WelcomeTitle = styled.div`
-	margin-top: ${props => props.theme.grid.divider_12};
-	margin-bottom: ${props => props.theme.grid.divider_8};
-
-	display: flex;
-	flex-direction: column;
-	justify-content: center;
-	text-align: center;
-	max-width: 700px;
-	margin-left: auto;
-	margin-right: auto;
-	@media ${device.laptop} {
-	}
-`;
-const Title = styled.h2`
-	text-align: center;
+const Value = styled.h3`
 	font-weight: bold;
-	margin-bottom: ${props => props.theme.grid.divider_4};
 `;
-const Ingress = styled.h3`
-	text-align: center;
-	margin-bottom: ${props => props.theme.grid.divider_4};
+
+const Divider = styled.div`
+	border-bottom: 1px solid ${props => props.theme.colors.gray_60};
+	width: 100%;
+	margin-top: 20px;
+	margin-bottom: 20px;
 `;
+const Label = styled.p`
+	color: ${props => props.theme.colors.gray_130};
+	font-size: 14px;
+`
 
 
 const DataPoints = () => {
 	const {
-		setAppLocation
+		dashboardData,
+		setAppLocation,
+		loading,
+		user,
+		something
 	} = useContext(AppContext);
-	const handleClick = () => {
-		window.location = 'mailto:aleksanteri@helau.io';
-	};
 
-	
-	const [formValue, setFormValue] = useState({
-		cell: '',
-	});
-	const [data, setData] = useState('data');
-	
+	const {
+		control,
+		register,
+		handleSubmit,
+		reset,
+		formState: { errors },
+	} = useForm();
 
-	const handleSubmit = async () => {
-		const resp =  await axios.post('/api', {
-
-			params: {
-				cell:  formValue.cell
-			}
-		});
-
-		try {
-			setData(resp);
-		}
-		catch (err) {
-			console.log('fetching data error', err);
-		}
-		finally {
-			console.log('data:', data);
-		}
-
+	const onSubmit = async (data) => {
+		console.log(data)
 
 	};
-	const handleChange = (event) => {
-		setFormValue({
-			...formValue,
-			[event.target.name]: event.target.value
-		});
-	};
-	useEffect(() => {
-		window.scroll(0, 0);
-		setAppLocation('Home');
-	}, []);
+
 	return (
 		<Container>
-			<Content>
-				<h1>Hyperfigures:</h1>
-				<form onSubmit={handleSubmit}>
-					{/* <input
-					type="text"
-					name="private_key"
-					placeholder="private_key"
-					value={formValue.private_key}
-					onChange={handleChange}
-					required
-				/> */}
-					<input
-						type="text"
-						name="cell"
-						placeholder="cell"
-						value={formValue.cell}
-						onChange={handleChange}
-
+			<HeaderText
+				locationText="Business Data Superset™"
+				title="Hyperfigures"
+				description="All your organization Hyperfigures in one dashboard"
+			/>
+			<CardGrid>
+				<Card
+					to={"/datapoints/budget_2022"}
+				>
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
 					/>
-					{/* <input
-					type="text"
-					name="client_email"
-					placeholder="client_email"
-					value={formValue.client_email}
-					onChange={handleChange}
-					required
-				/> */}
-					{/* 
-				<input
-					type="text"
-					name="sheet_ID"
-					placeholder="sheet_ID"
-					value={formValue.sheet_ID}
-					onChange={handleChange}
-					required
-				/> */}
+
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card
+					to={"/datapoints/budget_2022"}
+				>
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card
+					to={"/datapoints/budget_2022"}
+				>
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card
+					to={"/datapoints/budget_2022"}
+				>
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+				<Card >
+					<TextWithLabel
+						title={CurrencyFormatter.format(34567)}
+						label="Budget 2022"
+					/>
+				</Card>
+			</CardGrid>
 
 
-					<button type="submit" >Submit</button>
-				</form>
-
-
-
-			</Content>
 		</Container>
 	);
 };
