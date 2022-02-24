@@ -68,7 +68,7 @@ const TopNav = () => {
 					isAuthenticated ?
 						<Links>
 						
-							<Link to="/profilepage">
+							<Link to="/user">
 								<p>
 								{user.email}
 								</p>
@@ -78,7 +78,7 @@ const TopNav = () => {
 
 						:
 						<Links>
-							<a href="/login">
+							<a onClick={() => loginWithRedirect()}>
 								<Button
 									primary
 									type=""
