@@ -4,12 +4,14 @@ import { device } from '../device';
 
 const Wrapper = styled.div`
 	margin-top: ${props => props.theme.grid.divider_4};
+	margin-right: ${props => props.theme.grid.divider_2};
+
 `;
 
 const StyledInput = styled.input`
-	background-color: ${props => props.theme.colors.white};
-	height: 56px;
-	width: calc(100% - 44px);
+background-color: ${props => props.theme.colors.white};
+height: 56px;
+width: calc(100% - 60px);
 	border: 1px solid ${props => props.theme.colors.fontDark};
 	border-radius: 8px;
 	font-size: 18px;
@@ -42,7 +44,7 @@ const Label = styled.label`
 
 
 
-const Input = ({ label, required, placeholder, register, name, maxLength }) => {
+const InputNumber = ({ label, required, placeholder, register, name, maxLength }) => {
 	return (
 		<Wrapper>
 			<Label>
@@ -59,4 +61,4 @@ const Input = ({ label, required, placeholder, register, name, maxLength }) => {
 	);
 };
 
-export default Input;
+export default InputNumber;
