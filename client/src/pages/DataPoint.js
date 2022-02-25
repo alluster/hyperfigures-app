@@ -84,36 +84,39 @@ const DataPoint = () => {
 
 			</CardGrid>
 			<form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-				<Input
-					name="imported_value"
-					label="Imported Value"
-					placeholder="Testi"
-					register={register}
-				/>
-				<Input
-					name="sheet"
-					label="Sheet"
-					placeholder="Testi"
-					register={register}
-				/>
-				<Input
-					name="page"
-					label="Page"
-					placeholder="Testi"
-					register={register}
-				/>
-				<Input
-					name="cell"
-					label="Cell"
-					placeholder="Testi"
-					register={register}
-				/>
-				<Input
-					name="connected_dashboard"
-					label="Connected Dashboard"
-					placeholder="Testi"
-					register={register}
-				/>
+				<CardGrid>
+					<Input
+						name="imported_value"
+						label="Imported Value"
+						placeholder="Testi"
+						register={register}
+					/>
+					<Input
+						name="sheet"
+						label="Sheet"
+						placeholder="Testi"
+						register={register}
+					/>
+					<Input
+						name="page"
+						label="Page"
+						placeholder="Testi"
+						register={register}
+					/>
+					<Input
+						name="cell"
+						label="Cell"
+						placeholder="Testi"
+						register={register}
+					/>
+					<Input
+						name="connected_dashboard"
+						label="Connected Dashboard"
+						placeholder="Testi"
+						register={register}
+					/>
+				</CardGrid>
+
 			</form>
 
 		</Container>

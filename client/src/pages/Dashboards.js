@@ -55,7 +55,7 @@ const Dashboards = () => {
 			<ButtonGoBack text="Go Back" />
 
 			<HeaderText
-				locationText="Company Name Oy Inc."
+				locationText=""
 				title="Dashboards"
 				description="Your organization data dashboards"
 			/>
