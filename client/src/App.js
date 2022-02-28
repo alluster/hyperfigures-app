@@ -12,7 +12,7 @@ import { withAuthenticationRequired } from "@auth0/auth0-react";
 
 import Provider from './context/Provider';
 
-import SideBar from './components/SideBar';
+import Navigation from './components/Navigation';
 import Notification from './components/Notification';
 import SpinnerSmall from './components/SpinnerSmall';
 import Footer from './components/Footer';
@@ -166,7 +166,7 @@ const App = () => {
 			<ThemeProvider theme={theme}>
 				<Provider>
 					<Router>
-						<SideBar />
+						<Navigation />
 						<TopNav />
 						<Notification />
 						<Switch>

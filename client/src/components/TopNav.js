@@ -18,6 +18,7 @@ const Wrapper = styled.div`
 	padding-left: ${props => props.theme.grid.divider_10};
 	padding-right: ${props => props.theme.grid.divider_4};
 	@media ${device.laptop} {
+		display: none;
 	}
 `;
 const Header = styled.h5`

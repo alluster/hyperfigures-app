@@ -13,6 +13,7 @@ const Wrapper = styled.div`
 	padding-right: ${props => props.theme.grid.divider_2} ;
 	@media ${device.laptop} {
 		padding-left: ${props => props.theme.grid.divider_2};
+		padding-top: ${props => props.theme.grid.divider_6}
 
 	}
 `;

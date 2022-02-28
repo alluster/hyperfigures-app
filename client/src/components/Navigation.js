@@ -3,8 +3,9 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDatabase, faTh, faColumns, faCog, faUser } from '@fortawesome/free-solid-svg-icons';
-const Wrapper = styled.div`
+import { faDatabase, faTh, faColumns, faWindowClose,  faCog, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+
+const SideNav = styled.div`
 	position: fixed;
 	background-color: ${props => props.theme.colors.white};
 	border-right: 1px solid ${props => props.theme.colors.gray_60};
@@ -74,7 +75,7 @@ const Links = styled.div`
 // 		cursor: pointer;
 // 		color: white;
 // 		background-color: ${props => props.theme.colors.gray_20};
-	
+
 // 		${IconPhone} {
 // 			color: ${props => props.theme.colors.white}
 // 		}
@@ -94,6 +95,7 @@ const BarsIcon = styled.div`
 		cursor: pointer;
 	}
 `;
+
 const LogoIcon = styled.img`
 	height: 18px;
 `;
@@ -163,8 +165,51 @@ const LinkContainer = styled(Link)`
 	}
 `;
 
+// Mobile nav styles
+const MobileNav = styled.div`
+	position: absolute;
+	width: 100%;
+	min-height: 100vh;
+	left: 0px;
+	top: 0px;
+	display: none;
+	flex-direction: column;
+	z-index: 10000000;
+	background-color: ${props => props.theme.colors.white};
 
-const SideBar = () => {
+	${({ open }) => open && `
+		display: flex;
+		width: 100%;
+		-webkit-transition: width 0.2s ease-in-out;
+		-moz-transition: width 0.2s ease-in-out;
+		-o-transition: width 0.2s ease-in-out;
+		transition: width 0.2s ease-in-out;
+	`}
+	@media ${device.laptop} {
+	}
+`;
+
+const MobileNavToggler = styled.div`
+	position: absolute;
+	display: flex;
+	width: 100%;
+	flex-direction: column;
+	padding-top: 20px;
+	justify-content: right;
+	display: none;
+	z-index: 10000000000;
+
+	@media ${device.laptop} {
+		display: flex;
+	}
+
+`;
+
+const ToggleIcon = styled(Icon)`
+	align-self: flex-end;
+`;
+
+const Navigation = () => {
 	const routeList = [
 		{
 			link: '/datapoints',
@@ -201,50 +246,94 @@ const SideBar = () => {
 			ingress: 'Your Business Data in One View!',
 			description: 'Combined view to your business data'
 		}
-		
+
 	];
 	const [sideBarOpen, setSideBarOpen] = useState(false);
 	return (
-		<Wrapper open={sideBarOpen}>
-			<BarsIcon onClick={() => setSideBarOpen(!sideBarOpen)}>
-				{!sideBarOpen && <LogoIcon src="/arm.svg" />}
-				{sideBarOpen && <Logo src="/arm-logo-dark.svg" />}
+		<div>
+			<MobileNavToggler 
+				open={sideBarOpen} 
+				onClick={() => setSideBarOpen(!sideBarOpen)}
+			>
+				{!sideBarOpen && <ToggleIcon icon={faBars}/>}
+				{sideBarOpen && <ToggleIcon icon={faTimes}/>}
+			</MobileNavToggler>
+			<MobileNav open={sideBarOpen}>
+				
+				<Links>
+					{
+						routeList.map((item, i) => {
+							return (
+								<LinkContainer key={i} to={item.link}
+									onClick={() => setSideBarOpen(false)}
+								>
+									<IconContainer>
+										<Icon icon={item.icon} />
+									</IconContainer>
+									{
+										// !sideBarOpen &&
+										// <Tooltip>
+										// 	<p style={{ fontWeight: 'bold' }}>
+										// 		{item.ingress}
+										// 	</p>
+										// 	<h4 style={{ fontWeight: 'bold', marginTop: '8px', marginBottom: '8px' }}>
+										// 		{item.title}
+										// 	</h4>
+										// 	{/* <p>
+										// 		{item.description}
+										// 	</p> */}
+										// </Tooltip>
+									}
+									{
+										sideBarOpen && <LinkText>{item.title}</LinkText>
+									}
+								</LinkContainer>
+							);
+						})
+					}
 
-			</BarsIcon>
-			<Links>
-				{
-					routeList.map((item, i) => {
-						return (
-							<LinkContainer key={i} to={item.link}
-								onClick={() => setSideBarOpen(false)}
-							>
-								<IconContainer>
-									<Icon icon={item.icon} />
-								</IconContainer>
-								{
-									// !sideBarOpen &&
-									// <Tooltip>
-									// 	<p style={{ fontWeight: 'bold' }}>
-									// 		{item.ingress}
-									// 	</p>
-									// 	<h4 style={{ fontWeight: 'bold', marginTop: '8px', marginBottom: '8px' }}>
-									// 		{item.title}
-									// 	</h4>
-									// 	{/* <p>
-									// 		{item.description}
-									// 	</p> */}
-									// </Tooltip>
-								}
-								{
-									sideBarOpen && <LinkText>{item.title}</LinkText>
-								}
-							</LinkContainer>
-						);
-					})
-				}
+				</Links>
+			</MobileNav>
+			<SideNav open={sideBarOpen}>
+				<BarsIcon onClick={() => setSideBarOpen(!sideBarOpen)}>
+					{!sideBarOpen && <LogoIcon src="/arm.svg" />}
+					{sideBarOpen && <Logo src="/arm-logo-dark.svg" />}
 
-			</Links>
-			{/* <Phone to="/contact"
+				</BarsIcon>
+				<Links>
+					{
+						routeList.map((item, i) => {
+							return (
+								<LinkContainer key={i} to={item.link}
+									onClick={() => setSideBarOpen(false)}
+								>
+									<IconContainer>
+										<Icon icon={item.icon} />
+									</IconContainer>
+									{
+										// !sideBarOpen &&
+										// <Tooltip>
+										// 	<p style={{ fontWeight: 'bold' }}>
+										// 		{item.ingress}
+										// 	</p>
+										// 	<h4 style={{ fontWeight: 'bold', marginTop: '8px', marginBottom: '8px' }}>
+										// 		{item.title}
+										// 	</h4>
+										// 	{/* <p>
+										// 		{item.description}
+										// 	</p> */}
+										// </Tooltip>
+									}
+									{
+										sideBarOpen && <LinkText>{item.title}</LinkText>
+									}
+								</LinkContainer>
+							);
+						})
+					}
+
+				</Links>
+				{/* <Phone to="/contact"
 				onClick={() => setSideBarOpen(false)}
 
 			>
@@ -252,8 +341,10 @@ const SideBar = () => {
 				{!sideBarOpen && <Tooltip>Ota yhteyttä</Tooltip>}
 				{sideBarOpen && <LinkText>Ota yhteyttä</LinkText>}
 			</Phone> */}
-		</Wrapper>
+			</SideNav>
+		</div>
+
 	);
 };
 
-export default SideBar;
+export default Navigation;
