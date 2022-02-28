@@ -20,7 +20,6 @@ const FooterWrapper = styled.div`
    margin-right: auto;
    padding-top: ${props => props.theme.grid.divider_6};
    padding-left: ${props => props.theme.grid.divider_10};
-   padding-right: ${props => props.theme.grid.divider_2};
    color: ${props => props.theme.colors.white};
    width: 100%;
    background-color: ${props => props.theme.colors.primary_200};
@@ -89,7 +88,7 @@ const Footer = ({
 				<Links>
 					<h6>info@helau.io</h6>
 					<h6>www.hyperfigures.com</h6>
-					<h6>© Copywrite 2022 Helau Solutions Oy</h6>
+					<h6>© Helau Solutions Oy 2022</h6>
 				</Links>
 			</FooterContent>
 
