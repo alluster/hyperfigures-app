@@ -11,7 +11,7 @@ const StyledButton = styled.button `
 	text-align: center;
 	font-weight: 400;
 	font-size: 12px;
-	border-radius: 4px;
+	border-radius: 8px;
 	height: 64px;
 	padding-left: 40px;
 	padding-right: 40px;
@@ -61,7 +61,7 @@ const StyledButton = styled.button `
 `;
 
 const Button = ({style, download, target,  onClick, type, form, children, to, primary, color, className, textColor, small, white, success, alert, dividerRight}) => {
-	return(<div>
+	return(<div onClick={onClick}>
 		{
 			type === 'submit' || 'reset' ?
 				<StyledButton 

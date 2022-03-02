@@ -14,7 +14,7 @@ const Provider = ({ children }) => {
 	]);
 	const [loading, setLoading] = useState(false);
 	const [appLocation, setAppLocation] = useState("")
-const [user, setUser] = useState();
+	const [user, setUser] = useState();
 	// Delete functions 
 
 	const Delete = async () => {

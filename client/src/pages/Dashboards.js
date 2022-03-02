@@ -13,7 +13,9 @@ import { useForm } from 'react-hook-form';
 import Input from '../components/Input';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
-
+import Modal from '../components/Modal';
+import Button from '../components/Button';
+import FormAddDataPoint from '../components/FormAddDataPoint';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -36,7 +38,7 @@ const Dashboards = () => {
 	
 		something
 	} = useContext(AppContext);
-
+	const [openModal, setOpenModal] = useState(false);
 	const {
 		control,
 		register,
@@ -49,11 +51,15 @@ const Dashboards = () => {
 		console.log(data)
 
 	};
-
 	return (
 		<Container>
 			<ButtonGoBack text="Go Back" />
-
+			<Button primary onClick={() => setOpenModal(!openModal)}>
+				Create
+			</Button>
+			<Modal open={openModal}>
+				<FormAddDataPoint openModal={() => setOpenModal()}/>
+			</Modal>
 			<HeaderText
 				locationText=""
 				title="Dashboards"
