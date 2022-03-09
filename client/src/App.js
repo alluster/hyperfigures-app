@@ -18,6 +18,7 @@ import SpinnerSmall from './components/SpinnerSmall';
 import Footer from './components/Footer';
 import DataStreams from './pages/DataStreams';
 import TopNav from './components/TopNav';
+import  Background from './components/Background';
 
 //pages
 const Profile = React.lazy(() => import('./pages/Profile'));
@@ -44,7 +45,7 @@ const GlobalStyle = createGlobalStyle`
 		color: ${props => props.theme.colors.black};
 		hyphens: manual;
 		text-rendering: optimizeLegibility;
-		background-color: ${props => props.theme.colors.gray_20};
+		background-color: ${props => props.theme.colors.white};
 	}
 
     

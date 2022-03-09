@@ -4,6 +4,7 @@ import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
 import { AppContext } from '../context/Context';
+import Background from '../components/Background';
 
 const Grid = styled.div`
 	margin-top: ${props => props.theme.grid.divider_12};
@@ -26,30 +27,35 @@ const WelcomeTitle = styled.div`
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
-	max-width: 700px;
+	max-width: 900px;
 	margin-left: auto;
 	margin-right: auto;
 	@media ${device.laptop} {
 	}
 `;
-const Title = styled.h2`
+const Title = styled.h1`
 	text-align: center;
 	font-weight: bold;
 	margin-bottom: ${props => props.theme.grid.divider_4};
+	color: transparent;
+	-webkit-text-stroke: 2px #fff;
 `;
 const Ingress = styled.h3`
 	text-align: center;
 	margin-bottom: ${props => props.theme.grid.divider_4};
+	color: ${props => props.theme.colors.white};
+	
 `;
 
 const List = styled.div`
 	margin-top: 30px;
+	color: ${props => props.theme.colors.white};
 	
-`;	
+`;
 const Image = styled.img`
 	margin-bottom: ${props => props.theme.grid.divider_8};
 	
-`;	
+`;
 
 const Home = () => {
 	const {
@@ -64,10 +70,13 @@ const Home = () => {
 		setAppLocation('Home');
 	}, []);
 	return (
-		<Container>
+		<div>
+
+			<Container>
 				<WelcomeTitle>
-					<Image src="/logo.svg"/>
-					
+					<Title>Connect and share all your business data with anyone.</Title>
+					{/* <Image src="/logo.svg" /> */}
+
 					{/* <Title>Take control over your data!</Title> */}
 					{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
 					<Ingress>Connect data sources* into one dashboard to gain unseen power over your data!</Ingress>
@@ -91,7 +100,10 @@ const Home = () => {
 
 
 
-		</Container>
+			</Container>
+			<Background />
+		</div>
+
 	);
 };
 

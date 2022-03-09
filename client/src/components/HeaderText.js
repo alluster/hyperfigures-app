@@ -1,22 +1,49 @@
 import React from 'react';
 import styled from 'styled-components';
+import Button from './Button';
 
 const HeaderTextWrapper = styled.div`
+	display: flex;
+	flex-direction: row;
+	width: 100%;
+
 * {
 	margin-bottom: ${props => props.theme.grid.divider_1}
    }
+`;
+const TextContainer = styled.div`
+	display: flex;
+	flex-direction: column;
+`
+const ButtonContainer = styled.div`
+   margin-left:auto;
+
 `;
 
 const HeaderText = ({
 	locationText,
 	title,
-	description
+	description,
+	onClickFunction,
+	buttonTitle
 }) => {
 	return (
 		<HeaderTextWrapper>
-			<h6>{locationText || ""}</h6>
-			<h4>{title || ""}</h4>
-			<h5>{description || ""}</h5>
+			<TextContainer>
+				<h6>{locationText || ""}</h6>
+				<h4>{title || ""}</h4>
+				<h5>{description || ""}</h5>
+			</TextContainer>
+			{
+				buttonTitle != null
+				&&
+				<ButtonContainer>
+					<Button primary onClick={() => onClickFunction()}>
+						{buttonTitle}
+					</Button>
+				</ButtonContainer>
+			}
+			
 		</HeaderTextWrapper>
 
 	)

@@ -27,11 +27,11 @@ const theme = {
 		gray_100: '#F1F1F1',
 		gray_120: '#282828',
 		gray_130: '#9C9C9C',
-		fontDark: '#252525'
+		fontDark: '#111111'
 	},
 	fontWeight: {
 		thin: '300',
-		regular: '500',
+		regular: '600',
 		bold: '700'
 
 	},

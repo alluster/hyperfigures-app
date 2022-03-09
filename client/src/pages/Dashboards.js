@@ -10,12 +10,11 @@ import ButtonGoBack from '../components/ButtonGoBack';
 import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
 import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
-import Input from '../components/Input';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import Modal from '../components/Modal';
 import Button from '../components/Button';
-import FormAddDataPoint from '../components/FormAddDataPoint';
+import Form from '../components/Form';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -35,7 +34,7 @@ const Label = styled.p`
 
 const Dashboards = () => {
 	const {
-	
+
 		something
 	} = useContext(AppContext);
 	const [openModal, setOpenModal] = useState(false);
@@ -52,39 +51,64 @@ const Dashboards = () => {
 
 	};
 	return (
-		<Container>
-			<ButtonGoBack text="Go Back" />
-			<Button primary onClick={() => setOpenModal(!openModal)}>
-				Create
-			</Button>
-			<Modal open={openModal}>
-				<FormAddDataPoint openModal={() => setOpenModal()}/>
-			</Modal>
-			<HeaderText
-				locationText=""
-				title="Dashboards"
-				description="Your organization data dashboards"
-			/>
-			<CardGrid>
-				<Card 
-					to="/dashboards/finance"
-				>
-					<h4>Finance</h4>
-				</Card>
-				<Card
-					to="/dashboards/hr"
-				>
-					<h4>HR</h4>
-				</Card>
-				<Card
-					to="/dashboards/esg"
-				>
-					<h4>ESG</h4>
-				</Card>
-			</CardGrid>
-			
+		<div>
+			<Container>
+				<ButtonGoBack text="Go Back" />
+				
 
-		</Container>
+				<HeaderText
+					buttonTitle="Create a new Dashboard"
+					onClickFunction={() => setOpenModal(!openModal)}
+					locationText=""
+					title="Dashboards"
+					description="Your organization data dashboards"
+				/>
+				<CardGrid>
+					<Card
+						to="/dashboards/finance"
+					>
+						<h4>Finance</h4>
+					</Card>
+					<Card
+						to="/dashboards/hr"
+					>
+						<h4>HR</h4>
+					</Card>
+					<Card
+						to="/dashboards/esg"
+					>
+						<h4>ESG</h4>
+					</Card>
+				</CardGrid>
+
+
+			</Container>
+			<Modal
+				open={openModal}
+				openModal={() => setOpenModal()}
+				modalTitle="Create a new Dashboard"
+			>
+				<Form
+					openModal={() => setOpenModal()}
+					fields={
+						[
+							{
+								type: "input",
+								name: "dashboadName",
+								label: "Dashboard name",
+								options: "",
+								required: true,
+								errorMessage: "This input is required"
+							}
+						]
+					}
+
+				>
+
+
+				</Form>
+			</Modal>
+		</div>
 	);
 };
 

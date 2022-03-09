@@ -4,8 +4,8 @@ import { device } from '../device';
 import { Link } from 'react-router-dom';
 
 const Wrapper = styled.div`
-	padding-top: ${props => props.theme.grid.divider_2} ;
-	padding-bottom: ${props => props.theme.grid.divider_2} ;
+	padding-top: ${props => props.theme.grid.divider_4} ;
+	padding-bottom: ${props => props.theme.grid.divider_4} ;
 	padding-left: ${props => props.theme.grid.divider_4} ;
 	padding-right: ${props => props.theme.grid.divider_4} ;
 	display: flex;
@@ -13,7 +13,7 @@ const Wrapper = styled.div`
 	flex-wrap: wrap;
 
 	background-color: ${props => props.theme.colors.white};
-	border: solid 1px ${props => props.theme.colors.gray_100};
+	border: solid 1px ${props => props.theme.colors.gray_110};
 	border-radius: 8px;
 	margin-right: ${props => props.theme.grid.divider_2} ;
 	margin-bottom: ${props => props.theme.grid.divider_2} ;
@@ -21,8 +21,8 @@ const Wrapper = styled.div`
 	}
 `;
 const WrapperLink = styled(Link)`
-	padding-top: ${props => props.theme.grid.divider_2} ;
-	padding-bottom: ${props => props.theme.grid.divider_2} ;
+	padding-top: ${props => props.theme.grid.divider_4} ;
+	padding-bottom: ${props => props.theme.grid.divider_4} ;
 	padding-left: ${props => props.theme.grid.divider_4} ;
 	padding-right: ${props => props.theme.grid.divider_4} ;
 	display: flex;
@@ -30,7 +30,7 @@ const WrapperLink = styled(Link)`
 
 	flex-direction: row;
 	background-color: ${props => props.theme.colors.white};
-	border: solid 1px ${props => props.theme.colors.gray_100};
+	border: solid 1px ${props => props.theme.colors.gray_110};
 	border-radius: 8px;
 	margin-right: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_2} ;

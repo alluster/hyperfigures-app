@@ -4,6 +4,7 @@ import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
 import { AppContext } from '../context/Context';
+import Background from '../components/Background';
 
 const Grid = styled.div`
 	margin-top: ${props => props.theme.grid.divider_12};
@@ -56,7 +57,8 @@ const Login = () => {
 		setAppLocation('Register');
 	}, []);
 	return (
-		<Container>
+		<div>
+			<Container>
 				<WelcomeTitle>
 					<Title>You need to sign in to view this!</Title>
 					{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
@@ -73,11 +75,9 @@ const Login = () => {
 					<Button primary onClick={handleClick}>Get in touch</Button>
 
 				</WelcomeTitle>
-
-
-
-
-		</Container>
+			</Container>
+			<Background />
+		</div>
 	);
 };
 

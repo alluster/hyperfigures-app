@@ -9,7 +9,7 @@ const ModalWrapper = styled.div`
 	position: absolute;
 	top: 0px;
 	left: 0px;
-	height: 100vh;
+	min-height: 100vh;
 	width: 100vw;
 	background: rgba(0, 0, 0, 0.5);
 	visibility: hidden;
@@ -31,6 +31,7 @@ const ModalBox = styled.div`
 	margin-left: auto;
 	margin-right: auto;
 	margin-top: ${props => props.theme.grid.divider_8};
+	margin-bottom: ${props => props.theme.grid.divider_8};
 
 `;
 
@@ -43,24 +44,32 @@ const Icon = styled(FontAwesomeIcon)`
 	font-size: 20px;
 	margin-right: ${props => props.theme.grid.divider_1};
 	align-self: flex-end;
+	margin-bottom: ${props => props.theme.grid.divider_4};
 
 
 	`;
 
+	const ModalTitle = styled.h4`
+
+	
+	`;
+
 const Modal = ({
 		children,
-		open
+		open,
+		openModal,
+		modalTitle
 }) => {
-	const [ modalOpen, setModalOpen ] = useState(open);
 	
-	useEffect(() => {
-		setModalOpen(!modalOpen)
-	}, [open]);
+	// useEffect(() => {
+	// 	setModalOpen(!modalOpen)
+	// }, [open]);
 
 	return (
-		<ModalWrapper open={modalOpen} >
+		<ModalWrapper open={open} >
 			<ModalBox>
-					<Icon onClick={() => setModalOpen(false)} icon={faTimes} />
+					<Icon onClick={() => openModal(false)} icon={faTimes} />
+					<ModalTitle>{modalTitle || "" }</ModalTitle>
 				{children}
 			</ModalBox>
 		</ModalWrapper>

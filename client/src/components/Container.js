@@ -3,7 +3,9 @@ import styled from 'styled-components';
 import { device } from '../device';
 
 const Wrapper = styled.div`
-	max-width: 1500px;
+	position: relative;
+	z-index: 2;
+	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
 	margin-bottom: 400px;

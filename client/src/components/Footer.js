@@ -8,6 +8,8 @@ const FooterWrapper = styled.div`
 	height: 260px;
 	margin-top: -260px;
 	background-color: ${props => props.theme.colors.primary_200};
+	z-index: 2;
+	position: relative;
 * {
 	margin-bottom: ${props => props.theme.grid.divider_1}
    }

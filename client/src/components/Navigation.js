@@ -63,28 +63,6 @@ const Links = styled.div`
 	margin-top: 100px;
 `;
 
-// const Phone = styled(Link)`
-// 	margin-bottom: 0px;
-// 	margin-top: auto;
-// 	display: flex;
-// 	flex-direction: row;
-// 	padding-top: 10px;
-// 	padding-bottom: 10px;
-// 	margin-bottom: 16px;
-// 	&:hover  {
-// 		cursor: pointer;
-// 		color: white;
-// 		background-color: ${props => props.theme.colors.gray_20};
-
-// 		${IconPhone} {
-// 			color: ${props => props.theme.colors.white}
-// 		}
-// 		${LinkText} {
-// 			color: ${props => props.theme.colors.white}
-// 		}
-// 	}
-// `;
-
 const BarsIcon = styled.div`
 	display: flex;
 	flex-direction: column;
@@ -177,7 +155,7 @@ const MobileNav = styled.div`
 	z-index: 10000000;
 	background-color: ${props => props.theme.colors.white};
 
-	${({ open }) => open && `
+	${({ mobileNavOpen }) => mobileNavOpen && `
 		display: flex;
 		width: 100%;
 		-webkit-transition: width 0.2s ease-in-out;
@@ -249,23 +227,25 @@ const Navigation = () => {
 
 	];
 	const [sideBarOpen, setSideBarOpen] = useState(false);
+	const [mobileNavOpen, setMobileNavOpen] = useState(false);
+
 	return (
 		<div>
 			<MobileNavToggler 
-				open={sideBarOpen} 
-				onClick={() => setSideBarOpen(!sideBarOpen)}
+				mobileNavOpen={mobileNavOpen} 
+				onClick={() => setMobileNavOpen(!mobileNavOpen)}
 			>
-				{!sideBarOpen && <ToggleIcon icon={faBars}/>}
-				{sideBarOpen && <ToggleIcon icon={faTimes}/>}
+				{!mobileNavOpen && <ToggleIcon icon={faBars}/>}
+				{mobileNavOpen && <ToggleIcon icon={faTimes}/>}
 			</MobileNavToggler>
-			<MobileNav open={sideBarOpen}>
+			<MobileNav mobileNavOpen={mobileNavOpen}>
 				
 				<Links>
 					{
 						routeList.map((item, i) => {
 							return (
 								<LinkContainer key={i} to={item.link}
-									onClick={() => setSideBarOpen(false)}
+									onClick={() => setMobileNavOpen(false)}
 								>
 									<IconContainer>
 										<Icon icon={item.icon} />
@@ -285,7 +265,7 @@ const Navigation = () => {
 										// </Tooltip>
 									}
 									{
-										sideBarOpen && <LinkText>{item.title}</LinkText>
+										mobileNavOpen && <LinkText>{item.title}</LinkText>
 									}
 								</LinkContainer>
 							);

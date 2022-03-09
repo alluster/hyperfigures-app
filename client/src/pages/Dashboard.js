@@ -10,7 +10,6 @@ import ButtonGoBack from '../components/ButtonGoBack';
 import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
 import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
-import Input from '../components/Input';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';

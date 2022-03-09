@@ -12,7 +12,6 @@ import ButtonGoBack from '../components/ButtonGoBack';
 import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
 import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
-import Input from '../components/Input';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
@@ -83,41 +82,7 @@ const DataPoint = () => {
 				</Card>
 
 			</CardGrid>
-			<form encType="multipart/form-data" onSubmit={handleSubmit(onSubmit)}>
-				<CardGrid>
-					<Input
-						name="imported_value"
-						label="Imported Value"
-						placeholder="Testi"
-						register={register}
-					/>
-					<Input
-						name="sheet"
-						label="Sheet"
-						placeholder="Testi"
-						register={register}
-					/>
-					<Input
-						name="page"
-						label="Page"
-						placeholder="Testi"
-						register={register}
-					/>
-					<Input
-						name="cell"
-						label="Cell"
-						placeholder="Testi"
-						register={register}
-					/>
-					<Input
-						name="connected_dashboard"
-						label="Connected Dashboard"
-						placeholder="Testi"
-						register={register}
-					/>
-				</CardGrid>
-
-			</form>
+			
 
 		</Container>
 	);
