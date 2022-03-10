@@ -12,11 +12,9 @@ const CardGrid = ({ children }) => {
 			<ResponsiveMasonry
 				columnsCountBreakPoints={{ 350: 1, 750: 2, 1200: 3 }}
 			>
-
 				<Masonry>
 					{children}
 				</Masonry>
-
 			</ResponsiveMasonry>
 		</CardGridWrapper>
 

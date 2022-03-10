@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDatabase, faTh, faColumns, faWindowClose,  faCog, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faTh, faColumns, faWindowClose, faCog, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SideNav = styled.div`
 	position: fixed;
@@ -144,6 +144,7 @@ const LinkContainer = styled(Link)`
 `;
 
 // Mobile nav styles
+
 const MobileNav = styled.div`
 	position: absolute;
 	width: 100%;
@@ -167,12 +168,26 @@ const MobileNav = styled.div`
 	}
 `;
 
-const MobileNavToggler = styled.div`
-	position: absolute;
+const MobileNavToggleContainer = styled.div`
 	display: flex;
+	flex-direction: row;
 	width: 100%;
-	flex-direction: column;
-	padding-top: 20px;
+
+
+`;
+const LogoMobile = styled.div`
+	z-index: 2;
+	max-height: 30px;
+	padding: ${props => props.theme.grid.divider_4};
+`;
+
+const LogoMobileImage = styled.img`
+	max-height: 100%;
+`;
+
+const MobileNavToggler = styled.div`
+	margin-left: auto;
+	padding: ${props => props.theme.grid.divider_4};
 	justify-content: right;
 	display: none;
 	z-index: 10000000000;
@@ -185,6 +200,7 @@ const MobileNavToggler = styled.div`
 
 const ToggleIcon = styled(Icon)`
 	align-self: flex-end;
+	color: ${props => props.theme.colors.white};
 `;
 
 const Navigation = () => {
@@ -231,15 +247,23 @@ const Navigation = () => {
 
 	return (
 		<div>
-			<MobileNavToggler 
-				mobileNavOpen={mobileNavOpen} 
-				onClick={() => setMobileNavOpen(!mobileNavOpen)}
-			>
-				{!mobileNavOpen && <ToggleIcon icon={faBars}/>}
-				{mobileNavOpen && <ToggleIcon icon={faTimes}/>}
-			</MobileNavToggler>
+			<MobileNavToggleContainer>
+
+				<LogoMobile>
+					<LogoMobileImage src="/logo-text-light.svg" />
+				</LogoMobile>
+
+				<MobileNavToggler
+					mobileNavOpen={mobileNavOpen}
+					onClick={() => setMobileNavOpen(!mobileNavOpen)}
+				>
+					{!mobileNavOpen && <ToggleIcon icon={faBars} />}
+					{mobileNavOpen && <ToggleIcon icon={faTimes} />}
+				</MobileNavToggler>
+			</MobileNavToggleContainer>
+
 			<MobileNav mobileNavOpen={mobileNavOpen}>
-				
+
 				<Links>
 					{
 						routeList.map((item, i) => {
