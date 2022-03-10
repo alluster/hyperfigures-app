@@ -1,5 +1,6 @@
 import React, { Suspense } from 'react';
 import ReactDOM from 'react-dom';
+import { device } from './device';
 
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
@@ -54,42 +55,70 @@ const GlobalStyle = createGlobalStyle`
 		font-size: 90.44px;
 		line-height: 112px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 28.83px;
+			line-height: 40px
+		}
     }
     h2 {
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-size: 63.96px;
 		line-height: 80px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 	25.63px;
+			line-height: 32px
+		}
     }
     h3 {
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-size: 45.23px;
 		line-height: 48px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 	22.78px;
+			line-height: 32px
+		}
     }
     h4 {
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-size: 31.99px;
 		line-height: 40px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 	20.25px;
+			line-height: 24px
+		}
     }
     h5 {
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-size: 22.62px;
 		line-height: 32px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 	18px;
+			line-height: 24px
+		}
     }
     h6 {
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-size: 18px;
 		line-height: 24px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 	16px;
+			line-height: 24px
+		}
 	}
 	p {
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-size: 18px;
 		line-height: 24px;
 		margin: 0px;
+		@media ${device.laptop} {
+			font-size: 	16px;
+			line-height: 24px
+		}
 
 	}
 	small-desktop {
