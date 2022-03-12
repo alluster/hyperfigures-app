@@ -169,16 +169,24 @@ const MobileNav = styled.div`
 `;
 
 const MobileNavToggleContainer = styled.div`
-	display: flex;
+	display: none;
 	flex-direction: row;
 	width: 100%;
+	@media ${device.laptop} {
+		display: flex;
+	}
+
 
 
 `;
 const LogoMobile = styled.div`
 	z-index: 2;
 	max-height: 30px;
-	padding: ${props => props.theme.grid.divider_4};
+	padding-top: ${props => props.theme.grid.divider_4};
+	padding-left: ${props => props.theme.grid.divider_2};
+	padding-right: ${props => props.theme.grid.divider_2};
+
+
 `;
 
 const LogoMobileImage = styled.img`
@@ -187,10 +195,11 @@ const LogoMobileImage = styled.img`
 
 const MobileNavToggler = styled.div`
 	margin-left: auto;
-	padding: ${props => props.theme.grid.divider_4};
 	justify-content: right;
 	display: none;
 	z-index: 10000000000;
+	text-align: right;
+	align-items: flex-end;
 
 	@media ${device.laptop} {
 		display: flex;
@@ -200,8 +209,9 @@ const MobileNavToggler = styled.div`
 
 const ToggleIcon = styled(Icon)`
 	align-self: flex-end;
-	color: ${props => props.theme.colors.white};
-`;
+	color: ${props => props.theme.colors.fontDark};
+	line-height: 30px;
+	`;
 
 const Navigation = () => {
 	const routeList = [
@@ -220,9 +230,9 @@ const Navigation = () => {
 			description: 'Connect data points from various sources'
 		},
 		{
-			link: '/datastreams',
+			link: '/datasources',
 			icon: faDatabase,
-			title: 'Data Streams',
+			title: 'Data Sources',
 			ingress: 'Your Business Data in One View!',
 			description: 'Combined view to your business data'
 		},
@@ -247,10 +257,11 @@ const Navigation = () => {
 
 	return (
 		<div>
-			<MobileNavToggleContainer>
+			<MobileNavToggleContainer mobileNavOpen={mobileNavOpen}
+>
 
 				<LogoMobile>
-					<LogoMobileImage src="/logo-text-light.svg" />
+					<LogoMobileImage src="/arm-logo-dark.svg" />
 				</LogoMobile>
 
 				<MobileNavToggler

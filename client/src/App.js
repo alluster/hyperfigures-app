@@ -17,7 +17,7 @@ import Navigation from './components/Navigation';
 import Notification from './components/Notification';
 import SpinnerSmall from './components/SpinnerSmall';
 import Footer from './components/Footer';
-import DataStreams from './pages/DataStreams';
+import DataSources from './pages/DataSources';
 import TopNav from './components/TopNav';
 import  Background from './components/Background';
 
@@ -56,7 +56,7 @@ const GlobalStyle = createGlobalStyle`
 		line-height: 112px;
 		margin: 0px;
 		@media ${device.laptop} {
-			font-size: 28.83px;
+			font-size: 40.83px;
 			line-height: 40px
 		}
     }
@@ -207,7 +207,7 @@ const App = () => {
 							<PrivateRoute exact path="/error" component={ErrorPage} />
 							<PrivateRoute exact path="/datapoints" component={DataPoints} />
 							<PrivateRoute exact path="/datapoints/:id" component={DataPoint} />
-							<PrivateRoute exact path="/datastreams" component={DataStreams} />
+							<PrivateRoute exact path="/datasources" component={DataSources} />
 
 							<Route exact path="/loginpage" component={Login} />
 						</Switch>

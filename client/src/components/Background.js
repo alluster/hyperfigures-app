@@ -28,12 +28,5 @@ const Background = styled.div`
 }
 `;
 
-const Container = ({ children }) => {
-	return (
-		<Wrapper>
-			{children}
-		</Wrapper>
-	);
-};
 
 export default Background;

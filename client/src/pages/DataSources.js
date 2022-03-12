@@ -49,7 +49,7 @@ const DataStreams = () => {
 			<ButtonGoBack text="Go Back" />
 			<HeaderText
 				locationText=""
-				title="Data Streams"
+				title="Data Sources"
 				description="List of all data connectors available for your organization."
 			/>
 			<Wrapper>

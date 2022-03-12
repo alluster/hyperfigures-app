@@ -20,8 +20,8 @@ const Grid = styled.div`
 `;
 
 const WelcomeTitle = styled.div`
-	margin-top: ${props => props.theme.grid.divider_12};
-	margin-bottom: ${props => props.theme.grid.divider_8};
+	// margin-top: ${props => props.theme.grid.divider_12};
+	// margin-bottom: ${props => props.theme.grid.divider_8};
 
 	display: flex;
 	flex-direction: column;
@@ -37,8 +37,8 @@ const Title = styled.h1`
 	text-align: center;
 	font-weight: bold;
 	margin-bottom: ${props => props.theme.grid.divider_4};
-	color: transparent;
-	-webkit-text-stroke: 2px #fff;
+	color: white;
+	// -webkit-text-stroke: 2px #fff;
 `;
 const Ingress = styled.h3`
 	text-align: center;
@@ -48,7 +48,7 @@ const Ingress = styled.h3`
 `;
 
 const List = styled.div`
-	margin-top: 30px;
+	margin-bottom: 30px;
 	color: ${props => props.theme.colors.white};
 	
 `;
@@ -74,12 +74,17 @@ const Home = () => {
 
 			<Container>
 				<WelcomeTitle>
-					<Title>Connect and share all your business data with anyone.</Title>
+					<Title>Business Intelligence for Humans.</Title>
 					{/* <Image src="/logo.svg" /> */}
 
 					{/* <Title>Take control over your data!</Title> */}
 					{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
-					<Ingress>Connect data sources* into one dashboard to gain unseen power over your data!</Ingress>
+					<Ingress>Combine all data sources to build beautiful reports and dashboards!</Ingress>
+					<List>
+						<p>
+							Connect all your business data sources and execute calculations and business operations without boundaries. 
+						</p>
+					</List>
 					<Button primary onClick={handleClick}>Not yet a user? Get in touch</Button>
 					{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
 					<a href="/login">
@@ -90,11 +95,7 @@ const Home = () => {
 							Sign in
 						</Button>
 					</a> */}
-					<List>
-						<p>
-							* Google Sheets, Teams Excel
-						</p>
-					</List>
+					
 				</WelcomeTitle>
 
 

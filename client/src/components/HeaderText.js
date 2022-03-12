@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
 import Button from './Button';
+import { device } from '../device';
 
 const HeaderTextWrapper = styled.div`
 	display: flex;
 	flex-direction: row;
 	width: 100%;
+	flex-wrap: wrap;
 
 * {
 	margin-bottom: ${props => props.theme.grid.divider_1}
@@ -16,8 +18,10 @@ const TextContainer = styled.div`
 	flex-direction: column;
 `
 const ButtonContainer = styled.div`
-   margin-left:auto;
-
+   margin-left: auto;
+   @media ${device.laptop} {
+	margin-left: 0px;
+}
 `;
 
 const HeaderText = ({
