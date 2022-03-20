@@ -4,7 +4,6 @@ import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
 import { AppContext } from '../context/Context';
-import Background from '../components/Background';
 
 const Grid = styled.div`
 	margin-top: ${props => props.theme.grid.divider_12};
@@ -18,17 +17,45 @@ const Grid = styled.div`
 	@media ${device.laptop} {
 	}
 `;
+const Background = styled.div`
+	z-index: 1;
+	width: 100%;
+	height: 100%;
+	top: 0px;
+	left: 0px;
+	background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+	background-size: 400% 400%;
+	animation: gradient 15s ease infinite;
+
+	opacity: 1;
+	@keyframes gradient {
+		0% {
+			background-position: 0% 50%;
+
+		}
+		50% {
+			background-position: 100% 50%;
+		}
+		100% {
+			background-position: 0% 50%;
+		}
+}
+`;
 
 const WelcomeTitle = styled.div`
-	// margin-top: ${props => props.theme.grid.divider_12};
-	// margin-bottom: ${props => props.theme.grid.divider_8};
-
+	padding-top: ${props => props.theme.grid.divider_5};
+	padding-bottom: ${props => props.theme.grid.divider_5};
+	z-index: 3;
 	display: flex;
+	position: relative;
 	flex-direction: column;
 	justify-content: center;
 	text-align: center;
 	max-width: 900px;
 	margin-left: auto;
+	height: 100%;
+	min-height: 100vh;
+	align-items: center;
 	margin-right: auto;
 	@media ${device.laptop} {
 	}
@@ -70,9 +97,8 @@ const Home = () => {
 		setAppLocation('Home');
 	}, []);
 	return (
-		<div>
-
-			<Container>
+		<Background>
+			
 				<WelcomeTitle>
 					<Title>Business Intelligence for Humans.</Title>
 					{/* <Image src="/logo.svg" /> */}
@@ -101,9 +127,8 @@ const Home = () => {
 
 
 
-			</Container>
 			<Background />
-		</div>
+		</Background>
 
 	);
 };

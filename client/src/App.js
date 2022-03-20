@@ -39,7 +39,8 @@ const GlobalStyle = createGlobalStyle`
         margin: 0px;
         padding: 0px;
 		max-width: 100%;
-		min-height: 100vh;
+		overflow-x: hidden;
+		// overflow-y: auto;
 		font-family: 'Rubik', sans-serif;
 		font-weight: ${props => props.theme.fontWeight.regular};
 		font-display: swap;

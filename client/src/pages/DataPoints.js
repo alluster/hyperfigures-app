@@ -17,20 +17,6 @@ import Form from '../components/Form';
 import Modal from '../components/Modal';
 import Chart from '../components/Chart';
 
-const Value = styled.h3`
-	font-weight: bold;
-`;
-
-const Divider = styled.div`
-	border-bottom: 1px solid ${props => props.theme.colors.gray_60};
-	width: 100%;
-	margin-top: 20px;
-	margin-bottom: 20px;
-`;
-const Label = styled.p`
-	color: ${props => props.theme.colors.gray_130};
-	font-size: 14px;
-`
 
 
 const DataPoints = () => {

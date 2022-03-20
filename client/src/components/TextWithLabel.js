@@ -8,10 +8,10 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.p`
-	color: ${props => props.theme.colors.fontDark};
+	color: ${props => props.theme.colors.gray_80};
 	font-size: 14px;
 	font-weight: 400;
-	text-transform: uppercase;
+	// text-transform: uppercase;
 	margin-bottom: ${props => props.theme.grid.divider_1}
 `;
 
@@ -23,7 +23,7 @@ const TextWithLabel = ({
 	return (
 		<Wrapper>
 			<Label>{label || "-"}</Label>
-			<h5>{title || "-"}</h5>
+			<h4>{title || "-"}</h4>
 		</Wrapper>
 	);
 };

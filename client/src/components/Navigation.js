@@ -174,6 +174,7 @@ const MobileNavToggleContainer = styled.div`
 	width: 100%;
 	@media ${device.laptop} {
 		display: flex;
+		position: absolute;
 	}
 
 
@@ -181,7 +182,7 @@ const MobileNavToggleContainer = styled.div`
 `;
 const LogoMobile = styled.div`
 	z-index: 2;
-	max-height: 30px;
+	max-height: 20px;
 	padding-top: ${props => props.theme.grid.divider_4};
 	padding-left: ${props => props.theme.grid.divider_2};
 	padding-right: ${props => props.theme.grid.divider_2};

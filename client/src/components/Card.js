@@ -18,6 +18,8 @@ const Wrapper = styled.div`
 	margin-right: ${props => props.theme.grid.divider_2} ;
 	margin-bottom: ${props => props.theme.grid.divider_2} ;
 	@media ${device.laptop} {
+		margin-right: 0px;
+
 	}
 `;
 const WrapperLink = styled(Link)`
@@ -35,6 +37,7 @@ const WrapperLink = styled(Link)`
 	margin-right: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_2} ;
 	@media ${device.laptop} {
+		margin-right: 0px;
 	}
 `;
 const Card = ({ children, to }) => {

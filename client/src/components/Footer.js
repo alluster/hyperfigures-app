@@ -5,46 +5,50 @@ import { device } from '../device';
 
 const FooterWrapper = styled.div`
 	bottom: 0px;
-	height: 260px;
-	margin-top: -260px;
 	background-color: ${props => props.theme.colors.primary_200};
 	z-index: 2;
 	position: relative;
-* {
-	margin-bottom: ${props => props.theme.grid.divider_1}
-   }
+	width: 100%;
+	
 `;
-   const FooterContent = styled.div`
-   display: flex;
-   flex-direction: column;
-   max-width: 1500px;
-   margin-left: auto;
-   margin-right: auto;
-   padding-top: ${props => props.theme.grid.divider_6};
-   padding-left: ${props => props.theme.grid.divider_10};
-   color: ${props => props.theme.colors.white};
-   width: 100%;
-   background-color: ${props => props.theme.colors.primary_200};
+const FooterContent = styled.div`
+	display: flex;
+	flex-direction: column;
+	max-width: calc(100% - ${props => props.theme.grid.divider_10});
+	
+	padding-top: ${props => props.theme.grid.divider_6};
+	margin-left: ${props => props.theme.grid.divider_10};
 
-   @media ${device.laptop} {
-	padding-left: 0px;
-	text-align: center;
+	color: ${props => props.theme.colors.white};
+	width: 100%;
+	background-color: ${props => props.theme.colors.primary_200};
+
+	@media ${device.laptop} {
+		margin-left: 0px;
+		text-align: center;
+		align-items: center;
+		justify-content: center;
+		max-width: 100%;
+
 
 }
 `;
 const Links = styled.div`
-	margin-top: 60px;
-   display: flex;
-   flex-direction: row;
-   text-align: center;
-   min-width: 100%;
-   bottom: 0px;
-   justify-content: space-between;
-   background-color: ${props => props.theme.colors.primary_200};
-
-   @media ${device.laptop} {
-	flex-direction: column;
-	padding-bottom: ${props => props.theme.grid.divider_2};
+	margin-top: 60px;	
+	margin-right: ${props => props.theme.grid.divider_2};
+	margin-bottom: 20px;
+	display: flex;
+	flex-direction: row;
+	text-align: center;
+	bottom: 0px;
+	justify-content: space-between;
+	background-color: ${props => props.theme.colors.primary_200};
+	@media ${device.laptop} {
+		flex-direction: column;
+		margin-right: 0px;
+		width: 100%;
+		align-items: center;
+		justify-content: center;
 
 }
   
@@ -52,9 +56,9 @@ const Links = styled.div`
 `;
 
 const Logo = styled.div`
-   max-width: 260px;
-   margin-bottom: ${props => props.theme.grid.divider_2};
-   @media ${device.laptop} {
+	max-width: 260px;
+	margin-bottom: ${props => props.theme.grid.divider_2};
+	@media ${device.laptop} {
 	width: 100%;
 	margin-left: auto;
 	margin-right: auto;
@@ -82,10 +86,10 @@ const Footer = ({
 		<FooterWrapper>
 			<FooterContent>
 				<Logo >
-					<img src="/logo-text-light.svg" alt="Logo"/>
+					<img src="/logo-text-light.svg" alt="Logo" />
 				</Logo>
 				<Description>
-					We help organizations to create Supersets™ from business data stored in online data providers.  
+					We help organizations to create Supersets™ from business data stored in online data providers.
 				</Description>
 				<Links>
 					<h6>info@helau.io</h6>

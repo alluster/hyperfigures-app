@@ -31,8 +31,8 @@ const theme = {
 	},
 	fontWeight: {
 		thin: '300',
-		regular: '600',
-		bold: '700'
+		regular: '400',
+		bold: '600'
 
 	},
 	grid: {
