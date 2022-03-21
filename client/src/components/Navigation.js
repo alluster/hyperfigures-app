@@ -184,16 +184,17 @@ const MobileNavToggleContainer = styled.div`
 `;
 const LogoMobile = styled.div`
 	z-index: 2;
-	max-height: 20px;
-	padding-top: ${props => props.theme.grid.divider_4};
+	height: 20px;
+	align-self: center;
 	padding-left: ${props => props.theme.grid.divider_2};
-	padding-right: ${props => props.theme.grid.divider_2};
 
 
 `;
 
 const LogoMobileImage = styled.img`
 	max-height: 100%;
+	align-self: center;
+
 `;
 
 const MobileNavToggler = styled.div`
