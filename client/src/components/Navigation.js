@@ -61,6 +61,9 @@ const Links = styled.div`
 	padding-top: 60px;
 	align-items: left;
 	margin-top: 100px;
+	@media ${device.laptop} {
+		margin-top: ${props => props.theme.grid.divider_2};
+	}
 `;
 
 const BarsIcon = styled.div`
@@ -172,9 +175,9 @@ const MobileNavToggleContainer = styled.div`
 	display: none;
 	flex-direction: row;
 	width: 100%;
-	height: 80px;
-	background-color: ${props => props.theme.colors.white};
-	@media ${device.laptop} {
+	height: 60px;
+	background-color: rgba(255, 255, 255, 0.8);
+		@media ${device.laptop} {
 		display: flex;
 		position: absolute;
 	}
