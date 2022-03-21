@@ -195,8 +195,8 @@ const LogoMobile = styled.div`
 `;
 
 const LogoMobileImage = styled.img`
-	max-height: 100%;
 	align-self: center;
+	height: 16px;
 
 `;
 
