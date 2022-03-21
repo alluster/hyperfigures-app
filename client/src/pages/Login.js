@@ -4,7 +4,6 @@ import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
 import { AppContext } from '../context/Context';
-import Background from '../components/Background';
 
 const Grid = styled.div`
 	margin-top: ${props => props.theme.grid.divider_12};
@@ -76,7 +75,6 @@ const Login = () => {
 
 				</WelcomeTitle>
 			</Container>
-			<Background />
 		</div>
 	);
 };

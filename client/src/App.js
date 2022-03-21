@@ -19,7 +19,6 @@ import SpinnerSmall from './components/SpinnerSmall';
 import Footer from './components/Footer';
 import DataSources from './pages/DataSources';
 import TopNav from './components/TopNav';
-import  Background from './components/Background';
 
 //pages
 const Profile = React.lazy(() => import('./pages/Profile'));

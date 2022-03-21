@@ -7,6 +7,7 @@ const Wrapper = styled.div`
 	max-width: 1200px;
 	margin-left: auto;
 	margin-right: auto;
+	min-height: 100vh;
 	padding-bottom: 200px;
 	padding-top: ${props => props.theme.grid.divider_4};
 	padding-left: ${props => props.theme.grid.divider_10};
