@@ -172,6 +172,8 @@ const MobileNavToggleContainer = styled.div`
 	display: none;
 	flex-direction: row;
 	width: 100%;
+	height: 80px;
+	background-color: ${props => props.theme.colors.white};
 	@media ${device.laptop} {
 		display: flex;
 		position: absolute;
@@ -209,7 +211,7 @@ const MobileNavToggler = styled.div`
 `;
 
 const ToggleIcon = styled(Icon)`
-	align-self: flex-end;
+	align-self: center;
 	color: ${props => props.theme.colors.fontDark};
 	line-height: 30px;
 	`;

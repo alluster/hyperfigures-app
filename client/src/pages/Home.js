@@ -45,6 +45,9 @@ const Background = styled.div`
 const WelcomeTitle = styled.div`
 	padding-top: ${props => props.theme.grid.divider_5};
 	padding-bottom: ${props => props.theme.grid.divider_5};
+	padding-right: ${props => props.theme.grid.divider_2};
+	padding-left: ${props => props.theme.grid.divider_2};
+
 	z-index: 3;
 	display: flex;
 	position: relative;
