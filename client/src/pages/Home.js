@@ -101,21 +101,21 @@ const Home = () => {
 	}, []);
 	return (
 		<Background>
-			
-				<WelcomeTitle>
-					<Title>Business Intelligence for Humans.</Title>
-					{/* <Image src="/logo.svg" /> */}
 
-					{/* <Title>Take control over your data!</Title> */}
-					{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
-					<Ingress>Combine all data sources to build beautiful reports and dashboards!</Ingress>
-					<List>
-						<p>
-							Connect all your business data sources and execute calculations and business operations without boundaries. 
-						</p>
-					</List>
-					<Button primary onClick={handleClick}>Not yet a user? Get in touch</Button>
-					{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
+			<WelcomeTitle>
+				<Title>Business Intelligence for Humans.</Title>
+				{/* <Image src="/logo.svg" /> */}
+
+				{/* <Title>Take control over your data!</Title> */}
+				{/* <Ingress>Take control of your Business Data Supersets and get in touch now!</Ingress> */}
+				<Ingress>Combine all data sources to build beautiful reports and dashboards!</Ingress>
+				<List>
+					<p>
+						Connect all your business data sources and execute calculations and business operations without boundaries.
+					</p>
+				</List>
+				<Button primary onClick={handleClick}>Not yet a user? Get in touch</Button>
+				{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
 					<a href="/login">
 						<Button
 							white
@@ -124,9 +124,8 @@ const Home = () => {
 							Sign in
 						</Button>
 					</a> */}
-					
-				</WelcomeTitle>
 
+			</WelcomeTitle>
 
 
 

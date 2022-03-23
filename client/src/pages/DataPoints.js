@@ -16,19 +16,15 @@ import TextWithLabel from '../components/TextWithLabel';
 import Form from '../components/Form';
 import Modal from '../components/Modal';
 import Chart from '../components/Chart';
-
+import { useQuery, gql } from '@apollo/client';
+import { LOAD_DATAPOINTS } from '../GraphQL/Queries';
 
 
 const DataPoints = () => {
-	const {
-		dashboardData,
-		setAppLocation,
-		loading,
-		user,
-		something
-	} = useContext(AppContext);
-	const [openModal, setOpenModal] = useState(false);
+	const { error, loading, data } = useQuery(LOAD_DATAPOINTS);
 
+	const [openModal, setOpenModal] = useState(false);
+	const [datapoints, setDatapoints] = useState([]);
 	const {
 		control,
 		register,
@@ -36,12 +32,32 @@ const DataPoints = () => {
 		reset,
 		formState: { errors },
 	} = useForm();
+	const Datapoints = () => {
+		return (
+			datapoints.map((item, i) => { return (
+				<Card 
+					key={i}
+					to={`/datapoints/${item.title}`}
+				>
+				<TextWithLabel
+					title={CurrencyFormatter.format(item.value)}
+					label={item.title}	
+				/>
+				<p>{item.description}</p>
 
+			</Card>
+			) })
+		)
+	}
 	const onSubmit = async (data) => {
 		console.log(data)
 
 	};
-
+	useEffect(() => {
+		if (data) {
+			setDatapoints(data.getAllDatapoints)
+		}
+	}, [data])
 	return (
 		<div>
 
@@ -54,28 +70,7 @@ const DataPoints = () => {
 					description="All your organization Hyperfigures in one dashboard"
 				/>
 				<CardGrid>
-					<Card
-						to={"/datapoints/budget_2022"}
-					>
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-						<p>Ipsum lorem doloris executive</p>
-					</Card>
+				
 					<Card >
 						<TextWithLabel
 							title={`Total: ${CurrencyFormatter.format(34567)}`}
@@ -84,72 +79,7 @@ const DataPoints = () => {
 						<p>Combined values from all sites</p>
 						<Chart />
 					</Card>
-					<Card
-						to={"/datapoints/budget_2022"}
-					>
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-							
-						/>
-						<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make </p>
-
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-					</Card>
-					<Card
-						to={"/datapoints/budget_2022"}
-					>
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-					</Card>
-					<Card
-						to={"/datapoints/budget_2022"}
-					>
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-					</Card>
-					<Card >
-						<TextWithLabel
-							title={CurrencyFormatter.format(34567)}
-							label="Budget 2022"
-						/>
-					</Card>
+					{Datapoints()}
 				</CardGrid>
 
 

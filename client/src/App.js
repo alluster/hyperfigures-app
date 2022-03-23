@@ -31,6 +31,37 @@ const Login = React.lazy(() => import('./pages/Login'));
 const DataPoint = React.lazy(() => import('./pages/DataPoint'));
 const DataPoints = React.lazy(() => import('./pages/DataPoints'));
 
+import {
+	ApolloClient,
+	InMemoryCache,
+	ApolloProvider,
+	HttpLink,
+	from,
+
+} from '@apollo/client';
+import { onError } from '@apollo/client/link/error';
+
+const errorLink = onError(({ graphqlErrors, networkError}) => {
+	if(graphqlErrors) {
+		graphqlErrors.map(({message, location, path}) => {
+			alert(`Graphql error: ${message}`);
+		});
+	}
+});
+
+const link = from([
+	errorLink,
+	new HttpLink({ uri: 'http://localhost:5000/graphql'})
+]);
+
+const client = new ApolloClient({
+	cache: new InMemoryCache,
+	link: link,
+	fetchOptions: {
+		mode: 'no-cors',   // <== Note the fetch options
+	  }
+})
+
 library.add(fas);
 
 const GlobalStyle = createGlobalStyle`
@@ -192,6 +223,7 @@ const App = () => {
 		/>
 	);
 	return (
+		<ApolloProvider client={client} >
 		<Suspense fallback={<SpinnerSmall />}>
 			<ThemeProvider theme={theme}>
 				<Provider>
@@ -217,6 +249,8 @@ const App = () => {
 				</Provider>
 			</ThemeProvider>
 		</Suspense>
+		</ApolloProvider>
+
 	);
 };
 
