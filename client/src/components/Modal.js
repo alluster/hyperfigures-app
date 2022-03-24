@@ -2,26 +2,20 @@ import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import Container from './Container';
 import { device } from '../device';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';  
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
+import BackgroundOverlay from './BackgroundOverlay';
 
 const ModalWrapper = styled.div`
-	position: fixed;
+	position: absolute;
 	top: 0px;
-	left: 0px;
 	height: 100%;
-	width: 100vw;
-	background: rgba(0, 0, 0, 0.5) ;
+	width: 100%;
 	visibility: hidden;
-	z-index: 4;
-	@media ${device.laptop} {
-		background: rgba(0, 0, 0, 0.0) ;
-		position: absolute;
-
-
-
-
-	}
+	z-index: 5;
+	display: flex;
+	flex-direction: column;
+	
 	${({ open }) => open && `
 		visibility: visible
 	`}
@@ -29,6 +23,9 @@ const ModalWrapper = styled.div`
 `;
 
 const ModalBox = styled.div`
+	align-self: center;
+	position: absolute;
+	z-index: 5;
 	width: 400px;
 	max-width: 90%;
 	background-color: ${props => props.theme.colors.white};
@@ -42,13 +39,7 @@ const ModalBox = styled.div`
 	margin-top: ${props => props.theme.grid.divider_8};
 	margin-bottom: ${props => props.theme.grid.divider_8};
 	@media ${device.laptop} {
-		// border: none;
-		// width: 100%;
-		// max-width: 100%;
-		// min-height: 100%;
-		// border-radius: 0px;
-
-
+	max-width: 80%;
 	}
 `;
 
@@ -69,35 +60,33 @@ const Icon = styled(FontAwesomeIcon)`
 
 	`;
 
-	const ModalTitle = styled.h4`
+const ModalTitle = styled.h4`
 
 	
 	`;
 
 const Modal = ({
-		children,
-		open,
-		openModal,
-		modalTitle
+	children,
+	open,
+	openModal,
+	modalTitle
 }) => {
-	
+
 	// useEffect(() => {
 	// 	setModalOpen(!modalOpen)
 	// }, [open]);
 
 	return (
-		<ModalWrapper open={open} >
-			<ModalBox>
-			<Content>
-
-					<Icon onClick={() => openModal(false)} icon={faTimes} />
-					<ModalTitle>{modalTitle || "" }</ModalTitle>
-					{children}
-
+			<ModalWrapper open={open} >
+				<ModalBox>
+					<Content>
+						<Icon onClick={() => openModal(false)} icon={faTimes} />
+						<ModalTitle>{modalTitle || ""}</ModalTitle>
+						{children}
 					</Content>
-			</ModalBox>
-		</ModalWrapper>
-
+				</ModalBox>
+				<BackgroundOverlay />
+			</ModalWrapper>
 	)
 }
 

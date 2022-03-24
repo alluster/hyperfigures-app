@@ -81,7 +81,7 @@ const LogoIcon = styled.img`
 	height: 18px;
 `;
 const Logo = styled.img`
-	height: 26px;
+	height: 20px;
 	align-self: flex-start;
 	margin-left: 16px;
 `;
