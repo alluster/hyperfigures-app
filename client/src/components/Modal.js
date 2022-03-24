@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ModalWrapper = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left: 0px;
 	height: 100%;
@@ -16,7 +16,8 @@ const ModalWrapper = styled.div`
 	z-index: 4;
 	@media ${device.laptop} {
 		background: rgba(0, 0, 0, 0.0) ;
-		background-attachment: fixed;
+		position: absolute;
+
 
 
 
