@@ -6,11 +6,11 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ModalWrapper = styled.div`
-	position: absolute;
+	position: fixed;
 	top: 0px;
 	left: 0px;
-	min-height: 100vh;
-	width: 100vw;
+	height: 100vh;
+	width: 100%;
 	background: rgba(0, 0, 0, 0.5);
 	visibility: hidden;
 	z-index: 1000000000;

@@ -68,8 +68,8 @@ const GlobalStyle = createGlobalStyle`
     body, html {
         margin: 0px;
         padding: 0px;
-		max-width: 100%;
-		overflow-x: hidden;
+		// max-width: 100% !important;
+		// overflow-x: hidden !important;
 		// overflow-y: auto;
 		font-family: 'Rubik', sans-serif;
 		font-weight: ${props => props.theme.fontWeight.regular};

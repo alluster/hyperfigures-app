@@ -10,9 +10,9 @@ import { device } from '../device';
 const StyledButton = styled.button `
 	text-align: center;
 	font-weight: 400;
-	font-size: 12px;
 	border-radius: 8px;
-	height: 64px;
+
+	height: 100%;
 	padding-left: 40px;
 	padding-right: 40px;
 	font-size: 22.6px;
@@ -57,6 +57,12 @@ const StyledButton = styled.button `
 
 	`};
 		@media ${device.laptop} {
+			height: 100%;
+			padding-left: 24px;
+			padding-right: 24px;
+			font-size: 16px;
+			line-height: 40px;
+			font-weight: 600;
 		}
 `;
 

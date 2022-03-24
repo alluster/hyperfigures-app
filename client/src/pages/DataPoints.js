@@ -83,14 +83,14 @@ const DataPoints = () => {
 				/>
 				<CardGrid>
 
-					<Card >
+					{/* <Card >
 						<TextWithLabel
 							title={`Total: ${CurrencyFormatter.format(34567)}`}
 							label="HR Cost 2022"
 						/>
 						<p>Combined values from all sites</p>
 						<Chart />
-					</Card>
+					</Card> */}
 					{Datapoints()}
 				</CardGrid>
 
