@@ -6,17 +6,25 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const ModalWrapper = styled.div`
-	position: fixed;
+	position: absolute;
 	top: 0px;
 	left: 0px;
-	height: 100vh;
-	width: 100%;
-	background: rgba(0, 0, 0, 0.5);
+	height: 100%;
+	width: 100vw;
+	background: rgba(0, 0, 0, 0.5) ;
 	visibility: hidden;
-	z-index: 1000000000;
+	z-index: 4;
+	@media ${device.laptop} {
+		background: rgba(0, 0, 0, 0.0) ;
+		background-attachment: fixed;
+
+
+
+	}
 	${({ open }) => open && `
 		visibility: visible
 	`}
+	
 `;
 
 const ModalBox = styled.div`
@@ -32,11 +40,22 @@ const ModalBox = styled.div`
 	margin-right: auto;
 	margin-top: ${props => props.theme.grid.divider_8};
 	margin-bottom: ${props => props.theme.grid.divider_8};
+	@media ${device.laptop} {
+		// border: none;
+		// width: 100%;
+		// max-width: 100%;
+		// min-height: 100%;
+		// border-radius: 0px;
 
+
+	}
 `;
 
-const ModalClose = styled.div`
-
+const Content = styled.div`
+	// max-width: calc(100% - 64px);
+	display: flex;
+	flex-direction: column;
+	position: relative;
 `;
 
 const Icon = styled(FontAwesomeIcon)`
@@ -45,7 +64,7 @@ const Icon = styled(FontAwesomeIcon)`
 	margin-right: ${props => props.theme.grid.divider_1};
 	align-self: flex-end;
 	margin-bottom: ${props => props.theme.grid.divider_4};
-
+	
 
 	`;
 
@@ -68,9 +87,13 @@ const Modal = ({
 	return (
 		<ModalWrapper open={open} >
 			<ModalBox>
+			<Content>
+
 					<Icon onClick={() => openModal(false)} icon={faTimes} />
 					<ModalTitle>{modalTitle || "" }</ModalTitle>
-				{children}
+					{children}
+
+					</Content>
 			</ModalBox>
 		</ModalWrapper>
 

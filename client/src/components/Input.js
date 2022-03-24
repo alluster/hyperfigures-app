@@ -10,9 +10,9 @@ const Wrapper = styled.div`
 `;
 
 const StyledInput = styled.input`
-background-color: ${props => props.theme.colors.white};
-height: 56px;
-width: calc(100% - 60px);
+	background-color: ${props => props.theme.colors.white};
+	height: 56px;
+	width: calc(100% - 60px);
 	border: 1px solid ${props => props.theme.colors.fontDark};
 	border-radius: 8px;
 	font-size: 18px;
