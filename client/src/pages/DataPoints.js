@@ -32,23 +32,35 @@ const DataPoints = () => {
 		reset,
 		formState: { errors },
 	} = useForm();
-	const Datapoints = () => {
-		return (
-			datapoints.map((item, i) => { return (
-				<Card 
-					key={i}
-					to={`/datapoints/${item.title}`}
-				>
-				<TextWithLabel
-					title={CurrencyFormatter.format(item.value)}
-					label={item.title}	
-				/>
-				<p>{item.description}</p>
 
-			</Card>
-			) })
-		)
-	}
+	const Datapoints = () => {
+
+		if (loading) {
+			return (
+				<p>Loading data...</p>
+			)
+		}
+		if (error) {console.log('error occured', error)}
+		else {
+			return (
+				datapoints.map((item, i) => {
+					return (
+						<Card
+							key={i}
+							to={`/datapoints/${item.title}`}
+						>
+							<TextWithLabel
+								title={CurrencyFormatter.format(item.value)}
+								label={item.title}
+							/>
+							<p>{item.description}</p>
+
+						</Card>
+					)
+				})
+			)
+		};
+	};
 	const onSubmit = async (data) => {
 		console.log(data)
 
@@ -70,7 +82,7 @@ const DataPoints = () => {
 					description="All your organization Hyperfigures in one dashboard"
 				/>
 				<CardGrid>
-				
+
 					<Card >
 						<TextWithLabel
 							title={`Total: ${CurrencyFormatter.format(34567)}`}
