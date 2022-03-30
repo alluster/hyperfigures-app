@@ -9,3 +9,11 @@ export const LOAD_DATAPOINTS = gql`
 	}}
 
 `;
+
+export const LOAD_DASHBOARDS = gql`
+	query {getAllDashboards {
+		id
+		title
+		description
+	}}
+`;
