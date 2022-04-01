@@ -15,5 +15,8 @@ export const LOAD_DASHBOARDS = gql`
 		id
 		title
 		description
+		created_at
+		updated_at
+		deleted_at
 	}}
 `;

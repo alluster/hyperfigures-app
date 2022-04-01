@@ -52,13 +52,17 @@ const Mutation = new GraphQLObjectType({
 				args: {
 					id: { type: GraphQLInt },
 					title: { type: GraphQLString },
-					description: { type: GraphQLString }
+					description: { type: GraphQLString },
+					created_at: { type: GraphQLString }
+
 				},
 				resolve(parent, args) {
 					dashboardData.push({
 						id: dashboardData.length + 1,
 						title: args.title,
 						description: args.description,
+						created_at: new Date().toLocaleDateString()
+
 					})
 					return args
 				}

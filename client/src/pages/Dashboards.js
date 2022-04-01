@@ -1,20 +1,19 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
-import { AppContext } from '../context/Context';
-import axios from 'axios';
 import Card from '../components/Card';
 import CardGrid from '../components/CardGrid';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
-import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
-import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
-import InputNumber from '../components/InputNumber';
-import InputTextarea from '../components/InputTextarea';
 import Modal from '../components/Modal';
-import Button from '../components/Button';
-import Form from '../components/Form';
+import FormAddDashboard from '../components/Forms/FormAddDashboard';
+import { useQuery, gql } from '@apollo/client';
+import { LOAD_DASHBOARDS } from '../GraphQL/Queries';
+import { useMutation } from '@apollo/client';
+import { CREATE_DASHBOARD_MUTATION } from '../GraphQL/Mutations';
+import FormCompiler from '../supportFunctions/FormComplier';
+import { AppContext } from '../context/Context';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -33,10 +32,10 @@ const Label = styled.p`
 
 
 const Dashboards = () => {
-	const {
-
-		something
-	} = useContext(AppContext);
+	var date = (dateData) => new window.Date(dateData);
+	const { setNotifyMessage } = useContext(AppContext);
+	const { error, loading, data } = useQuery(LOAD_DASHBOARDS);
+	const [dashboards, setDashboards] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
 	const {
 		control,
@@ -45,17 +44,73 @@ const Dashboards = () => {
 		reset,
 		formState: { errors },
 	} = useForm();
+	const DashboardsList = () => {
+		if (loading) {
+			return (
+				<p>Loading data...</p>
+			)
+		}
+		if (error) { console.log('error', error) }
+		else {
+			return (
+				dashboards !== [] ?
+				 dashboards.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
+
+					return (
+						<Card
+							key={i}
+							to={`/dashboards/${item.title}`}
+						>
+							<h4>{item.title}</h4>
+							<p>{item.description}</p>
+
+						</Card>
+					)
+				})
+				:
+				<p>No dashboards</p>
+			)
+		};
+	};
+
+	const [createDashboard] = useMutation(CREATE_DASHBOARD_MUTATION);
+
+	console.log(dashboards)
+
 
 	const onSubmit = async (data) => {
-		console.log(data)
+		try{
+			createDashboard({
+				variables: {
+					title: data.dashboardName,
+					description: ""
+				},
+				refetchQueries: [LOAD_DASHBOARDS]
 
-	};
+			})
+			setNotifyMessage(`New dashboard ${data.dashboardName} added`);
+
+		}
+		catch(error){
+			console.log(error);
+			setNotifyMessage("Something went wrong");
+		}
+		finally{
+			setOpenModal(false);
+			reset();
+		}	
+	}
+
+	useEffect(() => {
+		if (data) {
+			setDashboards(data.getAllDashboards);
+	
+		}
+	}, [data]);
 	return (
 		<div>
 			<Container>
 				<ButtonGoBack text="Go Back" />
-				
-
 				<HeaderText
 					buttonTitle="Create a new Dashboard"
 					onClickFunction={() => setOpenModal(!openModal)}
@@ -64,41 +119,31 @@ const Dashboards = () => {
 					description="Your organization data dashboards"
 				/>
 				<CardGrid>
-					<Card
-						to="/dashboards/finance"
-					>
-						<h4>Finance</h4>
-					</Card>
-					<Card
-						to="/dashboards/hr"
-					>
-						<h4>HR</h4>
-					</Card>
-					<Card
-						to="/dashboards/esg"
-					>
-						<h4>ESG</h4>
-					</Card>
+					{DashboardsList()}
+
 				</CardGrid>
-
-
 			</Container>
 			<Modal
 				open={openModal}
 				openModal={() => setOpenModal()}
 				modalTitle="Create a new Dashboard"
 			>
-				<Form
+				<FormCompiler
+					reset={reset}
 					openModal={() => setOpenModal()}
+					errors={errors}
+					onSubmit={() => handleSubmit(onSubmit)}
+					register={register}
 					fields={
 						[
 							{
 								type: "input",
-								name: "dashboadName",
+								name: "dashboardName",
 								label: "Dashboard name",
 								options: "",
 								required: true,
-								errorMessage: "This input is required"
+								errorMessage: "Dashboard name is required",
+								placeholder: "Give your dashboard a name"
 							}
 						]
 					}
@@ -106,9 +151,9 @@ const Dashboards = () => {
 				>
 
 
-				</Form>
+				</FormCompiler>
 			</Modal>
-		</div>
+		</div >
 	);
 };
 

@@ -1,8 +1,8 @@
 import React, { useEffect } from 'react';
 import styled from 'styled-components';
-import Button from './Button';
 import { useForm } from 'react-hook-form';
 import { device } from '../device';
+import Button from '../components/Button';
 
 const ButtonRow = styled.div`
 	display: flex;
@@ -15,6 +15,7 @@ const Wrapper = styled.div`
 	margin-top: ${props => props.theme.grid.divider_4};
 `;
 
+
 const StyledInput = styled.input`
 	background-color: ${props => props.theme.colors.white};
 	height: 56px;
@@ -23,7 +24,7 @@ const StyledInput = styled.input`
 	border-radius: 8px;
 	font-size: 18px;
 	color: ${props => props.theme.colors.fontDark};
-	padding-left: ${props => props.theme.grid.divider_4};
+	padding-left: ${props => props.theme.grid.divider_2};
 	padding-right: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_1};
 	// padding: 0.4%;
@@ -54,85 +55,53 @@ const ErrorMessage = styled.label`
 
 	
 `;
-const Form = ({
-	openModal,
-	onSubmitFunction,
-	resetFunction,
-	fields,
-	buttonTitle
-}) => {
-	const {
-		control,
-		register,
-		handleSubmit,
-		reset,
-		formState: { errors },
-	} = useForm();
-	const errorCreator = ({ name, errorMessage }) => {
-		return (
-			errors.name && <p>{errorMessage}</p>
 
-		)
-	}
-	const Input = ({ label, required, placeholder, name, errorMessage, errors }) => {
-
-		return (
-			<Wrapper>
-				<Label>
-					{label}
-				</Label>
-				<StyledInput
-					{...register(name, { required })}
-					label={label}
-					placeholder={placeholder}
-					type="text"
-				/>
-				<ErrorMessage>{errorMessage}</ErrorMessage>
-			</Wrapper >
-
-		);
-	};
-	const FormStructurer = () => {
-		console.log(errors)
-		if (fields.length > 0) return (
-			fields.map((item, i) => {
-
-				switch (item.type) {
-					case 'input':
-						return <Input
-							key={i}
-							label={item.label}
-							placeholder={item.placeholder}
-							required={item.required}
-							name={item.name}
-							errorMessage={item.errorMessage}
-							errors={errors}
-						/>;
-					default:
-						return <p>No form element</p>;
-				}
-			})
-		)
-	}
-	onSubmitFunction = (data) => {
-		reset();
-		console.log(data)
-	}
-
-	useEffect(() => {
-		resetFunction
-	}, []);
-
-
+const FormCompiler = ({fields, onSubmit, buttonTitle, errors, openModal, register}) => {
 	return (
-		<form onSubmit={handleSubmit(onSubmitFunction)}>
-			{FormStructurer()}			
+		<form onSubmit={onSubmit()}>
+			{
+				fields.length > 0 &&
+				fields.map((item, i) => {
+					let name = item.name
+					switch (item.type) {
+						case 'input':
+							return <Wrapper key={i}>
+								<Label>
+									{item.label}
+								</Label>
+								<StyledInput
+									type="text"
+									{...register(item.name, { required:item.required } )}
+									label={item.label}
+									placeholder={item.placeholder}
+									name={item.name}
+								/>
+						{
+
+							name in errors ?
+								<p>{item.errorMessage}</p>
+								:
+								null
+					}	
+							</Wrapper >
+
+						default:
+							return <p>No form element</p>;
+					}
+				})
+
+			}
 			<ButtonRow>
 				<Button primary dividerRight type="submit">{buttonTitle || "Create"}</Button>
 				<Button type="reset" white onClick={() => openModal(false)}>Peruuta</Button>
 			</ButtonRow>
 		</form>
-	);
-};
+	)
+}
 
-export default Form;
+
+
+
+
+
+export default FormCompiler; 

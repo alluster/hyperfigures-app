@@ -13,7 +13,6 @@ import { useForm } from 'react-hook-form';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
-import Form from '../components/Form';
 import Modal from '../components/Modal';
 import Chart from '../components/Chart';
 import { useQuery, gql } from '@apollo/client';
@@ -101,7 +100,7 @@ const DataPoints = () => {
 				openModal={() => setOpenModal()}
 				modalTitle="Connect a datapoint"
 			>
-				<Form
+				{/* <Form
 					buttonTitle="Connect"
 					openModal={() => setOpenModal()}
 					fields={
@@ -144,7 +143,7 @@ const DataPoints = () => {
 				>
 
 
-				</Form>
+				</Form> */}
 			</Modal>
 		</div>
 
