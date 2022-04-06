@@ -13,6 +13,10 @@ import { useForm } from 'react-hook-form';
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
+import { LOAD_DASHBOARD } from '../GraphQL/Queries';
+import { useQuery, gql } from '@apollo/client';
+import { useParams, useHistory } from 'react-router-dom';
+import CardDataGroup from '../components/CardDataGroup';
 
 
 const Value = styled.h3`
@@ -32,14 +36,15 @@ const Label = styled.p`
 
 
 const Dashboard = () => {
-	const {
-		dashboardData,
-		setAppLocation,
-		loading,
-		user,
-		something
-	} = useContext(AppContext);
+	let { id } = useParams();
 
+	const {
+		setAppLocation,
+	} = useContext(AppContext);
+	const { error, loading, data } = useQuery(LOAD_DASHBOARD, {
+		variables: { id: id }
+	});
+	const [dashboard, setDashboard] = useState([]);
 	const {
 		control,
 		register,
@@ -47,43 +52,92 @@ const Dashboard = () => {
 		reset,
 		formState: { errors },
 	} = useForm();
+	const DashboardContent = () => {
+		if (loading) {
+			return (
+				<p>Loading data...</p>
+			)
+		}
+		if (error) { console.log('error', error) }
+		else {
+			return (
+				<div>
+					<ButtonGoBack text="Go Back" />
 
+					{
+
+						dashboard.length > 0 ?
+							<div>
+
+								<HeaderText
+									locationText="Dashboard"
+									title={dashboard[0].title || '-'}
+									description={dashboard[0].description || '-'}
+								/>
+								<CardGrid>
+									{
+										dashboard[0].data_point_groups.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
+
+											return (
+												<CardDataGroup
+													updated_at={item.updated_at}
+													title={item.title}
+													description={item.description}
+													dataPoints={item.google_spreadsheet_data_points}
+													key={i}
+												/>
+									
+											)
+										})
+									}
+								</CardGrid>
+								<CardGrid>
+									{
+										dashboard[0].google_spreadsheet_data_points.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
+
+											return (
+												<Card
+													key={i}
+												>
+													<TextWithLabel
+														label={item.title}
+														title={CurrencyFormatter.format(item.value)}
+													/>
+												</Card>
+											)
+										})
+									}
+								</CardGrid>
+							</div>
+
+							:
+							<p>No data</p>
+					}
+				</div>
+
+
+			)
+		};
+	};
 	const onSubmit = async (data) => {
 		console.log(data)
 
 	};
 
+	useEffect(() => {
+		window.scroll(0, 0);
+
+		if (data) {
+			setDashboard(data.getDashboard);
+		}
+	}, [data]);
 	return (
 		<Container>
-			<ButtonGoBack text="Go Back" />
-			<HeaderText
-				locationText="Dashboard"
-				title="Finance"
-				description="Finance calculations"
-			/>
-			<CardGrid>
-				<Card
-					to={"/datapoints/budget_2022"}
-				>
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
+			{
+				DashboardContent()
 
-				</Card>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
-				</Card>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
-				</Card>
-			</CardGrid>
+			}
+
 
 
 		</Container>

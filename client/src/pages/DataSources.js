@@ -55,6 +55,7 @@ const DataStreams = () => {
 			<Wrapper>
 
 				<Card
+					row
 					to={"/datapoints/budget_2022"}
 				>
 					<Logo>

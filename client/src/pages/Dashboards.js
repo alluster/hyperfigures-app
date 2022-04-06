@@ -35,6 +35,7 @@ const Dashboards = () => {
 	var date = (dateData) => new window.Date(dateData);
 	const { setNotifyMessage } = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_DASHBOARDS);
+	const [createDashboard] = useMutation(CREATE_DASHBOARD_MUTATION);
 	const [dashboards, setDashboards] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
 	const {
@@ -59,7 +60,7 @@ const Dashboards = () => {
 					return (
 						<Card
 							key={i}
-							to={`/dashboards/${item.title}`}
+							to={`/dashboards/${item.id}`}
 						>
 							<h4>{item.title}</h4>
 							<p>{item.description}</p>
@@ -73,7 +74,6 @@ const Dashboards = () => {
 		};
 	};
 
-	const [createDashboard] = useMutation(CREATE_DASHBOARD_MUTATION);
 
 	console.log(dashboards)
 
@@ -83,7 +83,7 @@ const Dashboards = () => {
 			createDashboard({
 				variables: {
 					title: data.dashboardName,
-					description: ""
+					description: data.dashboardDescription
 				},
 				refetchQueries: [LOAD_DASHBOARDS]
 
@@ -102,6 +102,8 @@ const Dashboards = () => {
 	}
 
 	useEffect(() => {
+		window.scroll(0, 0);
+
 		if (data) {
 			setDashboards(data.getAllDashboards);
 	
@@ -144,6 +146,15 @@ const Dashboards = () => {
 								required: true,
 								errorMessage: "Dashboard name is required",
 								placeholder: "Give your dashboard a name"
+							},
+							{
+								type: "textarea",
+								name: "dashboardDescription",
+								label: "Dashboard Description",
+								options: "",
+								required: false,
+								errorMessage: "",
+								placeholder: "Describe your dashboard"
 							}
 						]
 					}

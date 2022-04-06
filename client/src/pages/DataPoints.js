@@ -16,14 +16,14 @@ import TextWithLabel from '../components/TextWithLabel';
 import Modal from '../components/Modal';
 import Chart from '../components/Chart';
 import { useQuery, gql } from '@apollo/client';
-import { LOAD_DATAPOINTS } from '../GraphQL/Queries';
+import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
 
 
 const DataPoints = () => {
-	const { error, loading, data } = useQuery(LOAD_DATAPOINTS);
+	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS);
 
 	const [openModal, setOpenModal] = useState(false);
-	const [datapoints, setDatapoints] = useState([]);
+	const [dataPoints, setDataPoints] = useState([]);
 	const {
 		control,
 		register,
@@ -32,7 +32,7 @@ const DataPoints = () => {
 		formState: { errors },
 	} = useForm();
 
-	const Datapoints = () => {
+	const DataPoints = () => {
 
 		if (loading) {
 			return (
@@ -42,7 +42,7 @@ const DataPoints = () => {
 		if (error) {console.log('error occured', error)}
 		else {
 			return (
-				datapoints.map((item, i) => {
+				dataPoints.map((item, i) => {
 					return (
 						<Card
 							key={i}
@@ -66,7 +66,7 @@ const DataPoints = () => {
 	};
 	useEffect(() => {
 		if (data) {
-			setDatapoints(data.getAllDatapoints)
+			setDataPoints(data.getAllGoogleSpreadsheetDataPoints)
 		}
 	}, [data])
 	return (
@@ -90,7 +90,7 @@ const DataPoints = () => {
 						<p>Combined values from all sites</p>
 						<Chart />
 					</Card> */}
-					{Datapoints()}
+					{DataPoints()}
 				</CardGrid>
 
 
@@ -98,7 +98,7 @@ const DataPoints = () => {
 			<Modal
 				open={openModal}
 				openModal={() => setOpenModal()}
-				modalTitle="Connect a datapoint"
+				modalTitle="Connect a data point"
 			>
 				{/* <Form
 					buttonTitle="Connect"

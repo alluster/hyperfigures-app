@@ -1,8 +1,8 @@
 const graphql = require('graphql');
 const { GraphQLObjectType, GraphQLInt, GraphQLString, GraphQLFloat } = require('graphql');
 
-const DatapointType = new GraphQLObjectType({
-	name: 'Datapoint',
+const DataPointType = new GraphQLObjectType({
+	name: 'DataPoint',
 	fields: () => ({
 		id: { type: GraphQLInt },
 		title: { type: GraphQLString },
@@ -12,4 +12,4 @@ const DatapointType = new GraphQLObjectType({
 });
 
 
-module.exports = DatapointType
+module.exports = DataPointType

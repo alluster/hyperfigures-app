@@ -1,18 +1,18 @@
-const { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLList, GraphQLString, GraphQLFloat } = require('graphql');
+const { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLID, GraphQLList, GraphQLString, GraphQLFloat } = require('graphql');
 const graphql = require('graphql');
 const dashboardData = require('../MOCK_DASHBOARDS.json');
-const datapointData = require('../MOCK_DATAPOINTS.json');
-const DatapointType = require('./TypeDefs/DatapointType');
+const GoogleSpreadsheetDataPointData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_POINTS.json');
+const GoogleSpreadsheetDataPointType = require('./TypeDefs/GoogleSpreadsheetDataPointType');
 const DashboardType = require('./TypeDefs/DashboardType');
 
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
 	fields: {
-		getAllDatapoints: {
-			type: new GraphQLList(DatapointType),
+		getAllGoogleSpreadsheetDataPoints: {
+			type: new GraphQLList(GoogleSpreadsheetDataPointType),
 			args: { id: { type: GraphQLInt } },
 			resolve(parent, args) {
-				return datapointData
+				return GoogleSpreadsheetDataPointData
 			}
 		},
 		getAllDashboards: {
@@ -21,16 +21,23 @@ const RootQuery = new GraphQLObjectType({
 			resolve(parent, args) {
 				return dashboardData
 			}
+		},
+		getDashboard: {
+			type: new GraphQLList(DashboardType),
+			args: { id: { type: GraphQLString } },
+			resolve(parent, args) {
+				const res = dashboardData.filter(x => x.id === args.id)
+				return res
+			}
 		}
-
 	}
 });
 
 const Mutation = new GraphQLObjectType({
 	name: 'Mutation',
 	fields: {
-		createDatapoint: {
-			type: DatapointType,
+		createGoogleSpreadsheetDataPoint: {
+			type: GoogleSpreadsheetDataPointType,
 			args: {
 				id: { type: GraphQLInt },
 				title: { type: GraphQLString },
@@ -38,8 +45,8 @@ const Mutation = new GraphQLObjectType({
 				value: { type: GraphQLFloat }
 			},
 			resolve(parent, args) {
-				datapointData.push({
-					id: datapointData.length + 1,
+				GoogleSpreadsheetDataPointData.push({
+					id: GoogleSpreadsheetDataPointData.length + 1,
 					title: args.title,
 					description: args.description,
 					value: args.value

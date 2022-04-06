@@ -17,13 +17,25 @@ const Label = styled.p`
 
 const TextWithLabel = ({
 	title,
-	label
+	label,
+	small
 }) => {
 
 	return (
 		<Wrapper>
-			<Label>{label || "-"}</Label>
-			<h4>{title || "-"}</h4>
+			{
+				small ?
+					<div>
+						<Label>{label || "-"}</Label>
+						<h5>{title || "-"}</h5>
+					</div>
+					:
+					<div>
+						<Label>{label || "-"}</Label>
+						<h4>{title || "-"}</h4>
+					</div>
+			}
+
 		</Wrapper>
 	);
 };
