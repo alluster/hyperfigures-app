@@ -93,6 +93,23 @@ const Dashboard = () => {
 								</CardGrid>
 								<CardGrid>
 									{
+										dashboard[0].data_point_groups.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
+
+											return (
+												<CardDataGroup
+													updated_at={item.updated_at}
+													title={item.title}
+													description={item.description}
+													dataPoints={item.google_spreadsheet_data_points}
+													key={i}
+												/>
+									
+											)
+										})
+									}
+								</CardGrid>
+								<CardGrid>
+									{
 										dashboard[0].google_spreadsheet_data_points.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
 
 											return (

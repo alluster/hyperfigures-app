@@ -16,37 +16,38 @@ import {
 	ResponsiveContainer,
   } from 'recharts';
 
-const data = [
-	{
-		name: 'Berlin',
-		uv: 4000,
-		pv: 2400,
-		amt: 2400,
-	},
-	{
-		name: 'Helsinki',
-		uv: 3000,
-		pv: 1398,
-		amt: 2210,
-	},
-	{
-		name: 'London',
-		uv: 2000,
-		pv: 9800,
-		amt: 2290,
-	},
-	{
-		name: 'Madrid',
-		uv: 2780,
-		pv: 3908,
-		amt: 2000,
-	}
-];
+// const data = [
+// 	{
+// 		name: 'Berlin',
+// 		uv: 4000,
+// 		pv: 2400,
+// 		amt: 2400,
+// 	},
+// 	{
+// 		name: 'Helsinki',
+// 		uv: 3000,
+// 		pv: 1398,
+// 		amt: 2210,
+// 	},
+// 	{
+// 		name: 'London',
+// 		uv: 2000,
+// 		pv: 9800,
+// 		amt: 2290,
+// 	},
+// 	{
+// 		name: 'Madrid',
+// 		uv: 2780,
+// 		pv: 3908,
+// 		amt: 2000,
+// 	}
+// ];
 const ChartContainer = styled.div`
 	max-width: 60%;
 `;
 
 const Chart = ({
+	data
 
 }) => {
 	return (
@@ -62,10 +63,10 @@ const Chart = ({
           }}
         >
           <CartesianGrid stroke="#f5f5f5" />
-          <XAxis dataKey="name" scale="band" />
+          <XAxis dataKey="title" scale="band" />
           <Tooltip />
-          <Bar dataKey="uv" barSize={10} fill="#413ea0" />
-          <Line type="monotone" dataKey="uv" stroke="#ff7300" />
+          <Bar dataKey="value" barSize={10} fill="#413ea0" />
+          <Line type="monotone" dataKey="value" stroke="#ff7300" />
         </ComposedChart>
 
 	)

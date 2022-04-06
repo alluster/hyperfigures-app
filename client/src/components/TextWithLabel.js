@@ -14,26 +14,40 @@ const Label = styled.p`
 	// text-transform: uppercase;
 	margin-bottom: ${props => props.theme.grid.divider_1}
 `;
+const Content = styled.div`
+
+
+	${({ line }) => line && `
+	padding-top: 16px;
+	padding-bottom: 16px;
+	padding-left: 32px;
+	padding-right: 16px;
+		background-color: ${props => props.theme.colors.white};
+		border: solid 1px gray;
+		border-radius: 8px;
+	`}
+`;
 
 const TextWithLabel = ({
 	title,
 	label,
+	line,
 	small
 }) => {
 
 	return (
-		<Wrapper>
+		<Wrapper >
 			{
 				small ?
-					<div>
+					<Content line={line}>
 						<Label>{label || "-"}</Label>
 						<h5>{title || "-"}</h5>
-					</div>
+					</Content>
 					:
-					<div>
+					<Content line={line}>
 						<Label>{label || "-"}</Label>
 						<h4>{title || "-"}</h4>
-					</div>
+					</Content>
 			}
 
 		</Wrapper>
