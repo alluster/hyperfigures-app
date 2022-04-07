@@ -31,6 +31,7 @@ const Content = styled.div`
 const TextWithLabel = ({
 	title,
 	label,
+	description,
 	line,
 	small
 }) => {
@@ -40,13 +41,16 @@ const TextWithLabel = ({
 			{
 				small ?
 					<Content line={line}>
-						<Label>{label || "-"}</Label>
-						<h5>{title || "-"}</h5>
+						<Label>{label || ""}</Label>
+						<h5>{title || ""}</h5>
+						<p>{description || ""}</p>
 					</Content>
 					:
 					<Content line={line}>
-						<Label>{label || "-"}</Label>
-						<h4>{title || "-"}</h4>
+						<Label>{label || ""}</Label>
+						<h4>{title || ""}</h4>
+						<p>{description || ""}</p>
+
 					</Content>
 			}
 

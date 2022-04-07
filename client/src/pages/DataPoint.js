@@ -12,10 +12,13 @@ import ButtonGoBack from '../components/ButtonGoBack';
 import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
 import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
+import { useParams, useHistory } from 'react-router-dom';
+
 import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
-
+import { useQuery, gql } from '@apollo/client';
+import { LOAD_GOOGLE_SPREADSHEET_DATA_POINT } from '../GraphQL/Queries';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -34,10 +37,15 @@ const Label = styled.p`
 
 
 const DataPoint = () => {
+	let { id } = useParams();
+
+	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINT, {
+		variables: { id: id }
+	});
+	const [dataPoint, setDataPoint] = useState([]);
 	const {
 		dashboardData,
 		setAppLocation,
-		loading,
 		user,
 		something
 	} = useContext(AppContext);
@@ -54,35 +62,97 @@ const DataPoint = () => {
 		console.log(data)
 
 	};
+	
+	const DataPointContent = () => {
+		if (loading) {
+			return (
+				<p>Loading data...</p>
+			)
+		}
+		if (error) { console.log('error', error) }
+		else {
+			return (
+				<div>
+					<ButtonGoBack text="Go Back" />
+
+					{
+
+						dataPoint.length > 0 ?
+							<div>
+
+								<HeaderText
+									locationText="Data Point"
+									title={dataPoint[0].title || '-'}
+									description={dataPoint[0].description || '-'}
+								/>
+								<Card>
+									<TextWithLabel 
+										title={dataPoint[0].value}
+										label="Value"
+									/>
+								</Card>
+								<Card>
+							
+									<TextWithLabel 
+										title={dataPoint[0].updated_at}
+										label="Updated"
+									/>
+									<TextWithLabel 
+										title={dataPoint[0].created_at}
+										label="Created"
+									/>
+									<TextWithLabel 
+										title={dataPoint[0].data_point_group}
+										label="Group"
+									/>
+									<TextWithLabel 
+										title={dataPoint[0].creator}
+										label="Creator"
+									/>
+								</Card>
+								<Card>
+							
+							<TextWithLabel 
+								title={dataPoint[0].spreadsheet}
+								label="Spreadsheet"
+							/>
+							<TextWithLabel 
+								title={dataPoint[0].sheet}
+								label="Sheet"
+							/>
+							<TextWithLabel 
+								title={dataPoint[0].cell}
+								label="Cell"
+							/>
+						
+						</Card>
+							
+							</div>
+
+							:
+							<p>No data</p>
+					}
+				</div>
+
+
+			)
+		};
+	};
 	useEffect(() => {
-		reset(
-			{
-				imported_value: "1234",
-				sheet: "finances_data.csv",
-				page: "Calculations",
-				cell: "c2",
-				connected_dashboard: "Finance"
-			}
-		)
-	}, [])
+		if (data) {
+			window.scroll(0, 0);
+			setDataPoint(data.getGoogleSpreadsheetDataPoint)
+			console.log(data)
+		}
+	}, [data]);
 	return (
 		<Container>
-			<ButtonGoBack text="Go Back" />
-			<HeaderText
-				locationText=""
-				title="Data Point"
-				description="Budget 2022"
-			/>
-			<CardGrid>
-				<Card >
-					<TextWithLabel
-						title={CurrencyFormatter.format(34567)}
-						label="Budget 2022"
-					/>
-				</Card>
+			{
+				DataPointContent()
+			}
 
-			</CardGrid>
-			
+
+
 
 		</Container>
 	);

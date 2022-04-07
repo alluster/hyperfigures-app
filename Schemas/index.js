@@ -2,7 +2,10 @@ const { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLID, GraphQLList, Gr
 const graphql = require('graphql');
 const dashboardData = require('../MOCK_DASHBOARDS.json');
 const GoogleSpreadsheetDataPointData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_POINTS.json');
+const GoogleSpreadsheetDataSourceData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_SOURCES.json');
 const GoogleSpreadsheetDataPointType = require('./TypeDefs/GoogleSpreadsheetDataPointType');
+const GoogleSpreadsheetDataSourceType = require('./TypeDefs/GoogleSpreadsheetDataSourceType');
+
 const DashboardType = require('./TypeDefs/DashboardType');
 
 const RootQuery = new GraphQLObjectType({
@@ -10,9 +13,24 @@ const RootQuery = new GraphQLObjectType({
 	fields: {
 		getAllGoogleSpreadsheetDataPoints: {
 			type: new GraphQLList(GoogleSpreadsheetDataPointType),
-			args: { id: { type: GraphQLInt } },
+			args: { id: { type: GraphQLString } },
 			resolve(parent, args) {
 				return GoogleSpreadsheetDataPointData
+			}
+		},
+		getGoogleSpreadsheetDataPoint: {
+			type: new GraphQLList(GoogleSpreadsheetDataPointType),
+			args: { id: { type: GraphQLString } },
+			resolve(parent, args) {
+				const res = GoogleSpreadsheetDataPointData.filter(x => x.id === args.id)
+				return res
+			}
+		},
+		getAllGoogleSpreadsheetDataSources: {
+			type: new GraphQLList(GoogleSpreadsheetDataSourceType),
+			args: { id: { type: GraphQLString } },
+			resolve(parent, args) {
+				return GoogleSpreadsheetDataSourceData
 			}
 		},
 		getAllDashboards: {
