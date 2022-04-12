@@ -1,6 +1,25 @@
 import { gql } from '@apollo/client';
 
 
+
+export const GET_VALUE_FROM_GOOGLE_SPREADSHEET = gql`
+	query getValueFromGoogleSpreadsheet(
+		$cell: String!,
+		$sheetId: String!,
+		$spreadsheetId: String!
+	)
+	{getValueFromGoogleSpreadsheet(
+		cell: $cell,
+		sheetId: $sheetId,
+		spreadsheetId: $spreadsheetId
+	){
+		value
+	}
+	
+	}
+
+`;
+
 export const LOAD_GOOGLE_SPREADSHEET_DATA_POINT = gql`
 	query getGoogleSpreadsheetDataPoint($id: String!)
 		{getGoogleSpreadsheetDataPoint(id: $id) {

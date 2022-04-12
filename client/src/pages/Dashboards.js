@@ -75,7 +75,6 @@ const Dashboards = () => {
 	};
 
 
-	console.log(dashboards)
 
 
 	const onSubmit = async (data) => {

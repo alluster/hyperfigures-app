@@ -114,6 +114,7 @@ const Dashboard = () => {
 
 											return (
 												<Card
+													to={`/datapoints/${item.id}`}
 													key={i}
 												>
 													<TextWithLabel

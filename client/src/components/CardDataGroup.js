@@ -23,21 +23,8 @@ const DataDisplay = styled.p`
 const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 	const [data, setData] = useState([]);
 	const [barChart, setBarChart] = useState(false);
-	const DataPointsList = () => {
-		if (data && data.length > 0) {
-			data.map((item, i) => {
-				return (
-					<p>{item.value}</p>
-				)
-			})
 
-		}
-		else {
-			<p>This data point group does'nt contain any data</p>
-		}
-	}
 	useEffect(() => {
-		DataPointsList();
 		console.log("datapoints:", dataPoints)
 		setData(dataPoints);
 	}, [dataPoints])
@@ -66,12 +53,19 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 							data ?
 								data.map((item, i) => {
 									return (
-										<TextWithLabel
-											line
+										<Card
+											small
 											key={i}
-											label={item.title}
-											title={CurrencyFormatter.format(item.value)}
-										/>)
+											to={`/datapoints/${item.id}`}
+										>
+											<TextWithLabel
+												small
+												label={item.title}
+												title={CurrencyFormatter.format(item.value)}
+											/>
+										</Card>
+
+									)
 								}) :
 								<p>no data</p>
 						}

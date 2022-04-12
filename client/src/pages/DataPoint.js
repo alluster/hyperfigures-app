@@ -18,7 +18,7 @@ import InputNumber from '../components/InputNumber';
 import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
 import { useQuery, gql } from '@apollo/client';
-import { LOAD_GOOGLE_SPREADSHEET_DATA_POINT } from '../GraphQL/Queries';
+import { GET_VALUE_FROM_GOOGLE_SPREADSHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINT } from '../GraphQL/Queries';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -38,11 +38,23 @@ const Label = styled.p`
 
 const DataPoint = () => {
 	let { id } = useParams();
+	const [googleValue, setGoogleValue] = useState([]);
+	const [dataPoint, setDataPoint] = useState([]);
 
-	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINT, {
+	const { error, loading, data: dataPointData } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINT, {
 		variables: { id: id }
 	});
-	const [dataPoint, setDataPoint] = useState([]);
+	// const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
+	// 	skip: !dataPointData,
+	// 	variables: {
+	// 		cell: dataPointData.getGoogleSpreadsheetDataPoint.cell,
+	// 		spreadsheetId:'' ||  dataPointData && `${dataPointData.getGoogleSpreadsheetDataPoint.spreadsheet}`,
+	// 		sheetId: '' || dataPointData && `${dataPointData.getGoogleSpreadsheetDataPoint.sheet}` 
+	// 	},
+	// 	pollInterval: 500,
+
+	// });
+	
 	const {
 		dashboardData,
 		setAppLocation,
@@ -139,21 +151,21 @@ const DataPoint = () => {
 		};
 	};
 	useEffect(() => {
-		if (data) {
+		if (dataPointData) {
 			window.scroll(0, 0);
-			setDataPoint(data.getGoogleSpreadsheetDataPoint)
-			console.log(data)
+			setDataPoint(dataPointData.getGoogleSpreadsheetDataPoint)
 		}
-	}, [data]);
+	}, [dataPointData]);
+	// useEffect(() => {
+	// 	if (dataPointData && dataPoint.length > 0 ) {
+	// 		setGoogleValue(googleData.getValueFromGoogleSpreadsheet[0].value)
+	// 	}
+	// }, [googleData]);
 	return (
 		<Container>
 			{
 				DataPointContent()
 			}
-
-
-
-
 		</Container>
 	);
 };

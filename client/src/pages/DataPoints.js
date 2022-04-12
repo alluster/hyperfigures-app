@@ -21,9 +21,9 @@ import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
 
 const DataPoints = () => {
 	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS);
-	const [dataPoints, setDataPoints] = useState([]);
 
 	const [openModal, setOpenModal] = useState(false);
+	const [dataPoints, setDataPoints] = useState([]);
 	const {
 		control,
 		register,
@@ -51,8 +51,9 @@ const DataPoints = () => {
 							<TextWithLabel
 								title={CurrencyFormatter.format(item.value)}
 								label={item.title}
-								description={item.description}
 							/>
+							<p>{item.description}</p>
+
 						</Card>
 					)
 				})
@@ -64,7 +65,6 @@ const DataPoints = () => {
 
 	};
 	useEffect(() => {
-		window.scroll(0, 0);
 		if (data) {
 			setDataPoints(data.getAllGoogleSpreadsheetDataPoints)
 		}

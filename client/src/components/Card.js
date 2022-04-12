@@ -40,21 +40,27 @@ const WrapperLink = styled(Link)`
 	${({ row }) => row && `
 		flex-direction: row;
 	`};
+	${({ small }) => small && `
+	padding-top: 16px ;
+	padding-bottom: 16px ;
+	padding-left: 16px ;
+	padding-right: 16px ;
+`};
 	@media ${device.laptop} {
 		margin-right: 0px;
 	}
 `;
-const Card = ({ children, to, row }) => {
+const Card = ({ children, to, row, small }) => {
 	return (
 		<div>
 			{
 				to ?
 
-					<WrapperLink row={row} to={to || ""}>
+					<WrapperLink small={small} row={row} to={to || ""}>
 						{children}
 					</WrapperLink>
 					:
-					<Wrapper row={row}>
+					<Wrapper small={small} row={row}>
 						{children}
 					</Wrapper>
 			}

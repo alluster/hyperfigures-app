@@ -5,12 +5,37 @@ const GoogleSpreadsheetDataPointData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_
 const GoogleSpreadsheetDataSourceData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_SOURCES.json');
 const GoogleSpreadsheetDataPointType = require('./TypeDefs/GoogleSpreadsheetDataPointType');
 const GoogleSpreadsheetDataSourceType = require('./TypeDefs/GoogleSpreadsheetDataSourceType');
-
+const GoogleSpreadsheetIntegration = require( '../GoogleSpreadsheetIntegration');
 const DashboardType = require('./TypeDefs/DashboardType');
+const GoogleSpreadsheetValueType = require('./TypeDefs/GoogleSpreadsheetValueType');
+
+
+// cell: "C32",
+// spreadsheetId: "1m-tkTPGZHyx5DVw9VP86uGckmeAc_CUaQHO6IuSmuIs",
+// sheetId: "154788337"
 
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
 	fields: {
+		getValueFromGoogleSpreadsheet: {
+			type: new GraphQLList(GoogleSpreadsheetValueType),
+			args: { 
+				cell: { type: GraphQLString }, 
+				spreadsheetId: { type: GraphQLString },
+				sheetId: { type: GraphQLString }
+			},
+			resolve(parent, args) {
+				// const res = GoogleSpreadsheetIntegration({
+				// 	cell: args.cell,
+				// 	spreadsheetId: args.spreadsheetId,
+				// 	sheetId: args.sheetId
+				// });
+				// console.log(res);
+					return GoogleSpreadsheetDataPointData
+				
+				// return res;
+			}
+		},
 		getAllGoogleSpreadsheetDataPoints: {
 			type: new GraphQLList(GoogleSpreadsheetDataPointType),
 			args: { id: { type: GraphQLString } },
