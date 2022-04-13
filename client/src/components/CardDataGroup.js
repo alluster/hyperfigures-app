@@ -15,7 +15,7 @@ const Updated = styled.p`
 	margin-bottom: ${props => props.theme.grid.divider_2};
 `;
 
-const DataDisplay = styled.p`
+const DataDisplay = styled.div`
 	margin-top: ${props => props.theme.grid.divider_4};
 	margin-bottom: ${props => props.theme.grid.divider_4};
 
@@ -32,7 +32,7 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 		<Card>
 			<TextWithLabel
 				title={title}
-				label={"Data Point Group"}
+				label="Data Point Group"
 
 			/>
 
@@ -54,12 +54,12 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 								data.map((item, i) => {
 									return (
 										<Card
-											small
+											small="true"
 											key={i}
 											to={`/datapoints/${item.id}`}
 										>
 											<TextWithLabel
-												small
+												small="true"
 												label={item.title}
 												title={CurrencyFormatter.format(item.value)}
 											/>

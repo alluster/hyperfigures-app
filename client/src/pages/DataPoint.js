@@ -38,23 +38,70 @@ const Label = styled.p`
 
 const DataPoint = () => {
 	let { id } = useParams();
-	const [googleValue, setGoogleValue] = useState([]);
-	const [dataPoint, setDataPoint] = useState([]);
+	const [googleValue, setGoogleValue] = useState({
+		value: 'Loading data...'
+	});
+	const [dataPoint, setDataPoint] = useState(
+		{
+			title: 'Loading data...',
+			description: 'Loading data...',
+			updated_at: 'Loading data...',
+			deleted_at: 'Loading data...',
+			value: 'Loading data...',
+			cell: 'Loading data...',
+			spreadsheet: 'Loading data...',
+			sheet: 'Loading data...',
+			creator: 'Loading data...',
+			data_point_group: 'Loading data...'
+
+		}
+	);
 
 	const { error, loading, data: dataPointData } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINT, {
 		variables: { id: id }
 	});
-	// const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
-	// 	skip: !dataPointData,
-	// 	variables: {
-	// 		cell: dataPointData.getGoogleSpreadsheetDataPoint.cell,
-	// 		spreadsheetId:'' ||  dataPointData && `${dataPointData.getGoogleSpreadsheetDataPoint.spreadsheet}`,
-	// 		sheetId: '' || dataPointData && `${dataPointData.getGoogleSpreadsheetDataPoint.sheet}` 
-	// 	},
-	// 	pollInterval: 500,
+	const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
+		// skip: !dataPointData,
+		variables: {
+			cell: `${dataPoint.cell}`,
+			spreadsheetId: `${dataPoint.spreadsheet}`,
+			sheetId: `${dataPoint.sheet}`
+		},
+		pollInterval: 5000,
 
-	// });
-	
+	});
+	useEffect(() => {
+		if (dataPointData) {
+			window.scroll(0, 0);
+			setDataPoint({
+				...dataPoint,
+				title: dataPointData.getGoogleSpreadsheetDataPoint[0].title,
+				description: dataPointData.getGoogleSpreadsheetDataPoint[0].description,
+				updated_at: dataPointData.getGoogleSpreadsheetDataPoint[0].updated_at,
+				deleted_at: dataPointData.getGoogleSpreadsheetDataPoint[0].deleted_at,
+				value: dataPointData.getGoogleSpreadsheetDataPoint[0].value,
+				cell: dataPointData.getGoogleSpreadsheetDataPoint[0].cell,
+				spreadsheet: dataPointData.getGoogleSpreadsheetDataPoint[0].spreadsheet,
+				sheet: dataPointData.getGoogleSpreadsheetDataPoint[0].sheet,
+				creator: dataPointData.getGoogleSpreadsheetDataPoint[0].creator,
+				data_point_group: dataPointData.getGoogleSpreadsheetDataPoint[0].data_point_group
+			})
+		}
+		DataPointContent();
+	}, [dataPointData]);
+
+	useEffect(() => {
+		if (googleData) {
+			setGoogleValue({
+				...googleValue,
+				value: googleData.getValueFromGoogleSpreadsheet[0].value,
+
+			})
+		}
+	}, [googleData]);
+
+
+
 	const {
 		dashboardData,
 		setAppLocation,
@@ -70,11 +117,7 @@ const DataPoint = () => {
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = async (data) => {
-		console.log(data)
 
-	};
-	
 	const DataPointContent = () => {
 		if (loading) {
 			return (
@@ -87,80 +130,66 @@ const DataPoint = () => {
 				<div>
 					<ButtonGoBack text="Go Back" />
 
-					{
 
-						dataPoint.length > 0 ?
-							<div>
+					<div>
 
-								<HeaderText
-									locationText="Data Point"
-									title={dataPoint[0].title || '-'}
-									description={dataPoint[0].description || '-'}
-								/>
-								<Card>
-									<TextWithLabel 
-										title={dataPoint[0].value}
-										label="Value"
-									/>
-								</Card>
-								<Card>
-							
-									<TextWithLabel 
-										title={dataPoint[0].updated_at}
-										label="Updated"
-									/>
-									<TextWithLabel 
-										title={dataPoint[0].created_at}
-										label="Created"
-									/>
-									<TextWithLabel 
-										title={dataPoint[0].data_point_group}
-										label="Group"
-									/>
-									<TextWithLabel 
-										title={dataPoint[0].creator}
-										label="Creator"
-									/>
-								</Card>
-								<Card>
-							
-							<TextWithLabel 
-								title={dataPoint[0].spreadsheet}
+						<HeaderText
+							locationText="Data Point"
+							title={dataPoint.title || '-'}
+							description={dataPoint.description || '-'}
+						/>
+						<Card>
+							<TextWithLabel
+								title={googleValue.value || '-'}
+								label="Value"
+							/>
+						</Card>
+						<Card>
+
+							<TextWithLabel
+								title={dataPoint.updated_at}
+								label="Updated"
+							/>
+							<TextWithLabel
+								title={dataPoint.created_at}
+								label="Created"
+							/>
+							<TextWithLabel
+								title={dataPoint.data_point_group}
+								label="Group"
+							/>
+							<TextWithLabel
+								title={dataPoint.creator}
+								label="Creator"
+							/>
+						</Card>
+						<Card>
+
+							<TextWithLabel
+								title={dataPoint.spreadsheet}
 								label="Spreadsheet"
 							/>
-							<TextWithLabel 
-								title={dataPoint[0].sheet}
+							<TextWithLabel
+								title={dataPoint.sheet}
 								label="Sheet"
 							/>
-							<TextWithLabel 
-								title={dataPoint[0].cell}
+							<TextWithLabel
+								title={dataPoint.cell}
 								label="Cell"
 							/>
-						
-						</Card>
-							
-							</div>
 
-							:
-							<p>No data</p>
-					}
+						</Card>
+
+					</div>
+
+
 				</div>
 
 
 			)
 		};
 	};
-	useEffect(() => {
-		if (dataPointData) {
-			window.scroll(0, 0);
-			setDataPoint(dataPointData.getGoogleSpreadsheetDataPoint)
-		}
-	}, [dataPointData]);
-	// useEffect(() => {
-	// 	if (dataPointData && dataPoint.length > 0 ) {
-	// 		setGoogleValue(googleData.getValueFromGoogleSpreadsheet[0].value)
-	// 	}
-	// }, [googleData]);
+
 	return (
 		<Container>
 			{

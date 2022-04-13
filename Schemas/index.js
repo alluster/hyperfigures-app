@@ -25,15 +25,14 @@ const RootQuery = new GraphQLObjectType({
 				sheetId: { type: GraphQLString }
 			},
 			resolve(parent, args) {
-				// const res = GoogleSpreadsheetIntegration({
-				// 	cell: args.cell,
-				// 	spreadsheetId: args.spreadsheetId,
-				// 	sheetId: args.sheetId
-				// });
-				// console.log(res);
-					return GoogleSpreadsheetDataPointData
+				const res = GoogleSpreadsheetIntegration({
+					cell: args.cell,
+					spreadsheetId: args.spreadsheetId,
+					sheetId: args.sheetId
+				});
+				// 	return GoogleSpreadsheetDataPointData
 				
-				// return res;
+				return res
 			}
 		},
 		getAllGoogleSpreadsheetDataPoints: {
