@@ -8,29 +8,19 @@ const {promisify} = require("es6-promisify");
 
 
 
+const Cert = process.env.REACT_APP_CERT
+const ParsedCert = JSON.parse(Cert);
 
 
-// cell 
-// spreadsheet
-// sheet by id
-
-// get list of all spreadsheet on a service account
-// get list of sheets in a spreadsheet
 
 
  const GoogleSpreadsheetIntegration = async ({cell, spreadsheetId, sheetId }) => {
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);
 
 	await doc.useServiceAccountAuth({
-	  client_email: cert.client_email,
-	  private_key: cert.private_key,
+	  client_email: ParsedCert.client_email,
+	  private_key: ParsedCert.private_key,
 	});
-  
-
-	// get all cells by range
-	// get one cell
-
-
 
 
 

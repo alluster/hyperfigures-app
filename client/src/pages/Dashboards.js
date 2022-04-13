@@ -54,22 +54,26 @@ const Dashboards = () => {
 		if (error) { console.log('error', error) }
 		else {
 			return (
-				dashboards !== [] ?
-				 dashboards.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
+				<CardGrid>
+					{
+						dashboards !== [] ?
+							dashboards.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
 
-					return (
-						<Card
-							key={i}
-							to={`/dashboards/${item.id}`}
-						>
-							<h4>{item.title}</h4>
-							<p>{item.description}</p>
+								return (
+									<Card
+										key={i}
+										to={`/dashboards/${item.id}`}
+									>
+										<h4>{item.title}</h4>
+										<p>{item.description}</p>
 
-						</Card>
-					)
-				})
-				:
-				<p>No dashboards</p>
+									</Card>
+								)
+							})
+							:
+							<p>No dashboards</p>
+					}
+				</CardGrid>
 			)
 		};
 	};
@@ -78,7 +82,7 @@ const Dashboards = () => {
 
 
 	const onSubmit = async (data) => {
-		try{
+		try {
 			createDashboard({
 				variables: {
 					title: data.dashboardName,
@@ -90,14 +94,14 @@ const Dashboards = () => {
 			setNotifyMessage(`New dashboard ${data.dashboardName} added`);
 
 		}
-		catch(error){
+		catch (error) {
 			console.log(error);
 			setNotifyMessage("Something went wrong");
 		}
-		finally{
+		finally {
 			setOpenModal(false);
 			reset();
-		}	
+		}
 	}
 
 	useEffect(() => {
@@ -105,7 +109,7 @@ const Dashboards = () => {
 
 		if (data) {
 			setDashboards(data.getAllDashboards);
-	
+
 		}
 	}, [data]);
 	return (
@@ -119,10 +123,8 @@ const Dashboards = () => {
 					title="Dashboards"
 					description="Your organization data dashboards"
 				/>
-				<CardGrid>
 					{DashboardsList()}
 
-				</CardGrid>
 			</Container>
 			<Modal
 				open={openModal}

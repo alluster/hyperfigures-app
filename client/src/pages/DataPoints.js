@@ -39,24 +39,28 @@ const DataPoints = () => {
 				<p>Loading data...</p>
 			)
 		}
-		if (error) {console.log('error occured', error)}
+		if (error) { console.log('error occured', error) }
 		else {
 			return (
-				dataPoints.map((item, i) => {
-					return (
-						<Card
-							key={i}
-							to={`/datapoints/${item.id}`}
-						>
-							<TextWithLabel
-								title={CurrencyFormatter.format(item.value)}
-								label={item.title}
-							/>
-							<p>{item.description}</p>
+				<CardGrid>
+					{
+						dataPoints.map((item, i) => {
+							return (
+								<Card
+									key={i}
+									to={`/datapoints/${item.id}`}
+								>
+									<TextWithLabel
+										title={CurrencyFormatter.format(item.value)}
+										label={item.title}
+									/>
+									<p>{item.description}</p>
 
-						</Card>
-					)
-				})
+								</Card>
+							)
+						})
+					}
+				</CardGrid>
 			)
 		};
 	};
@@ -80,18 +84,8 @@ const DataPoints = () => {
 					title="Hyperfigures"
 					description="All your organization Hyperfigures in one dashboard"
 				/>
-				<CardGrid>
 
-					{/* <Card >
-						<TextWithLabel
-							title={`Total: ${CurrencyFormatter.format(34567)}`}
-							label="HR Cost 2022"
-						/>
-						<p>Combined values from all sites</p>
-						<Chart />
-					</Card> */}
 					{DataPoints()}
-				</CardGrid>
 
 
 			</Container>
@@ -145,7 +139,7 @@ const DataPoints = () => {
 
 				</Form> */}
 			</Modal>
-		</div>
+		</div >
 
 	);
 };
