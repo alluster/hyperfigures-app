@@ -66,8 +66,9 @@ const DataPoint = () => {
 			cell: `${dataPoint.cell}`,
 			spreadsheetId: `${dataPoint.spreadsheet}`,
 			sheetId: `${dataPoint.sheet}`
-		},
-		pollInterval: 5000,
+		}
+		// ,
+		// pollInterval: 5000,
 
 	});
 	useEffect(() => {
