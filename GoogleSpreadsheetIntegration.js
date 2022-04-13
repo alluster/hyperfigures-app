@@ -8,7 +8,7 @@ const {promisify} = require("es6-promisify");
 
 
 
-const Cert = process.env.REACT_APP_CERT
+const Cert = process.env.REACT_APP_CERT;
 const ParsedCert = JSON.parse(Cert);
 
 
