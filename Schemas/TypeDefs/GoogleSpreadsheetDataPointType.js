@@ -13,8 +13,8 @@ const GoogleSpreadsheetDataPointType = new GraphQLObjectType({
 		updated_at: { type: GraphQLString },
 		deleted_at: { type: GraphQLString },
 		cell: { type: GraphQLString },
-		sheet: { type: GraphQLString },
-		spreadsheet: { type: GraphQLString },
+		sheet_id: { type: GraphQLString },
+		spreadsheet_id: { type: GraphQLString },
 		org_id: { type: GraphQLString },
 		creator: { type: GraphQLString }
 	})

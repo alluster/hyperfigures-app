@@ -84,14 +84,18 @@ const Mutation = new GraphQLObjectType({
 				id: { type: GraphQLInt },
 				title: { type: GraphQLString },
 				description: { type: GraphQLString },
-				value: { type: GraphQLFloat }
+				spreadsheet_id:  { type: GraphQLString },
+				sheet_id: { type: GraphQLString },
+				cell:  { type: GraphQLString }
 			},
 			resolve(parent, args) {
 				GoogleSpreadsheetDataPointData.push({
 					id: GoogleSpreadsheetDataPointData.length + 1,
 					title: args.title,
 					description: args.description,
-					value: args.value
+					spreadsheet_id:  args.spreadsheet_id,
+					sheet_id: args.sheet_id,
+					cell:  args.cell
 				})
 				return args
 			}

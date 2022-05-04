@@ -49,8 +49,8 @@ const DataPoint = () => {
 			deleted_at: 'Loading data...',
 			value: 'Loading data...',
 			cell: 'Loading data...',
-			spreadsheet: 'Loading data...',
-			sheet: 'Loading data...',
+			spreadsheetId: 'Loading data...',
+			sheetId: 'Loading data...',
 			creator: 'Loading data...',
 			data_point_group: 'Loading data...'
 
@@ -64,8 +64,8 @@ const DataPoint = () => {
 		// skip: !dataPointData,
 		variables: {
 			cell: `${dataPoint.cell}`,
-			spreadsheetId: `${dataPoint.spreadsheet}`,
-			sheetId: `${dataPoint.sheet}`
+			spreadsheetId: `${dataPoint.spreadsheetId}`,
+			sheetId: `${dataPoint.sheetId}`
 		}
 		// ,
 		// pollInterval: 5000,
@@ -82,15 +82,15 @@ const DataPoint = () => {
 				deleted_at: dataPointData.getGoogleSpreadsheetDataPoint[0].deleted_at,
 				value: dataPointData.getGoogleSpreadsheetDataPoint[0].value,
 				cell: dataPointData.getGoogleSpreadsheetDataPoint[0].cell,
-				spreadsheet: dataPointData.getGoogleSpreadsheetDataPoint[0].spreadsheet,
-				sheet: dataPointData.getGoogleSpreadsheetDataPoint[0].sheet,
+				spreadsheetId: dataPointData.getGoogleSpreadsheetDataPoint[0].spreadsheet_id,
+				sheetId: dataPointData.getGoogleSpreadsheetDataPoint[0].sheet_id,
 				creator: dataPointData.getGoogleSpreadsheetDataPoint[0].creator,
 				data_point_group: dataPointData.getGoogleSpreadsheetDataPoint[0].data_point_group
 			})
 		}
 		DataPointContent();
 	}, [dataPointData]);
-
+	console.log("Datapoint data", dataPointData)
 	useEffect(() => {
 		if (googleData) {
 			setGoogleValue({
@@ -167,11 +167,11 @@ const DataPoint = () => {
 						<Card>
 
 							<TextWithLabel
-								title={dataPoint.spreadsheet}
+								title={dataPoint.spreadsheetId}
 								label="Spreadsheet"
 							/>
 							<TextWithLabel
-								title={dataPoint.sheet}
+								title={dataPoint.sheetId}
 								label="Sheet"
 							/>
 							<TextWithLabel

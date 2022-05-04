@@ -32,8 +32,8 @@ export const LOAD_GOOGLE_SPREADSHEET_DATA_POINT = gql`
 			updated_at
 			deleted_at
 			cell
-			spreadsheet
-			sheet
+			spreadsheet_id
+			sheet_id
 			org_id
 			creator
 		}}
@@ -49,7 +49,8 @@ export const LOAD_GOOGLE_SPREADSHEET_DATA_POINTS = gql`
 		updated_at
 		deleted_at
 		cell
-		spreadsheet
+		sheet_id
+		spreadsheet_id
 		org_id
 		creator
 	}}

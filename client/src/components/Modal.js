@@ -26,7 +26,7 @@ const ModalBox = styled.div`
 	align-self: center;
 	position: absolute;
 	z-index: 5;
-	width: 400px;
+	width: 500px;
 	max-width: 90%;
 	background-color: ${props => props.theme.colors.white};
 	border: 1px solid ${props => props.theme.colors.primary_200};
@@ -61,7 +61,7 @@ const Icon = styled(FontAwesomeIcon)`
 	`;
 
 const ModalTitle = styled.h4`
-
+	margin-bottom: ${props => props.theme.grid.divider_2};
 	
 	`;
 

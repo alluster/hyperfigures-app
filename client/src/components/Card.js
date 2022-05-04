@@ -19,6 +19,10 @@ const Wrapper = styled.div`
 	${({ row }) => row && `
 		flex-direction: row;
 	`};
+	${({ onClick }) => onClick && `
+		cursor:pointer
+	`};
+	
 	@media ${device.laptop} {
 		margin-right: 0px;
 
@@ -37,6 +41,7 @@ const WrapperLink = styled(Link)`
 	border-radius: 8px;
 	margin-right: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_2};
+	cursor: pointer;
 	${({ row }) => row && `
 		flex-direction: row;
 	`};
@@ -50,9 +55,9 @@ const WrapperLink = styled(Link)`
 		margin-right: 0px;
 	}
 `;
-const Card = ({ children, to, row, small }) => {
+const Card = ({ children, to, row, small, onClick }) => {
 	return (
-		<div>
+		<div onClick={onClick}>
 			{
 				to ?
 
