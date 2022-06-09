@@ -8,12 +8,14 @@ export const GET_VALUE_FROM_GOOGLE_SPREADSHEET = gql`
 		$sheetId: String!,
 		$spreadsheetId: String!
 		$serviceAccount: String!
+		$org_id: String!
 	)
 	{getValueFromGoogleSpreadsheet(
 		serviceAccount: $serviceAccount
 		cell: $cell,
 		sheetId: $sheetId,
 		spreadsheetId: $spreadsheetId
+		org_id: $org_id
 	){
 		value
 	}

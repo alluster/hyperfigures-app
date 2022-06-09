@@ -32,7 +32,8 @@ const RootQuery = new GraphQLObjectType({
 				cell: { type: GraphQLString }, 
 				spreadsheetId: { type: GraphQLString },
 				sheetId: { type: GraphQLString },
-				serviceAccount: { type: GraphQLString }
+				serviceAccount: { type: GraphQLString },
+				org_id: { type: GraphQLString}
 			},
 			resolve(parent, args) {
 				console.log('hello');
@@ -40,7 +41,8 @@ const RootQuery = new GraphQLObjectType({
 					cell: args.cell,
 					spreadsheetId: args.spreadsheetId,
 					sheetId: args.sheetId,
-					serviceAccount: args.serviceAccount
+					serviceAccount: args.serviceAccount,
+					org_id: args.org_id
 				});
 				// 	return GoogleSpreadsheetDataPointData
 				

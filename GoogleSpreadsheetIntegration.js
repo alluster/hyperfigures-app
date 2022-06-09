@@ -2,20 +2,17 @@ require('dotenv').config()
 const express = require('express');
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-// const cert = require('./cert.json'); // the file saved above
 const {promisify} = require("es6-promisify");
 
 
 
 
-const Cert = process.env.REACT_APP_CERT;
-const ParsedCert = JSON.parse(Cert);
 
 
-
- const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId, sheetId }) => {
+ const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId, sheetId, org_id}) => {
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);
-
+	const Cert = process.env.REACT_APP_CERT[org_id];
+	const ParsedCert = JSON.parse(Cert);
 	await doc.useServiceAccountAuth({
 	  client_email: ParsedCert.client_email,
 	  private_key: ParsedCert.private_key,
