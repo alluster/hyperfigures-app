@@ -22,6 +22,7 @@ import { GET_VALUE_FROM_GOOGLE_SPREADSHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINT }
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DividerLine from '../components/DividerLine';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -58,7 +59,11 @@ const Text = styled.h5`
 	}
 `;
 const DataPoints = () => {
-	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS);
+	const { user } = useAuth0();
+	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS, {
+		variables: {org_id: user.org_id }
+
+	});
 
 	const [openModal, setOpenModal] = useState(false);
 	const [dataPoints, setDataPoints] = useState([]);

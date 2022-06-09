@@ -13,20 +13,18 @@ const ParsedCert = JSON.parse(Cert);
 
 
 
-
- const GoogleSpreadsheetIntegration = async ({cell, spreadsheetId, sheetId }) => {
+ const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId, sheetId }) => {
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);
 
 	await doc.useServiceAccountAuth({
-	  client_email: ParsedCert.client_email,
-	  private_key: ParsedCert.private_key,
+	  client_email: serviceAccount,
+	//   private_key: ParsedCert.private_key,
 	});
 
 
 
 	await doc.loadInfo(); // loads document properties and worksheets
 	console.log(doc);
-	const sheetd = '816070597'
 	const sheet = doc.sheetsById[`${sheetId}`]; // or use doc.sheetsById[id]
 	// console.log(sheet.title);
 	// console.log(sheet.rowCount);

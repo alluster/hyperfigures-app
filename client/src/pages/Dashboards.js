@@ -14,6 +14,7 @@ import { useMutation } from '@apollo/client';
 import { CREATE_DASHBOARD_MUTATION } from '../GraphQL/Mutations';
 import FormCompiler from '../supportFunctions/FormComplier';
 import { AppContext } from '../context/Context';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -32,9 +33,13 @@ const Label = styled.p`
 
 
 const Dashboards = () => {
-	var date = (dateData) => new window.Date(dateData);
+	const { user } = useAuth0();
+	console.log(user.org_id)
+	var currentDate = (dateData) => new window.Date(dateData);
 	const { setNotifyMessage } = useContext(AppContext);
-	const { error, loading, data } = useQuery(LOAD_DASHBOARDS);
+	const { error, loading, data } = useQuery(LOAD_DASHBOARDS, {
+		variables: { org_id: user.org_id  }
+	});
 	const [createDashboard] = useMutation(CREATE_DASHBOARD_MUTATION);
 	const [dashboards, setDashboards] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
@@ -56,7 +61,7 @@ const Dashboards = () => {
 			return (
 				<CardGrid>
 					{
-						dashboards !== [] ?
+						dashboards !== [] && dashboards ?
 							dashboards.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
 
 								return (
@@ -86,7 +91,8 @@ const Dashboards = () => {
 			createDashboard({
 				variables: {
 					title: data.dashboardName,
-					description: data.dashboardDescription
+					description: data.dashboardDescription,
+					org_id: user.org_id
 				},
 				refetchQueries: [LOAD_DASHBOARDS]
 
@@ -109,7 +115,7 @@ const Dashboards = () => {
 
 		if (data) {
 			setDashboards(data.getAllDashboards);
-
+			console.log('dashboards from qraphql:', dashboards);
 		}
 	}, [data]);
 	return (

@@ -12,4 +12,4 @@ const DataPointType = new GraphQLObjectType({
 });
 
 
-module.exports = DataPointType
+module.exports = DataPointType;

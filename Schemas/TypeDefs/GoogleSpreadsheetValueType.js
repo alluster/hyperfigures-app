@@ -12,4 +12,4 @@ const GoogleSpreadsheetValueType = new GraphQLObjectType({
 	})
 });
 
-module.exports = GoogleSpreadsheetValueType
+module.exports = GoogleSpreadsheetValueType;

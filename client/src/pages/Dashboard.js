@@ -17,18 +17,19 @@ import { LOAD_DASHBOARD } from '../GraphQL/Queries';
 import { useQuery, gql } from '@apollo/client';
 import { useParams, useHistory } from 'react-router-dom';
 import CardDataGroup from '../components/CardDataGroup';
+import { useAuth0 } from '@auth0/auth0-react';
 
 
 
 
 const Dashboard = () => {
 	let { id } = useParams();
-
+	const { user } = useAuth0();
 	const {
 		setAppLocation,
 	} = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_DASHBOARD, {
-		variables: { id: id }
+		variables: { id: id, org_id: user.org_id }
 	});
 	const [dashboard, setDashboard] = useState([]);
 	const {
@@ -61,7 +62,7 @@ const Dashboard = () => {
 									description={dashboard[0].description || '-'}
 								/>
 								<CardGrid>
-									{
+									{/* {
 										dashboard[0].data_point_groups.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
 
 											return (
@@ -75,10 +76,10 @@ const Dashboard = () => {
 									
 											)
 										})
-									}
+									} */}
 						
 							
-									{
+									{/* {
 										dashboard[0].google_spreadsheet_data_points.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
 
 											return (
@@ -93,7 +94,7 @@ const Dashboard = () => {
 												</Card>
 											)
 										})
-									}
+									} */}
 								</CardGrid>
 							</div>
 
@@ -107,7 +108,7 @@ const Dashboard = () => {
 		};
 	};
 	const onSubmit = async (data) => {
-		console.log(data)
+		console.log('data from dashboard route', data)
 
 	};
 

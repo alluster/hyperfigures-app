@@ -9,7 +9,8 @@ import FormCompiler from '../../../supportFunctions/FormComplier';
 import TextWithLabel from '../../TextWithLabel';
 import Card from '../../Card';
 import { CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION } from '../../../GraphQL/Mutations';
-import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../../../GraphQL/Queries';
+import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS, LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES } from '../../../GraphQL/Queries';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const ButtonRow = styled.div`
 	display: flex;
@@ -43,19 +44,27 @@ const FormGoogleSpreadsheetDataPoint = ({
 		reset,
 		formState: { errors },
 	} = useForm();
+	const { user } = useAuth0();
+	const [serviceAccount, setServiceAccount] = useState('No Data Source Detected');
 	const [createGoogleSpreadsheetDataPoint] = useMutation(CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION);
-	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS);
+	const { error: dataSourceError, loading: loadingDataSource, data: dataSource } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES, {
+		variables: { org_id: user.org_id }
+	});
+	const fetchDataSource = async  () => {
+		setServiceAccount(dataSource.getAllGoogleSpreadsheetDataSources[0].service_account)
+	};
 	const { setNotifyMessage } = useContext(AppContext);
-
 	const onSubmit = async (data) => {
 		try {
-			await createGoogleSpreadsheetDataPoint({
+			createGoogleSpreadsheetDataPoint({
 				variables: {
+					org_id: user.org_id,
 					title: data.dataPointName,
 					description: data.dataPointDescription,
 					spreadsheet_id: data.spreadSheetId,
 					cell: data.cell,
-					sheet_id: data.sheetId
+					sheet_id: data.sheetId,
+					service_account: serviceAccount
 				},
 				refetchQueries: [LOAD_GOOGLE_SPREADSHEET_DATA_POINTS]
 
@@ -65,18 +74,25 @@ const FormGoogleSpreadsheetDataPoint = ({
 		}
 		catch (error) {
 			console.log(error);
-			setNotifyMessage("Something went wrong");
+			setNotifyMessage(`Something went wrong, ${error}`);
 		}
 		finally {
 			setOpenModal(false);
 			reset();
 		}
 	}
+	useEffect(() => {
+		if(dataSource) {
+			setServiceAccount(dataSource.getAllGoogleSpreadsheetDataSources[0].service_account)
+		}
+		
+
+	},[dataSource])
 
 	return (
 		<div>
 
-			<Title>Google sheets </Title>
+			<Title>Google sheets</Title>
 			<Card
 				small
 			>

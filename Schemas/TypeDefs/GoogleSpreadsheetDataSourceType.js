@@ -4,6 +4,7 @@ const { GraphQLObjectType, GraphQLString } = require('graphql');
 const GoogleSpreadsheetDataSourceType = new GraphQLObjectType({
 	name: 'GoogleSpreadsheetDataSource',
 	fields: () => ({
+		org_id: { type: GraphQLString }, 
 		id: { type: GraphQLString },
 		title: { type: GraphQLString },
 		description: { type: GraphQLString },
@@ -15,4 +16,4 @@ const GoogleSpreadsheetDataSourceType = new GraphQLObjectType({
 	})
 });
 
-module.exports = GoogleSpreadsheetDataSourceType
+module.exports = GoogleSpreadsheetDataSourceType;

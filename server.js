@@ -29,9 +29,11 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({
 	extended: true
 }));
+
 app.get('*', (req, res) => {
 	res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
 });
 
-app.listen(process.env.PORT || 5000,
-	() => console.log("Server is running..."));
+app.listen(process.env.PORT || 5000, () => console.log("Server is running..."));
+
+	

@@ -19,6 +19,7 @@ import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
 import { useQuery, gql } from '@apollo/client';
 import { GET_VALUE_FROM_GOOGLE_SPREADSHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINT } from '../GraphQL/Queries';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -37,12 +38,15 @@ const Label = styled.p`
 
 
 const DataPoint = () => {
+	const { user } = useAuth0();
+
 	let { id } = useParams();
 	const [googleValue, setGoogleValue] = useState({
 		value: 'Loading data...'
 	});
 	const [dataPoint, setDataPoint] = useState(
 		{
+			created_at: 'Loading data...',
 			title: 'Loading data...',
 			description: 'Loading data...',
 			updated_at: 'Loading data...',
@@ -52,20 +56,22 @@ const DataPoint = () => {
 			spreadsheetId: 'Loading data...',
 			sheetId: 'Loading data...',
 			creator: 'Loading data...',
-			data_point_group: 'Loading data...'
+			data_point_group: 'Loading data...',
+			serviceAccount: 'Loading data...'
 
 		}
 	);
 
 	const { error, loading, data: dataPointData } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINT, {
-		variables: { id: id }
+		variables: { id: id, org_id: user.org_id }
 	});
 	const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
 		// skip: !dataPointData,
 		variables: {
 			cell: `${dataPoint.cell}`,
 			spreadsheetId: `${dataPoint.spreadsheetId}`,
-			sheetId: `${dataPoint.sheetId}`
+			sheetId: `${dataPoint.sheetId}`,
+			serviceAccount: `${dataPoint.serviceAccount}`
 		}
 		// ,
 		// pollInterval: 5000,
@@ -73,11 +79,13 @@ const DataPoint = () => {
 	});
 	useEffect(() => {
 		if (dataPointData) {
+			console.log(dataPointData)
 			window.scroll(0, 0);
 			setDataPoint({
 				...dataPoint,
 				title: dataPointData.getGoogleSpreadsheetDataPoint[0].title,
 				description: dataPointData.getGoogleSpreadsheetDataPoint[0].description,
+				created_at: dataPointData.getGoogleSpreadsheetDataPoint[0].created_at,
 				updated_at: dataPointData.getGoogleSpreadsheetDataPoint[0].updated_at,
 				deleted_at: dataPointData.getGoogleSpreadsheetDataPoint[0].deleted_at,
 				value: dataPointData.getGoogleSpreadsheetDataPoint[0].value,
@@ -85,14 +93,16 @@ const DataPoint = () => {
 				spreadsheetId: dataPointData.getGoogleSpreadsheetDataPoint[0].spreadsheet_id,
 				sheetId: dataPointData.getGoogleSpreadsheetDataPoint[0].sheet_id,
 				creator: dataPointData.getGoogleSpreadsheetDataPoint[0].creator,
-				data_point_group: dataPointData.getGoogleSpreadsheetDataPoint[0].data_point_group
+				data_point_group: dataPointData.getGoogleSpreadsheetDataPoint[0].data_point_group,
+				serviceAccount: dataPointData.getGoogleSpreadsheetDataPoint[0].service_account
 			})
 		}
 		DataPointContent();
 	}, [dataPointData]);
-	console.log("Datapoint data", dataPointData)
+
 	useEffect(() => {
 		if (googleData) {
+			console.log('data from google', googleData.getValueFromGoogleSpreadsheet)
 			setGoogleValue({
 				...googleValue,
 				value: googleData.getValueFromGoogleSpreadsheet[0].value,
@@ -103,12 +113,7 @@ const DataPoint = () => {
 
 
 
-	const {
-		dashboardData,
-		setAppLocation,
-		user,
-		something
-	} = useContext(AppContext);
+
 
 	const {
 		control,
