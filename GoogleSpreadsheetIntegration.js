@@ -2,7 +2,7 @@ require('dotenv').config()
 const express = require('express');
 
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const cert = require('./cert.json'); // the file saved above
+// const cert = require('./cert.json'); // the file saved above
 const {promisify} = require("es6-promisify");
 
 
@@ -17,8 +17,8 @@ const ParsedCert = JSON.parse(Cert);
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);
 
 	await doc.useServiceAccountAuth({
-	  client_email: serviceAccount,
-	//   private_key: ParsedCert.private_key,
+	  client_email: ParsedCert.client_email,
+	  private_key: ParsedCert.private_key,
 	});
 
 
