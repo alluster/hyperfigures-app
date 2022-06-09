@@ -11,7 +11,7 @@ const {promisify} = require("es6-promisify");
 
  const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId, sheetId, org_id}) => {
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);
-	const Cert = process.env.REACT_APP_CERT[org_id];
+	const Cert = process.env['REACT_APP_CERT_' + org_id];
 	const ParsedCert = JSON.parse(Cert);
 	await doc.useServiceAccountAuth({
 	  client_email: ParsedCert.client_email,
