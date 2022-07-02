@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import Container from './Container';
 import { device } from '../device';
 
 const FooterWrapper = styled.div`
@@ -100,7 +99,7 @@ const Footer = ({
 
 		</FooterWrapper>
 
-	)
-}
+	);
+};
 
 export default Footer;

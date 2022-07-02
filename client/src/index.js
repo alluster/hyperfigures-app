@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { Auth0Provider } from "@auth0/auth0-react";
+import { Auth0Provider } from '@auth0/auth0-react';
 import './i18n';
 
 ReactDOM.render(
@@ -12,7 +12,7 @@ ReactDOM.render(
 			clientId={process.env.REACT_APP_CLIENT_ID}
 			redirectUri={process.env.REACT_APP_REDIRECT_URI}
 			useRefreshTokens={true}
-			cacheLocation="localstorage"
+			cacheLocation='localstorage'
 		>
 			<App />
 		</Auth0Provider>

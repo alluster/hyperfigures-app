@@ -5,11 +5,10 @@ import { device } from './device';
 import theme from './theme';
 import { ThemeProvider } from 'styled-components';
 import { createGlobalStyle } from 'styled-components';
-import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { fas } from '@fortawesome/free-solid-svg-icons';
-import { AppContext } from './context/Context';
-import { withAuthenticationRequired } from "@auth0/auth0-react";
+import { withAuthenticationRequired } from '@auth0/auth0-react';
 
 import Provider from './context/Provider';
 
@@ -60,8 +59,8 @@ const client = new ApolloClient({
 	link: link,
 	fetchOptions: {
 		mode: 'no-cors',   // <== Note the fetch options
-	  }
-})
+	}
+});
 
 library.add(fas);
 
@@ -225,33 +224,33 @@ const App = () => {
 	);
 	return (
 		<ApolloProvider client={client} >
-		<Suspense fallback={<SpinnerSmall />}>
-			<ThemeProvider theme={theme}>
-				<Provider>
-					<Router>
-						<Navigation />
-						<TopNav />
-						<Notification />
-						<Switch>
-							<Route exact path="/" component={() => <Home />} />
-							<PrivateRoute exact path="/user" component={Profile} />
-							<PrivateRoute exact path="/dashboards/:id" component={Dashboard} />
-							<PrivateRoute exact path="/dashboards" component={Dashboards} />
-							<PrivateRoute exact path="/error" component={ErrorPage} />
-							<PrivateRoute exact path="/datapoints" component={DataPoints} />
-							<PrivateRoute exact path="/datapoints/:id" component={DataPoint} />
-							<PrivateRoute exact path="/datasources" component={DataSources} />
-							<PrivateRoute exact path="/datasources/google" component={DataSourceGoogle} />
+			<Suspense fallback={<SpinnerSmall />}>
+				<ThemeProvider theme={theme}>
+					<Provider>
+						<Router>
+							<Navigation />
+							<TopNav />
+							<Notification />
+							<Switch>
+								<Route exact path="/" component={() => <Home />} />
+								<PrivateRoute exact path="/user" component={Profile} />
+								<PrivateRoute exact path="/dashboards/:id" component={Dashboard} />
+								<PrivateRoute exact path="/dashboards" component={Dashboards} />
+								<PrivateRoute exact path="/error" component={ErrorPage} />
+								<PrivateRoute exact path="/datapoints" component={DataPoints} />
+								<PrivateRoute exact path="/datapoints/:id" component={DataPoint} />
+								<PrivateRoute exact path="/datasources" component={DataSources} />
+								<PrivateRoute exact path="/datasources/google" component={DataSourceGoogle} />
 
 
-							<Route exact path="/loginpage" component={Login} />
-						</Switch>
-						<Footer />
-					</Router>
-					<GlobalStyle />
-				</Provider>
-			</ThemeProvider>
-		</Suspense>
+								<Route exact path="/loginpage" component={Login} />
+							</Switch>
+							<Footer />
+						</Router>
+						<GlobalStyle />
+					</Provider>
+				</ThemeProvider>
+			</Suspense>
 		</ApolloProvider>
 
 	);

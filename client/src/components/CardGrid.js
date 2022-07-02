@@ -1,3 +1,4 @@
+import React from 'react';
 import Masonry, { ResponsiveMasonry } from 'react-responsive-masonry';
 import styled from 'styled-components';
 
@@ -18,8 +19,8 @@ const CardGrid = ({ children }) => {
 			</ResponsiveMasonry>
 		</CardGridWrapper>
 
-	)
-}
+	);
+};
 
 
 export default CardGrid;

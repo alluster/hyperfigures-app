@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDatabase, faTh, faColumns, faWindowClose, faCog, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faTh, faColumns, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 
 const SideNav = styled.div`
 	position: fixed;
@@ -265,7 +265,7 @@ const Navigation = () => {
 	return (
 		<div>
 			<MobileNavToggleContainer mobileNavOpen={mobileNavOpen}
->
+			>
 
 				<LogoMobile>
 					<LogoMobileImage src="/arm-logo-dark.svg" />

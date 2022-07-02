@@ -12,7 +12,7 @@ const LineWrapper = styled.div`
 
 const DividerLine = () => {
 	return(
-	<LineWrapper/>
+		<LineWrapper/>
 	
 	);
 };
