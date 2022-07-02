@@ -69,7 +69,7 @@ const StyledButton = styled.button `
 const Button = ({style, download, target,  onClick, type, form, children, to, primary, color, className, textColor, small, white, success, alert, dividerRight}) => {
 	return(<div onClick={onClick}>
 		{
-			type === 'submit' || 'reset' ?
+			type === 'submit' || type === 'reset' || type === 'button' ?
 				<StyledButton 
 					download={download}
 					target={target}

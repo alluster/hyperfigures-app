@@ -1,12 +1,10 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import Button from './Button';
-import SpinnerSmall from './SpinnerSmall';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faClipboardList, faComments } from '@fortawesome/free-solid-svg-icons';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Wrapper = styled.div`
 	height: 48px;
@@ -44,7 +42,7 @@ const Icon = styled(FontAwesomeIcon) `
 	margin-right: 40px;
 	margin-left: 20px;
 
-`
+`;
 
 const LinkContainer = styled(Link)`
 	display: flex;
@@ -66,29 +64,29 @@ const TopNav = () => {
 		<Wrapper>
 
 			{
-					isAuthenticated ?
-						<Links>
+				isAuthenticated ?
+					<Links>
 						
-							<Link to="/user">
-								<p>
+						<Link to="/user">
+							<p>
 								{user.email}
-								</p>
+							</p>
 								
-							</Link>
-						</Links>
+						</Link>
+					</Links>
 
-						:
-						<Links>
-							<a onClick={() => loginWithRedirect()}>
-								<Button
-									primary
-									type=""
-									small
-								>
+					:
+					<Links>
+						<a onClick={() => loginWithRedirect()}>
+							<Button
+								primary
+								type='button'
+								small
+							>
 									Login
-								</Button>
-							</a>
-						</Links>
+							</Button>
+						</a>
+					</Links>
 			}
 
 

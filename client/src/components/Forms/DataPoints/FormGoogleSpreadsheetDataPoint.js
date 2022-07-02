@@ -3,13 +3,11 @@ import styled from 'styled-components';
 import { AppContext } from '../../../context/Context';
 
 import { useForm } from 'react-hook-form';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { useMutation } from '@apollo/client';
 import FormCompiler from '../../../supportFunctions/FormComplier';
-import TextWithLabel from '../../TextWithLabel';
-import Card from '../../Card';
 import { CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION } from '../../../GraphQL/Mutations';
-import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS, LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES } from '../../../GraphQL/Queries';
+import { LOAD_GOOGLE_SHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS, LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES } from '../../../GraphQL/Queries';
 import { useAuth0 } from '@auth0/auth0-react';
 
 const ButtonRow = styled.div`
@@ -23,18 +21,19 @@ const HelperText = styled.p`
 	margin-top: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_2};
 
-`
+`;
 const Title = styled.h4`
 	margin-top: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_2};
 
-`
+`;
 const FormGoogleSpreadsheetDataPoint = ({
 	openModal,
 	onSubmitFunction,
 	resetFunction,
 	fields,
 	buttonTitle,
+	options,
 	setOpenModal
 }) => {
 	const {
@@ -45,30 +44,43 @@ const FormGoogleSpreadsheetDataPoint = ({
 		formState: { errors },
 	} = useForm();
 	const { user } = useAuth0();
+	const [sheetId, setSheetId] = useState('');
+	const [spreadsheetId, setSpreadsheetId] = useState('');
+	const [sheetTitle, setSheetTitle] = useState('');
+	const [sheetIdFromDatabase, setSheetIdFromDatabase] = useState('');
 	const [serviceAccount, setServiceAccount] = useState('No Data Source Detected');
 	const [createGoogleSpreadsheetDataPoint] = useMutation(CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION);
-	const { error: dataSourceError, loading: loadingDataSource, data: dataSource } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES, {
+
+	const {  data: dataSource } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES, {
 		variables: { org_id: user.org_id }
 	});
-	const fetchDataSource = async  () => {
-		setServiceAccount(dataSource.getAllGoogleSpreadsheetDataSources[0].service_account)
-	};
+
+	const { data: dataSheet } = useQuery(LOAD_GOOGLE_SHEET, {
+		variables: { org_id: user.org_id, id: sheetIdFromDatabase }
+	});
+
 	const { setNotifyMessage } = useContext(AppContext);
+
+
 	const onSubmit = async (data) => {
+
 		try {
+			console.log(spreadsheetId);
 			createGoogleSpreadsheetDataPoint({
-				variables: {
+				variables:{
 					org_id: user.org_id,
 					title: data.dataPointName,
 					description: data.dataPointDescription,
-					spreadsheet_id: data.spreadSheetId,
-					cell: data.cell,
-					sheet_id: data.sheetId,
-					service_account: serviceAccount
+					spreadsheet_id: spreadsheetId ,
+					cell: data.cell.toUpperCase(),
+					sheet_id: sheetId,
+					sheet_title: sheetTitle,
+					service_account: serviceAccount,
+					deleted_at: null
 				},
 				refetchQueries: [LOAD_GOOGLE_SPREADSHEET_DATA_POINTS]
 
-			})
+			});
 			setNotifyMessage(`New Data Point ${data.dataPointName} added`);
 
 		}
@@ -80,31 +92,30 @@ const FormGoogleSpreadsheetDataPoint = ({
 			setOpenModal(false);
 			reset();
 		}
-	}
+	};
 	useEffect(() => {
 		if(dataSource) {
-			setServiceAccount(dataSource.getAllGoogleSpreadsheetDataSources[0].service_account)
+			setServiceAccount(dataSource.getAllGoogleSpreadsheetDataSources[0].service_account);
+		}
+		// console.log('options', options);
+		
+	},[dataSource]);
+
+	useEffect(() => {
+		if(dataSheet){
+			
+			setSheetId(dataSheet && dataSheet.getGoogleSheet.length > 0 ? dataSheet.getGoogleSheet[0].sheet_id : 'No sheet_id added');
+			setSpreadsheetId(dataSheet && dataSheet.getGoogleSheet.length > 0 ? dataSheet.getGoogleSheet[0].spreadsheet_id : 'No spreadsheet_id added');
+			setSheetTitle(dataSheet && dataSheet.getGoogleSheet.length > 0 ? dataSheet.getGoogleSheet[0].title : 'No title added');
+
 		}
 		
-
-	},[dataSource])
-
+	}, [sheetIdFromDatabase, dataSheet]);
 	return (
 		<div>
 
-			<Title>Google sheets</Title>
-			<Card
-				small
-			>
-				<TextWithLabel
-					title={<p>Make sure you have invited your <a target="blank" style={{ color: 'blue' }} href='/datasources'>Hyperfigures Google Service Account</a> to the Google Spreadsheet you want to connect to. The required ID's for connection can be found from the Google Spreadsheet URL as displayed bellow.</p>}
-					label='Requirements'
-				/>
-					<HelperText>Example spreadsheet id:</HelperText>
-			<img src="/spreadsheet_id.jpg" />
-			<HelperText>Example sheet id:</HelperText>
-			<img src="/sheet_id.jpg" />
-			</Card>
+			<Title>Add Datapoint</Title>
+	
 
 		
 			<FormCompiler
@@ -117,50 +128,43 @@ const FormGoogleSpreadsheetDataPoint = ({
 					[
 
 						{
-							type: "input",
-							name: "spreadSheetId",
-							label: "Spreadsheet ID",
-							options: "",
+							type: 'select',
+							name: 'googleSheet',
+							label: 'Select Google Sheet',
+							options: options,
+							placeholder: 'Select',
 							required: true,
-							errorMessage: "Spreadsheet ID is required",
-							placeholder: "ID can be found from the sheet URL"
+							errorMessage: 'Google Sheet is required. Add new Sheet in Data Sources view',
+							onChange: (e) => setSheetIdFromDatabase(e)
 						},
 						{
-							type: "input",
-							name: "sheetId",
-							label: "Sheet ID",
-							options: "",
+							type: 'input',
+							name: 'cell',
+							label: 'Cell',
+							options: '',
 							required: true,
-							errorMessage: "Sheet ID is required",
-							placeholder: "ID can be found from the sheet URL"
+							errorMessage: 'Data Point cell is required',
+							placeholder: 'Choose a Cell from spreadsheet'
 						},
 						{
-							type: "input",
-							name: "cell",
-							label: "Sheet Cell",
-							options: "",
+							type: 'input',
+							name: 'dataPointName',
+							label: 'Display Name',
+							options: '',
 							required: true,
-							errorMessage: "Cell ID is required",
-							placeholder: "Example: C4"
+							errorMessage: 'Data Point name is required',
+							placeholder: 'Display name will be shown on the dashboard'
 						},
 						{
-							type: "input",
-							name: "dataPointName",
-							label: "Display Name",
-							options: "",
-							required: true,
-							errorMessage: "Data Point name is required",
-							placeholder: "Display name will be shown on the dashboard"
-						},
-						{
-							type: "input",
-							name: "dataPointDescription",
-							label: "Data Point Description",
-							options: "",
+							type: 'input',
+							name: 'dataPointDescription',
+							label: 'Data Point Description',
+							options: '',
 							required: false,
-							errorMessage: "",
-							placeholder: "Describe your Data Point"
+							errorMessage: '',
+							placeholder: 'Describe your Data Point'
 						}
+					
 					]
 				}
 

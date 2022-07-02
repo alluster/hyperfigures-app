@@ -4,7 +4,7 @@ import { AppContext } from '../context/Context';
 import { device } from '../device';
 import Button from '../components/Button';
 import Container from '../components/Container';
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Wrapper = styled.div`
 	@media ${device.laptop} {
@@ -24,16 +24,16 @@ const Profile = () => {
 		<Container>
 		
 			{
-				  isAuthenticated ?
+				isAuthenticated ?
 					<div>
 						<a onClick={() => logout({ returnTo: window.location.origin })}>
 							<Button
 								primary
-								type=""
+								type='button'
 
 							>
 								Logout
-								</Button>
+							</Button>
 						</a>
 					</div>
 
@@ -42,10 +42,10 @@ const Profile = () => {
 					<a onClick={() => loginWithRedirect()}>
 						<Button
 							primary
-							type=""
+							type='button'
 						>
 							Login
-							</Button>
+						</Button>
 					</a>
 
 

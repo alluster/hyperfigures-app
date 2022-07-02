@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { device } from '../device';
-import { Link } from 'react-router-dom';
 import Card from './Card';
 import TextWithLabel from './TextWithLabel';
 import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
@@ -25,9 +23,9 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 	const [barChart, setBarChart] = useState(false);
 
 	useEffect(() => {
-		console.log("datapoints:", dataPoints)
+		console.log('datapoints:', dataPoints);
 		setData(dataPoints);
-	}, [dataPoints])
+	}, [dataPoints]);
 	return (
 		<Card>
 			<TextWithLabel
@@ -65,7 +63,7 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 											/>
 										</Card>
 
-									)
+									);
 								}) :
 								<p>no data</p>
 						}
@@ -73,6 +71,7 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 
 			}
 			<Button
+				type='button'
 				primary
 				small
 				onClick={() => setBarChart(!barChart)} >

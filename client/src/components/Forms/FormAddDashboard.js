@@ -1,8 +1,6 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Button from './../Button';
 import { useForm } from 'react-hook-form';
-import { device } from '../../device';
 import FormCompiler from '../../supportFunctions/FormComplier';
 
 const ButtonRow = styled.div`
@@ -20,6 +18,7 @@ const FormAddDashboard = ({
 	resetFunction,
 	fields,
 	buttonTitle,
+	onSubmit
 }) => {
 	const {
 		control,
@@ -33,9 +32,7 @@ const FormAddDashboard = ({
 
 	return (
 		<div>
-
 			{FormCompiler({ fields: fields, onSubmit })}
-			
 		</div>
 
 	);

@@ -16,4 +16,4 @@ const DataPointGroupType = new GraphQLObjectType({
 });
 
 
-module.exports = DataPointGroupType
+module.exports = DataPointGroupType;

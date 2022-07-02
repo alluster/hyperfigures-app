@@ -1,8 +1,6 @@
 const { GraphQLObjectType, GraphQLSchema, GraphQLInt, GraphQLID, GraphQLList, GraphQLString, GraphQLFloat } = require('graphql');
 const graphql = require('graphql');
-const dashboardData = require('../MOCK_DASHBOARDS.json');
-const GoogleSpreadsheetDataPointData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_POINTS.json');
-const GoogleSpreadsheetDataSourceData = require('../MOCK_GOOGLE_SPREADSHEET_DATA_SOURCES.json');
+
 const GoogleSpreadsheetDataPointType = require('./TypeDefs/GoogleSpreadsheetDataPointType');
 const GoogleSpreadsheetDataSourceType = require('./TypeDefs/GoogleSpreadsheetDataSourceType');
 const GoogleSpreadsheetIntegration = require( '../GoogleSpreadsheetIntegration');
@@ -15,6 +13,12 @@ const GetDataPointsGoogleSheets = require('../SQL/GetDataPointsGoogleSheets');
 const GetDataSourceGoogleSheets = require('../SQL/GetDataSourceGoogleSheets');
 const CreateDataPointGoogleSpreadSheet = require('../SQL/CreateDataPointGoogleSpreadSheet');
 const GetDataPointGoogleSheets = require('../SQL/GetDataPointGoogleSheets');
+const CreateGoogleSheet = require('../SQL/CreateGoogleSheet');
+const GoogleSheetType = require('./TypeDefs/GoogleSheetType');
+var GraphQLDate = require('graphql-date');
+const UpdateDataPointGoogleSpreadSheet = require('../SQL/UpdateDataPointGoogleSpreadSheet');
+const GetGoogleSheets = require('../SQL/GetGoogleSheets');
+const GetGoogleSheet = require('../SQL/GetGoogleSheet');
 
 
  
@@ -36,7 +40,6 @@ const RootQuery = new GraphQLObjectType({
 				org_id: { type: GraphQLString}
 			},
 			resolve(parent, args) {
-				console.log('hello');
 				const res = GoogleSpreadsheetIntegration({
 					cell: args.cell,
 					spreadsheetId: args.spreadsheetId,
@@ -104,8 +107,30 @@ const RootQuery = new GraphQLObjectType({
 				const data = GetDashboard({ org_id: args.org_id, id: args.id });
 				return data;
 			}
+		},
+		getAllGoogleSheets: {
+			type: new GraphQLList(GoogleSheetType),
+			args: { org_id: { type: GraphQLString }	},
+			resolve(parent, args) {
+				const data = GetGoogleSheets(args.org_id);
+				return data;
+		
+				
+			}
+
+		},
+		getGoogleSheet: {
+			type: new GraphQLList(GoogleSheetType),
+			args: { 
+				org_id: { type: GraphQLString },
+				id: { type: GraphQLString }
+			},			
+			resolve(parent, args) {
+				const data = GetGoogleSheet({ org_id: args.org_id, id: args.id });
+				return data;	
+			}
 		}
-	}
+}
 });
 
 const Mutation = new GraphQLObjectType({
@@ -115,13 +140,15 @@ const Mutation = new GraphQLObjectType({
 			type: GoogleSpreadsheetDataPointType,
 			args: {
 				org_id: { type: GraphQLString },
-				id: { type: GraphQLInt },
+				id: { type: GraphQLString },
 				title: { type: GraphQLString },
 				description: { type: GraphQLString },
 				spreadsheet_id:  { type: GraphQLString },
 				sheet_id: { type: GraphQLString },
+				sheet_title: {type: GraphQLString },
 				cell:  { type: GraphQLString },
-				service_account: { type: GraphQLString }
+				service_account: { type: GraphQLString },
+				deleted_at: { type: GraphQLDate }
 			},
 			resolve(parent, args) {
 				CreateDataPointGoogleSpreadSheet({
@@ -130,8 +157,26 @@ const Mutation = new GraphQLObjectType({
 					description: args.description,
 					spreadsheet_id:  args.spreadsheet_id,
 					sheet_id: args.sheet_id,
+					sheet_title: args.sheet_title,
 					cell:  args.cell,
-					service_account: args.service_account
+					service_account: args.service_account,
+					deleted_at: args.deleted_at || null
+				});
+				return args;
+			}
+		},
+		updateGoogleSpreadsheetDataPoint: {
+			type: GoogleSpreadsheetDataPointType,
+			args: {
+				org_id: { type: GraphQLString },
+				id: { type: GraphQLString },
+				deleted_at: { type: GraphQLDate }
+			},
+			resolve(parent, args) {
+				UpdateDataPointGoogleSpreadSheet({
+					org_id: args.org_id,
+					id: args.id,
+					deleted_at: args.deleted_at
 				});
 				return args;
 			}
@@ -148,6 +193,26 @@ const Mutation = new GraphQLObjectType({
 					org_id: args.org_id,
 					title: args.title,
 					description: args.description
+				});
+				return args;
+			}
+		},
+		createGoogleSheet: {
+			type: GoogleSheetType,
+			args: {
+				org_id: { type: GraphQLString },
+				title: { type: GraphQLString },
+				description: { type: GraphQLString },
+				spreadsheet_id: { type: GraphQLString },
+				sheet_id: { type: GraphQLString }
+			},
+			resolve(parent, args) {
+				CreateGoogleSheet ({
+					org_id: args.org_id,
+					title: args.title,
+					description: args.description,
+					spreadsheet_id: args.spreadsheet_id,
+					sheet_id: args.sheet_id
 				});
 				return args;
 			}

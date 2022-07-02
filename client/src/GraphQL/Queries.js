@@ -41,11 +41,54 @@ export const LOAD_GOOGLE_SPREADSHEET_DATA_POINT = gql`
 			deleted_at
 			cell
 			sheet_id
+			sheet_title
 			spreadsheet_id
 			service_account
 			org_id
 		}}
 `;
+
+export const LOAD_GOOGLE_SHEETS = gql`
+	query getAllGoogleSheets(
+		$org_id: String!
+	)
+		{getAllGoogleSheets(
+			org_id: $org_id
+		) {
+			id
+			title
+			description
+			created_at
+			updated_at
+			deleted_at
+			sheet_id
+			spreadsheet_id
+			org_id
+		}}
+`;
+
+
+export const LOAD_GOOGLE_SHEET = gql`
+	query getGoogleSheet(
+		$org_id: String!
+		$id: String!
+	)
+		{getGoogleSheet(
+			org_id: $org_id
+			id: $id
+		) {
+			id
+			title
+			description
+			created_at
+			updated_at
+			deleted_at
+			sheet_id
+			spreadsheet_id
+			org_id
+		}}
+`;
+
 export const LOAD_GOOGLE_SPREADSHEET_DATA_POINTS = gql`
 	query getAllGoogleSpreadsheetDataPoints($org_id: String!)
 		{getAllGoogleSpreadsheetDataPoints(org_id: $org_id) {
@@ -57,6 +100,7 @@ export const LOAD_GOOGLE_SPREADSHEET_DATA_POINTS = gql`
 			spreadsheet_id
 			org_id
 			service_account 
+			sheet_title
 	}}
 `;
 export const LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES = gql`

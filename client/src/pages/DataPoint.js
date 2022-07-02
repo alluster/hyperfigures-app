@@ -3,23 +3,21 @@
 import React, { useEffect, useContext, useState } from 'react';
 import styled from 'styled-components';
 import { AppContext } from '../context/Context';
-import axios from 'axios';
 import Card from '../components/Card';
-import CardGrid from '../components/CardGrid';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
-import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
-import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
 import { useParams, useHistory } from 'react-router-dom';
+import { useMutation } from '@apollo/client';
 
-import InputNumber from '../components/InputNumber';
-import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { GET_VALUE_FROM_GOOGLE_SPREADSHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINT } from '../GraphQL/Queries';
+import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
 import { useAuth0 } from '@auth0/auth0-react';
+import Button from '../components/Button';
+import { CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION, UPDATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION } from '../GraphQL/Mutations';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -34,11 +32,16 @@ const Divider = styled.div`
 const Label = styled.p`
 	color: ${props => props.theme.colors.gray_130};
 	font-size: 14px;
-`
+`;
 
 
 const DataPoint = () => {
+	const [createGoogleSpreadsheetDataPoint] = useMutation(CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION);
+	const [updateGoogleSpreadsheetDataPoint] = useMutation(UPDATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION);
+
+	const history = useHistory();
 	const { user } = useAuth0();
+	const { setNotifyMessage } = useContext(AppContext);
 
 	let { id } = useParams();
 	const [googleValue, setGoogleValue] = useState({
@@ -61,7 +64,27 @@ const DataPoint = () => {
 
 		}
 	);
-
+	const onDelete = async () => {
+		try {
+			await updateGoogleSpreadsheetDataPoint({
+				variables: {
+					org_id: user.org_id,
+					id: id,
+					deleted_at: Date.now()
+				},
+				refetchQueries: [LOAD_GOOGLE_SPREADSHEET_DATA_POINTS]
+	
+			});
+			setNotifyMessage('Data Point deleted');
+			history.push('/datapoints');
+	
+		}
+		catch (error) {
+			console.log(error);
+			setNotifyMessage(`Something went wrong, ${error}`);
+		}
+	
+	};
 	const { error, loading, data: dataPointData } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINT, {
 		variables: { id: id, org_id: user.org_id }
 	});
@@ -80,7 +103,6 @@ const DataPoint = () => {
 	});
 	useEffect(() => {
 		if (dataPointData) {
-			console.log(dataPointData)
 			window.scroll(0, 0);
 			setDataPoint({
 				...dataPoint,
@@ -95,27 +117,25 @@ const DataPoint = () => {
 				sheetId: dataPointData.getGoogleSpreadsheetDataPoint[0].sheet_id,
 				creator: dataPointData.getGoogleSpreadsheetDataPoint[0].creator,
 				data_point_group: dataPointData.getGoogleSpreadsheetDataPoint[0].data_point_group,
-				serviceAccount: dataPointData.getGoogleSpreadsheetDataPoint[0].service_account
-			})
+				serviceAccount: dataPointData.getGoogleSpreadsheetDataPoint[0].service_account,
+				sheetTitle: dataPointData.getGoogleSpreadsheetDataPoint[0].sheet_title
+			});
 		}
 		DataPointContent();
 	}, [dataPointData]);
 
 	useEffect(() => {
 		if (googleData) {
-			console.log('data from google', googleData.getValueFromGoogleSpreadsheet)
 			setGoogleValue({
 				...googleValue,
 				value: googleData.getValueFromGoogleSpreadsheet[0].value,
 
-			})
+			});
 		}
 	}, [googleData]);
-
-
-
-
-
+	useEffect(() => {
+		window.scroll(0, 0);
+	}, []);
 	const {
 		control,
 		register,
@@ -129,9 +149,9 @@ const DataPoint = () => {
 		if (loading) {
 			return (
 				<p>Loading data...</p>
-			)
+			);
 		}
-		if (error) { console.log('error', error) }
+		if (error) { console.log('error', error); }
 		else {
 			return (
 				<div>
@@ -171,7 +191,10 @@ const DataPoint = () => {
 							/>
 						</Card>
 						<Card>
-
+							<TextWithLabel
+								title={dataPoint.sheetTitle}
+								label="Sheet name"
+							/>
 							<TextWithLabel
 								title={dataPoint.spreadsheetId}
 								label="Spreadsheet"
@@ -186,15 +209,15 @@ const DataPoint = () => {
 							/>
 
 						</Card>
-
+						<Button primary type='button' onClick={() => onDelete()} ><p>Delete Data Point</p></Button>
 					</div>
 
 
 				</div>
 
 
-			)
-		};
+			);
+		}
 	};
 
 	return (

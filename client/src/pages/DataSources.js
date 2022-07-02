@@ -1,15 +1,16 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AppContext } from '../context/Context';
 import Card from '../components/Card';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
-import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
 import { useForm } from 'react-hook-form';
 import TextWithLabel from '../components/TextWithLabel';
 import { LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES } from '../GraphQL/Queries';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
+import { useAuth0 } from '@auth0/auth0-react';
+import Button from '../components/Button';
+import DividerLine from '../components/DividerLine';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -23,17 +24,23 @@ const Wrapper = styled.div`
 	margin-top: ${props => props.theme.grid.divider_4};
 `;
 
+
+
 const DataSources = () => {
+	const { user } = useAuth0();
+
 	const [dataSources, setDataSources] = useState([]);
-	const { data, error, loading } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES);
+	const { data, error, loading } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES, {
+		variables: { org_id: user.org_id  }
+	});
 	const DataSources = () => {
 
 		if (loading) {
 			return (
 				<p>Loading data...</p>
-			)
+			);
 		}
-		if (error) { console.log('error occured', error) }
+		if (error) { console.log('error occured', error); }
 		else {
 			return (
 				dataSources.map((item, i) => {
@@ -42,9 +49,9 @@ const DataSources = () => {
 							key={i}
 							row
 						>
-							<Logo>
-								<img src="/google_sheets.png" alt="Google Steets" />
-							</Logo>
+							{/* <Logo>
+								<img src="/google_sheets.png" alt="Google Sheets" />
+							</Logo> */}
 
 							<TextWithLabel
 								title={item.title}
@@ -54,19 +61,15 @@ const DataSources = () => {
 								title={item.service_account}
 								label="Service Account Email"
 							/>
-
+							<DividerLine/>
+							<Button primary to='/datasources/google'>Connect to a Google Sheet</Button>
 						</Card>
-					)
+					);
 				})
-			)
-		};
+			);
+		}
 	};
-	const {
-		dashboardData,
-		setAppLocation,
-		user,
-		something
-	} = useContext(AppContext);
+
 
 	const {
 		control,
@@ -76,15 +79,11 @@ const DataSources = () => {
 		formState: { errors },
 	} = useForm();
 
-	const onSubmit = async (data) => {
-		console.log(data)
-
-	};
 	useEffect(() => {
 		window.scroll(0, 0);
 
 		if (data) {
-			setDataSources(data.getAllGoogleSpreadsheetDataSources)
+			setDataSources(data.getAllGoogleSpreadsheetDataSources);
 		}
 	}, [data]);
 
@@ -98,6 +97,7 @@ const DataSources = () => {
 			/>
 			<Wrapper>
 				{DataSources()}
+			
 			</Wrapper>
 
 

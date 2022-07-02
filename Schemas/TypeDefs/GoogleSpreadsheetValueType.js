@@ -4,7 +4,7 @@ const { GraphQLObjectType, GraphQLFloat, GraphQLString } = require('graphql');
 const GoogleSpreadsheetValueType = new GraphQLObjectType({
 	name: 'GoogleSpreadsheetValueType',
 	fields: () => ({
-		value: { type: GraphQLFloat },
+		value: { type: GraphQLString },
 		cell: { type: GraphQLString },
 		spreadsheetId: { type: GraphQLString },
 		sheetId: { type: GraphQLString }

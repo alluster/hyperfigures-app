@@ -71,7 +71,9 @@ const Login = () => {
 						</Button>
 					</a>
 					<h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5> */}
-					<Button primary onClick={handleClick}>Get in touch</Button>
+					<Button 		
+						type='button'
+						primary onClick={handleClick}>Get in touch</Button>
 
 				</WelcomeTitle>
 			</Container>

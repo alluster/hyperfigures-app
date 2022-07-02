@@ -18,7 +18,6 @@ app.use ('/graphql', graphqlHTTP({
 app.post('/api', async (req, res) => {
 	const response = await accessSpreadsheet(req.params.cell);
 	console.log("response:", response)
-	res.json("hello")
 })	
 
 

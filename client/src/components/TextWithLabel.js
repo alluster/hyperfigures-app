@@ -1,4 +1,4 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const Wrapper = styled.div`
@@ -9,14 +9,12 @@ const Wrapper = styled.div`
 
 const Label = styled.p`
 	color: ${props => props.theme.colors.gray_80};
-	font-size: 14px;
+	font-size: 22px;
 	font-weight: 400;
 	// text-transform: uppercase;
-	margin-bottom: ${props => props.theme.grid.divider_1}
+	margin-bottom: ${props => props.theme.grid.divider_2}
 `;
 const Content = styled.div`
-
-
 	${({ line }) => line && `
 	padding-top: 16px;
 	padding-bottom: 16px;
@@ -41,15 +39,15 @@ const TextWithLabel = ({
 			{
 				small ?
 					<Content line={line}>
-						<Label>{label || ""}</Label>
-						<h5>{title || ""}</h5>
-						<p>{description || ""}</p>
+						<Label>{label || ''}</Label>
+						<h5>{title || ''}</h5>
+						<p>{description || ''}</p>
 					</Content>
 					:
 					<Content line={line}>
-						<Label>{label || ""}</Label>
-						<h4>{title || ""}</h4>
-						<p>{description || ""}</p>
+						<Label>{label || ''}</Label>
+						<h4>{title || ''}</h4>
+						<p>{description || ''}</p>
 
 					</Content>
 			}

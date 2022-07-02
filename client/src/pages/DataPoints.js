@@ -1,24 +1,17 @@
-import React, { useEffect, useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { AppContext } from '../context/Context';
-import axios from 'axios';
+import CardDataPoint from '../components/CardDataPoint';
 import Card from '../components/Card';
+
 import CardGrid from '../components/CardGrid';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
-import ButtonGoBack from '../components/ButtonGoBack';
-import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
-import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
-import InputNumber from '../components/InputNumber';
-import InputTextarea from '../components/InputTextarea';
 import TextWithLabel from '../components/TextWithLabel';
 import Modal from '../components/Modal';
-import Chart from '../components/Chart';
-import { useQuery, gql } from '@apollo/client';
-import { LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
+import { useQuery } from '@apollo/client';
+import { LOAD_GOOGLE_SHEETS, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
-import { GET_VALUE_FROM_GOOGLE_SPREADSHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINT } from '../GraphQL/Queries';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DividerLine from '../components/DividerLine';
@@ -64,10 +57,14 @@ const DataPoints = () => {
 		variables: {org_id: user.org_id }
 
 	});
-
+	const { error: sheetError, loading: sheetLoading, data: sheetData } = useQuery(LOAD_GOOGLE_SHEETS, {
+		variables: { org_id: user.org_id  }
+	});
 	const [openModal, setOpenModal] = useState(false);
 	const [dataPoints, setDataPoints] = useState([]);
-	const [dataPointSelector, setDataPointSelector] = useState("");
+	const [dataPointSelector, setDataPointSelector] = useState('');
+	const [googleSheets, setGoogleSheets] = useState([]);
+
 	const [googleValue, setGoogleValue] = useState({
 		value: 'Loading data...'
 	});
@@ -82,80 +79,71 @@ const DataPoints = () => {
 
 	const DataPointSelectorHandler = () => {
 		switch (dataPointSelector) {
-			case 'Google Sheets':
-				return <FormGoogleSpreadsheetDataPoint setOpenModal={setOpenModal} />
-			default:
-				return;
+		case 'Google Sheets':
+			return <FormGoogleSpreadsheetDataPoint setOpenModal={setOpenModal} options={googleSheets && googleSheets || []} />;
+		default:
+			return;
 		}
 
-	}
+	};
 
-
-	const GoogleValueGetter = (item) => {
-		console.log(item)
-		// const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
-		// 	variables: {
-		// 		cell: `${item.cell}`,
-		// 		spreadsheetId: `${item.spreadsheet}`,
-		// 		sheetId: `${item.sheet}`
-		// 	}
-		// 	// ,
-		// 	// pollInterval: 5000,
-
-		// });
-		// 	if (googleData) {
-		// 		console.log(googleData);
-		// 		return(
-		// 			googleData.getValueFromGoogleSpreadsheet[0].value
-		// 		)
-
-		// 	}
-
-	}
+	
 	const DataPoints = () => {
 
 		if (loading) {
 			return (
 				<p>Loading data...</p>
-			)
+			);
 		}
-		if (error) { console.log('error occurred', error) }
+		if (error) { console.log('error occurred', error); }
 		else {
 			return (
 				<div>
 					<CardGrid>
 						{
 							dataPoints.map((item, i) => {
+							
 								return (
-									<Card
+									<CardDataPoint
 										key={i}
 										to={`/datapoints/${item.id}`}
+										cell={ item.cell || ''}
+										spreadsheetId={item.spreadsheet_id || ''}
+										sheetId={item.sheet_id || ''}
+										serviceAccount={item.service_account || ''}
+										org_id={user.org_id}
+										title={item.title}
+										description={item.sheet_title}
 									>
-										<TextWithLabel
-											title={GoogleValueGetter(item) || '-'}
-											label={item.title}
-										/>
-										<p>{item.description}</p>
+										
 
-									</Card>
-								)
+									</CardDataPoint>
+										
+								);
 							})
 						}
 					</CardGrid>
 				</div>
 
-			)
-		};
+			);
+		}
 	};
-	const onSubmit = async (data) => {
-		console.log(data)
 
-	};
 	useEffect(() => {
 		if (data) {
-			setDataPoints(data.getAllGoogleSpreadsheetDataPoints)
+			setDataPoints(data.getAllGoogleSpreadsheetDataPoints);
 		}
-	}, [data])
+	}, [data]);
+
+	useEffect(() => {
+		if (sheetData) {
+			setGoogleSheets(sheetData.getAllGoogleSheets);
+		}
+	}, [sheetData]);
+	
+	useEffect(() => {
+		window.scroll(0, 0);
+	}, []);
 	return (
 		<div>
 
@@ -186,7 +174,7 @@ const DataPoints = () => {
 							<DividerLine />
 
 							<Card
-								onClick={() => setDataPointSelector("Google Sheets")}
+								onClick={() => setDataPointSelector('Google Sheets')}
 								row
 							>
 								<Logo>

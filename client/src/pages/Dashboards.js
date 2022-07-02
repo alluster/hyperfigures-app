@@ -7,8 +7,7 @@ import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import Modal from '../components/Modal';
-import FormAddDashboard from '../components/Forms/FormAddDashboard';
-import { useQuery, gql } from '@apollo/client';
+import { useQuery } from '@apollo/client';
 import { LOAD_DASHBOARDS } from '../GraphQL/Queries';
 import { useMutation } from '@apollo/client';
 import { CREATE_DASHBOARD_MUTATION } from '../GraphQL/Mutations';
@@ -29,12 +28,11 @@ const Divider = styled.div`
 const Label = styled.p`
 	color: ${props => props.theme.colors.gray_130};
 	font-size: 14px;
-`
+`;
 
 
 const Dashboards = () => {
 	const { user } = useAuth0();
-	console.log(user.org_id)
 	var currentDate = (dateData) => new window.Date(dateData);
 	const { setNotifyMessage } = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_DASHBOARDS, {
@@ -54,9 +52,9 @@ const Dashboards = () => {
 		if (loading) {
 			return (
 				<p>Loading data...</p>
-			)
+			);
 		}
-		if (error) { console.log('error', error) }
+		if (error) { console.log('error', error); }
 		else {
 			return (
 				<CardGrid>
@@ -73,14 +71,14 @@ const Dashboards = () => {
 										<p>{item.description}</p>
 
 									</Card>
-								)
+								);
 							})
 							:
 							<p>No dashboards</p>
 					}
 				</CardGrid>
-			)
-		};
+			);
+		}
 	};
 
 
@@ -96,19 +94,19 @@ const Dashboards = () => {
 				},
 				refetchQueries: [LOAD_DASHBOARDS]
 
-			})
+			});
 			setNotifyMessage(`New dashboard ${data.dashboardName} added`);
 
 		}
 		catch (error) {
 			console.log(error);
-			setNotifyMessage("Something went wrong");
+			setNotifyMessage('Something went wrong');
 		}
 		finally {
 			setOpenModal(false);
 			reset();
 		}
-	}
+	};
 
 	useEffect(() => {
 		window.scroll(0, 0);
@@ -129,7 +127,7 @@ const Dashboards = () => {
 					title="Dashboards"
 					description="Your organization data dashboards"
 				/>
-					{DashboardsList()}
+				{DashboardsList()}
 
 			</Container>
 			<Modal
@@ -146,22 +144,22 @@ const Dashboards = () => {
 					fields={
 						[
 							{
-								type: "input",
-								name: "dashboardName",
-								label: "Dashboard name",
-								options: "",
+								type: 'input',
+								name: 'dashboardName',
+								label: 'Dashboard name',
+								options: '',
 								required: true,
-								errorMessage: "Dashboard name is required",
-								placeholder: "Give your dashboard a name"
+								errorMessage: 'Dashboard name is required',
+								placeholder: 'Give your dashboard a name'
 							},
 							{
-								type: "textarea",
-								name: "dashboardDescription",
-								label: "Dashboard Description",
-								options: "",
+								type: 'textarea',
+								name: 'dashboardDescription',
+								label: 'Dashboard Description',
+								options: '',
 								required: false,
-								errorMessage: "",
-								placeholder: "Describe your dashboard"
+								errorMessage: '',
+								placeholder: 'Describe your dashboard'
 							}
 						]
 					}

@@ -1,6 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import Container from './Container';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTimes } from '@fortawesome/free-solid-svg-icons';
@@ -77,17 +76,17 @@ const Modal = ({
 	// }, [open]);
 
 	return (
-			<ModalWrapper open={open} >
-				<ModalBox>
-					<Content>
-						<Icon onClick={() => openModal(false)} icon={faTimes} />
-						<ModalTitle>{modalTitle || ""}</ModalTitle>
-						{children}
-					</Content>
-				</ModalBox>
-				<BackgroundOverlay />
-			</ModalWrapper>
-	)
-}
+		<ModalWrapper open={open} >
+			<ModalBox>
+				<Content>
+					<Icon onClick={() => openModal(false)} icon={faTimes} />
+					<ModalTitle>{modalTitle || ''}</ModalTitle>
+					{children}
+				</Content>
+			</ModalBox>
+			<BackgroundOverlay />
+		</ModalWrapper>
+	);
+};
 
 export default Modal;

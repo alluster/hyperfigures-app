@@ -2,7 +2,6 @@ import React, { useContext, useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
 import Button from '../components/Button';
-import Container from '../components/Container';
 import { AppContext } from '../context/Context';
 
 const Grid = styled.div`
@@ -114,7 +113,9 @@ const Home = () => {
 						Connect all your business data sources and execute calculations and business operations without boundaries.
 					</p>
 				</List>
-				<Button primary onClick={handleClick}>Not yet a user? Get in touch</Button>
+				<Button 				
+					type='button'
+					primary onClick={handleClick}>Not yet a user? Get in touch</Button>
 				{/* <h5 style={{ marginTop: '24px', marginBottom: '24px' }}>or</h5>
 					<a href="/login">
 						<Button

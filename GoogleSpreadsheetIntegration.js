@@ -1,15 +1,9 @@
 require('dotenv').config()
 const express = require('express');
-
 const { GoogleSpreadsheet } = require('google-spreadsheet');
 const {promisify} = require("es6-promisify");
 
-
-
-
-
-
- const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId, sheetId, org_id}) => {
+const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId, sheetId, org_id}) => {
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);
 	const Cert = process.env['REACT_APP_CERT_' + org_id];
 	const ParsedCert = JSON.parse(Cert);
@@ -19,15 +13,10 @@ const {promisify} = require("es6-promisify");
 	});
 
 
-
 	await doc.loadInfo(); // loads document properties and worksheets
-	console.log(doc);
 	const sheet = doc.sheetsById[`${sheetId}`]; // or use doc.sheetsById[id]
-	// console.log(sheet.title);
-	// console.log(sheet.rowCount);
 	await sheet.loadCells()
 	const c6 = sheet.getCellByA1(`${cell}`); // or A1 style notation
-	console.log(c6.value);
 	return(
 		// c6.value
 		[
@@ -38,4 +27,4 @@ const {promisify} = require("es6-promisify");
 	)
 }	
 
-  module.exports = GoogleSpreadsheetIntegration;
+module.exports = GoogleSpreadsheetIntegration;

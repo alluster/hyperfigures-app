@@ -52,11 +52,11 @@ const ErrorPage = () => {
 	}, []);
 	return (
 		<Container>
-				<WelcomeTitle>
-					<Title>Jokin meni pieleen</Title>
-					<Ingress>Selvitämme ongelmaa!</Ingress>
-					<Button to="/" primary>Ota palvelu käyttöön</Button>
-				</WelcomeTitle>
+			<WelcomeTitle>
+				<Title>Jokin meni pieleen</Title>
+				<Ingress>Selvitämme ongelmaa!</Ingress>
+				<Button to="/" primary>Ota palvelu käyttöön</Button>
+			</WelcomeTitle>
 				
 
 		</Container>

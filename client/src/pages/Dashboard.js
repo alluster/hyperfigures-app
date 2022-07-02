@@ -1,22 +1,13 @@
 import React, { useEffect, useContext, useState } from 'react';
-import styled from 'styled-components';
 import { AppContext } from '../context/Context';
-import axios from 'axios';
-import Card from '../components/Card';
 import CardGrid from '../components/CardGrid';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
-import CurrencyFormatter from '../supportFunctions/CurrencyFormatter';
-import Select from '../components/Select';
 import { useForm } from 'react-hook-form';
-import InputNumber from '../components/InputNumber';
-import InputTextarea from '../components/InputTextarea';
-import TextWithLabel from '../components/TextWithLabel';
 import { LOAD_DASHBOARD } from '../GraphQL/Queries';
-import { useQuery, gql } from '@apollo/client';
-import { useParams, useHistory } from 'react-router-dom';
-import CardDataGroup from '../components/CardDataGroup';
+import { useQuery } from '@apollo/client';
+import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 
 
@@ -43,9 +34,9 @@ const Dashboard = () => {
 		if (loading) {
 			return (
 				<p>Loading data...</p>
-			)
+			);
 		}
-		if (error) { console.log('error', error) }
+		if (error) { console.log('error', error); }
 		else {
 			return (
 				<div>
@@ -104,11 +95,11 @@ const Dashboard = () => {
 				</div>
 
 
-			)
-		};
+			);
+		}
 	};
 	const onSubmit = async (data) => {
-		console.log('data from dashboard route', data)
+		console.log('data from dashboard route', data);
 
 	};
 
