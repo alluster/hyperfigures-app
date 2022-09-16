@@ -6,7 +6,7 @@ const GoogleSpreadsheetDataPointType = require('./GoogleSpreadsheetDataPointType
 const DashboardType = new GraphQLObjectType({
 	name: 'Dashboard',
 	fields: () => ({
-		id: { type: GraphQLString },
+		id: { type: GraphQLInt },
 		org_id: { type: GraphQLString },
 		title: { type: GraphQLString },
 		description: { type: GraphQLString },

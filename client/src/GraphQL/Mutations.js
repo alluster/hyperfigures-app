@@ -47,6 +47,7 @@ export const CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION =gql`
 		$cell: String
 		$service_account: String
 		$org_id: String
+		$dashboard_id: Int
 		) {
 		createGoogleSpreadsheetDataPoint(
 			title: $title
@@ -57,6 +58,7 @@ export const CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION =gql`
 			cell: $cell 
 			service_account: $service_account
 			org_id: $org_id
+			dashboard_id: $dashboard_id
 		) {
 			id
 		}

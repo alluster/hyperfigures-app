@@ -10,18 +10,7 @@ import { CREATE_GOOGLE_SPREADSHEET_DATA_POINT_MUTATION } from '../../../GraphQL/
 import { LOAD_GOOGLE_SHEET, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS, LOAD_GOOGLE_SPREADSHEET_DATA_SOURCES } from '../../../GraphQL/Queries';
 import { useAuth0 } from '@auth0/auth0-react';
 
-const ButtonRow = styled.div`
-	display: flex;
-	flex-direction: row;
-	flex-wrap: wrap;
-	width: 100%;
-	margin-top: ${props => props.theme.grid.divider_4};
-`;
-const HelperText = styled.p`
-	margin-top: ${props => props.theme.grid.divider_2};
-	margin-bottom: ${props => props.theme.grid.divider_2};
 
-`;
 const Title = styled.h4`
 	margin-top: ${props => props.theme.grid.divider_2};
 	margin-bottom: ${props => props.theme.grid.divider_2};
@@ -33,7 +22,8 @@ const FormGoogleSpreadsheetDataPoint = ({
 	resetFunction,
 	fields,
 	buttonTitle,
-	options,
+	googleSheetsList,
+	dashboardsList,
 	setOpenModal
 }) => {
 	const {
@@ -65,7 +55,7 @@ const FormGoogleSpreadsheetDataPoint = ({
 	const onSubmit = async (data) => {
 
 		try {
-			console.log(spreadsheetId);
+			// console.log(spreadsheetId);
 			createGoogleSpreadsheetDataPoint({
 				variables:{
 					org_id: user.org_id,
@@ -76,7 +66,8 @@ const FormGoogleSpreadsheetDataPoint = ({
 					sheet_id: sheetId,
 					sheet_title: sheetTitle,
 					service_account: serviceAccount,
-					deleted_at: null
+					deleted_at: null,
+					dashboard_id: parseInt(data.dashboard_id)
 				},
 				refetchQueries: [LOAD_GOOGLE_SPREADSHEET_DATA_POINTS]
 
@@ -111,10 +102,12 @@ const FormGoogleSpreadsheetDataPoint = ({
 		}
 		
 	}, [sheetIdFromDatabase, dataSheet]);
+
+
 	return (
 		<div>
 
-			<Title>Add Datapoint</Title>
+			<Title>Add Data Point</Title>
 	
 
 		
@@ -131,7 +124,7 @@ const FormGoogleSpreadsheetDataPoint = ({
 							type: 'select',
 							name: 'googleSheet',
 							label: 'Select Google Sheet',
-							options: options,
+							options: googleSheetsList,
 							placeholder: 'Select',
 							required: true,
 							errorMessage: 'Google Sheet is required. Add new Sheet in Data Sources view',
@@ -163,7 +156,17 @@ const FormGoogleSpreadsheetDataPoint = ({
 							required: false,
 							errorMessage: '',
 							placeholder: 'Describe your Data Point'
-						}
+						},
+						{
+							type: 'select',
+							name: 'dashboard_id',
+							label: 'Select Dashboard',
+							options: dashboardsList,
+							placeholder: 'Select',
+							required: false,
+							errorMessage: 'Dashboard',
+							onChange: () => null
+						},
 					
 					]
 				}

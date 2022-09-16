@@ -19,6 +19,7 @@ var GraphQLDate = require('graphql-date');
 const UpdateDataPointGoogleSpreadSheet = require('../SQL/UpdateDataPointGoogleSpreadSheet');
 const GetGoogleSheets = require('../SQL/GetGoogleSheets');
 const GetGoogleSheet = require('../SQL/GetGoogleSheet');
+const GetDataPointsGoogleSheetsDashboard = require('../SQL/GetDataPointsGoogleSheetsDashboard');
 
 
  
@@ -56,10 +57,30 @@ const RootQuery = new GraphQLObjectType({
 			type: new GraphQLList(GoogleSpreadsheetDataPointType),
 			args: { org_id: { type: GraphQLString } },
 			resolve(parent, args) {
-				const data = GetDataPointsGoogleSheets(
-					args.org_id
-				);
+				const data = 
+				
+				
+						GetDataPointsGoogleSheets(
+							args.org_id
+						);
+						
+				
+
+					
 				return data;
+			}
+		},
+		getAllGoogleSpreadsheetDataPointsDashboard: {
+			type: new GraphQLList(GoogleSpreadsheetDataPointType),
+			args: { org_id: { type: GraphQLString }, dashboard_id: { type: GraphQLInt} },
+			resolve(parent, args) {
+				const data = 
+					GetDataPointsGoogleSheetsDashboard({
+						org_id: args.org_id,
+						dashboard_id: args.dashboard_id
+					});
+				return data;
+				
 			}
 		},
 		getGoogleSpreadsheetDataPoint: {
@@ -130,7 +151,7 @@ const RootQuery = new GraphQLObjectType({
 				return data;	
 			}
 		}
-}
+	}
 });
 
 const Mutation = new GraphQLObjectType({
@@ -148,7 +169,8 @@ const Mutation = new GraphQLObjectType({
 				sheet_title: {type: GraphQLString },
 				cell:  { type: GraphQLString },
 				service_account: { type: GraphQLString },
-				deleted_at: { type: GraphQLDate }
+				deleted_at: { type: GraphQLDate },
+				dashboard_id: { type: GraphQLInt }
 			},
 			resolve(parent, args) {
 				CreateDataPointGoogleSpreadSheet({
@@ -160,7 +182,8 @@ const Mutation = new GraphQLObjectType({
 					sheet_title: args.sheet_title,
 					cell:  args.cell,
 					service_account: args.service_account,
-					deleted_at: args.deleted_at || null
+					deleted_at: args.deleted_at || null,
+					dashboard_id: args.dashboard_id || null
 				});
 				return args;
 			}

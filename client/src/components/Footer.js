@@ -8,13 +8,14 @@ const FooterWrapper = styled.div`
 	z-index: 2;
 	position: relative;
 	width: 100%;
+
 	
 `;
 const FooterContent = styled.div`
 	display: flex;
 	flex-direction: column;
 	max-width: calc(100% - ${props => props.theme.grid.divider_10});
-	
+	padding-left: calc(280px + ${props => props.theme.grid.divider_2});
 	padding-top: ${props => props.theme.grid.divider_6};
 	margin-left: ${props => props.theme.grid.divider_10};
 

@@ -10,7 +10,7 @@ const Wrapper = styled.div`
 	min-height: 100vh;
 	padding-bottom: 200px;
 	padding-top: ${props => props.theme.grid.divider_4};
-	padding-left: ${props => props.theme.grid.divider_10};
+	padding-left: calc(220px + ${props => props.theme.grid.divider_2});
 	padding-right: ${props => props.theme.grid.divider_2} ;
 	@media ${device.laptop} {
 		padding-left: ${props => props.theme.grid.divider_2};

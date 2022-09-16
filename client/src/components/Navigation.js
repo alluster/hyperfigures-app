@@ -9,6 +9,7 @@ const SideNav = styled.div`
 	position: fixed;
 	background-color: ${props => props.theme.colors.white};
 	border-right: 1px solid ${props => props.theme.colors.gray_60};
+	color: .primary_100;
 	width: 64px;
 	height: 100vh;
 	min-height: 500px;
@@ -18,7 +19,7 @@ const SideNav = styled.div`
 	flex-direction: column;
 	z-index: 10000000;
 	${({ open }) => open && `
-		width: 280px;
+		width: 220px;
 		-webkit-transition: width 0.2s ease-in-out;
 		-moz-transition: width 0.2s ease-in-out;
 		-o-transition: width 0.2s ease-in-out;
@@ -79,11 +80,14 @@ const BarsIcon = styled.div`
 
 const LogoIcon = styled.img`
 	height: 18px;
+	fill: white;
+
 `;
 const Logo = styled.img`
-	height: 20px;
+	height: 18px;
 	align-self: flex-start;
 	margin-left: 16px;
+	fill: white;
 `;
 const ImageContainer = styled.div`
 	display: flex;
@@ -106,8 +110,8 @@ const IconContainer = styled.div`
 `;
 
 const Icon = styled(FontAwesomeIcon)`
-	color: ${props => props.theme.colors.primary_120};
-	height: 24px;
+	color: ${props => props.theme.colors.primary_100};
+	height: 18px;
 	min-width: 64px;
 `;
 // const IconPhone = styled(FontAwesomeIcon)`
@@ -115,9 +119,9 @@ const Icon = styled(FontAwesomeIcon)`
 // 	height: 32px;
 // 	min-width: 64px;
 // `;
-const LinkText = styled.h5`
+const LinkText = styled.h6`
 	color: ${props => props.theme.colors.gray_fontDark};
-	margin-left: 28px;
+	margin-left: 0px;
 	white-space: nowrap;
 	line-height: 40px;
 	font-weight: 500;
@@ -259,7 +263,7 @@ const Navigation = () => {
 		}
 
 	];
-	const [sideBarOpen, setSideBarOpen] = useState(false);
+	const [sideBarOpen, setSideBarOpen] = useState(true);
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
 	return (
@@ -327,7 +331,7 @@ const Navigation = () => {
 						routeList.map((item, i) => {
 							return (
 								<LinkContainer key={i} to={item.link}
-									onClick={() => setSideBarOpen(false)}
+									// onClick={() => setSideBarOpen(false)}
 								>
 									<IconContainer>
 										<Icon icon={item.icon} />

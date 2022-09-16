@@ -10,7 +10,7 @@ import { useForm } from 'react-hook-form';
 import TextWithLabel from '../components/TextWithLabel';
 import Modal from '../components/Modal';
 import { useQuery } from '@apollo/client';
-import { LOAD_GOOGLE_SHEETS, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
+import { LOAD_DASHBOARDS, LOAD_GOOGLE_SHEETS, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
 import FormGoogleSpreadsheetDataPoint from '../components/Forms/DataPoints/FormGoogleSpreadsheetDataPoint';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
@@ -60,10 +60,14 @@ const DataPoints = () => {
 	const { error: sheetError, loading: sheetLoading, data: sheetData } = useQuery(LOAD_GOOGLE_SHEETS, {
 		variables: { org_id: user.org_id  }
 	});
+	const {  data: dashboardsData, error: dashboardsError, loading: dashboardsLoading } = useQuery(LOAD_DASHBOARDS, {
+		variables: { org_id: user.org_id }
+	});
 	const [openModal, setOpenModal] = useState(false);
 	const [dataPoints, setDataPoints] = useState([]);
 	const [dataPointSelector, setDataPointSelector] = useState('');
 	const [googleSheets, setGoogleSheets] = useState([]);
+	const [dashboards, setDashboards] = useState([]);
 
 	const [googleValue, setGoogleValue] = useState({
 		value: 'Loading data...'
@@ -80,7 +84,7 @@ const DataPoints = () => {
 	const DataPointSelectorHandler = () => {
 		switch (dataPointSelector) {
 		case 'Google Sheets':
-			return <FormGoogleSpreadsheetDataPoint setOpenModal={setOpenModal} options={googleSheets && googleSheets || []} />;
+			return <FormGoogleSpreadsheetDataPoint setOpenModal={setOpenModal} googleSheetsList={googleSheets && googleSheets || []} dashboardsList={dashboards && dashboards || []} />;
 		default:
 			return;
 		}
@@ -133,6 +137,7 @@ const DataPoints = () => {
 		if (data) {
 			setDataPoints(data.getAllGoogleSpreadsheetDataPoints);
 		}
+		DataPoints();
 	}, [data]);
 
 	useEffect(() => {
@@ -140,7 +145,11 @@ const DataPoints = () => {
 			setGoogleSheets(sheetData.getAllGoogleSheets);
 		}
 	}, [sheetData]);
-	
+	useEffect(() => {
+		if (dashboardsData) {
+			setDashboards(dashboardsData.getAllDashboards);
+		}
+	}, [dashboardsData]);
 	useEffect(() => {
 		window.scroll(0, 0);
 	}, []);

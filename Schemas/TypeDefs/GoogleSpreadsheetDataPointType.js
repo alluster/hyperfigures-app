@@ -16,7 +16,8 @@ const GoogleSpreadsheetDataPointType = new GraphQLObjectType({
 		sheet_title: { type: GraphQLString },
 		created_at: { type: GraphQLDate },
 		updated_at: { type: GraphQLString },
-		deleted_at: { type: GraphQLString }
+		deleted_at: { type: GraphQLString },
+		dashboard_id: { type: GraphQLInt }
 	})
 });
 

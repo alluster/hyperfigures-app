@@ -98,8 +98,6 @@ const FormCompiler = ({ fields, onSubmit, buttonTitle, errors, openModal, regist
 	return (
 
 		<form onSubmit={onSubmit()}>
-			{	console.log(fields)}
-
 			{
 				fields.length > 0 &&
 				fields.map((item, i) => {
@@ -157,7 +155,7 @@ const FormCompiler = ({ fields, onSubmit, buttonTitle, errors, openModal, regist
 								label={item.label}
 								placeholder={item.placeholder}
 								name={item.name}
-								onChange={(e) => item.onChange(e.target.value)}
+								onChange={(e) => item.onChange(e.target.value) || null}
 								
 							>
 								<option hidden></option>

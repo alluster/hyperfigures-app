@@ -5,15 +5,17 @@ import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
 import { useForm } from 'react-hook-form';
-import { LOAD_DASHBOARD } from '../GraphQL/Queries';
+import { LOAD_DASHBOARD, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS_DASHBOARD } from '../GraphQL/Queries';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import CardDataPoint from '../components/CardDataPoint';
 
 
 
 
 const Dashboard = () => {
+	const [dataPoints, setDataPoints] = useState([]);
 	let { id } = useParams();
 	const { user } = useAuth0();
 	const {
@@ -21,6 +23,10 @@ const Dashboard = () => {
 	} = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_DASHBOARD, {
 		variables: { id: id, org_id: user.org_id }
+	});
+	const { error: dataPointsError, loading: dataPointsLoading, data: dataPointsData } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS_DASHBOARD, {
+		variables: {org_id: user.org_id, dashboard_id: parseInt(id) }
+
 	});
 	const [dashboard, setDashboard] = useState([]);
 	const {
@@ -30,6 +36,51 @@ const Dashboard = () => {
 		reset,
 		formState: { errors },
 	} = useForm();
+
+
+
+	const DataPoints = () => {
+
+		if (dataPointsLoading) {
+			return (
+				<p>Loading data...</p>
+			);
+		}
+		if (dataPointsError) { console.log('error occurred', dataPointsError); }
+		else {
+			return (
+				<div>
+					<CardGrid>
+						{
+							dataPoints.map((item, i) => {
+							
+								return (
+									<CardDataPoint
+										key={i}
+										to={`/datapoints/${item.id}`}
+										cell={ item.cell || ''}
+										spreadsheetId={item.spreadsheet_id || ''}
+										sheetId={item.sheet_id || ''}
+										serviceAccount={item.service_account || ''}
+										org_id={user.org_id}
+										title={item.title}
+										description={item.sheet_title}
+									>
+										
+
+									</CardDataPoint>
+										
+								);
+							})
+						}
+					</CardGrid>
+				</div>
+
+			);
+		}
+	};
+
+
 	const DashboardContent = () => {
 		if (loading) {
 			return (
@@ -52,41 +103,7 @@ const Dashboard = () => {
 									title={dashboard[0].title || '-'}
 									description={dashboard[0].description || '-'}
 								/>
-								<CardGrid>
-									{/* {
-										dashboard[0].data_point_groups.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
-
-											return (
-												<CardDataGroup
-													updated_at={item.updated_at}
-													title={item.title}
-													description={item.description}
-													dataPoints={item.google_spreadsheet_data_points}
-													key={`${i}${item.title}`}
-												/>
-									
-											)
-										})
-									} */}
-						
-							
-									{/* {
-										dashboard[0].google_spreadsheet_data_points.slice().sort((a, b) => new Date(b.created_at) - new Date(a.created_at)).map((item, i) => {
-
-											return (
-												<Card
-													to={`/datapoints/${item.id}`}
-													key={i}
-												>
-													<TextWithLabel
-														label={item.title}
-														title={CurrencyFormatter.format(item.value)}
-													/>
-												</Card>
-											)
-										})
-									} */}
-								</CardGrid>
+								{DataPoints()}
 							</div>
 
 							:
@@ -98,10 +115,7 @@ const Dashboard = () => {
 			);
 		}
 	};
-	const onSubmit = async (data) => {
-		console.log('data from dashboard route', data);
 
-	};
 
 	useEffect(() => {
 		window.scroll(0, 0);
@@ -110,6 +124,11 @@ const Dashboard = () => {
 			setDashboard(data.getDashboard);
 		}
 	}, [data]);
+	useEffect(() => {
+		if (dataPointsData) {
+			setDataPoints(dataPointsData.getAllGoogleSpreadsheetDataPointsDashboard);
+		}
+	}, [dataPointsData]);
 	return (
 		<Container>
 			{

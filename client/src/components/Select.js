@@ -48,7 +48,7 @@ const Label = styled.label`
 `;
 
 
-const Select = ({ label, required, register, name, options }) => {
+const Select = ({ label, required, register, name, options, type }) => {
 	const [disabled, setDisabled] = useState(false);
 	const checkOptions = () => {
 		if(options && options.length > 0){
@@ -69,7 +69,7 @@ const Select = ({ label, required, register, name, options }) => {
 			<StyledSelect
 				{...register(name, { required })}
 				label={label}
-				type="text"
+				type={type}
 				disabled={disabled}
 			>
 				<option  hidden ></option>
@@ -77,7 +77,7 @@ const Select = ({ label, required, register, name, options }) => {
 				{
 					options && options.map((item, i) => {
 						return (
-							<option key={i} value={item.title}>{item.title}</option>
+							<option key={i} value={item.id}>{item.title}</option>
 						);
 					})
 				}
