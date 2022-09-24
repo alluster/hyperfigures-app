@@ -8,11 +8,31 @@ const Wrapper = styled.div`
 `;
 
 const Label = styled.p`
-	color: ${props => props.theme.colors.gray_80};
+	// color: ${props => props.theme.colors.gray_80};
 	font-size: 22px;
 	font-weight: 400;
 	// text-transform: uppercase;
 	margin-bottom: ${props => props.theme.grid.divider_2}
+`;
+const Title = styled.h3`
+	// color: ${props => props.theme.colors.gray_80};
+	font-weight: 400;
+	// text-transform: uppercase;
+	margin-bottom: ${props => props.theme.grid.divider_2}
+`;
+const TitleSmall = styled.h5`
+	// color: ${props => props.theme.colors.gray_80};
+	font-size: 18px;
+	font-weight: 400;
+	// text-transform: uppercase;
+	margin-bottom: ${props => props.theme.grid.divider_2}
+`;
+const Description = styled.p`
+	color: ${props => props.theme.colors.gray_80};
+	font-size: 18px;
+	font-weight: 400;
+	align-self: flex-end;
+	// text-transform: uppercase;
 `;
 const Content = styled.div`
 	${({ line }) => line && `
@@ -40,14 +60,14 @@ const TextWithLabel = ({
 				small ?
 					<Content line={line}>
 						<Label>{label || ''}</Label>
-						<h5>{title || ''}</h5>
-						<p>{description || ''}</p>
+						<TitleSmall>{title || ''}</TitleSmall>
+						<Description>{description || ''}</Description>
 					</Content>
 					:
 					<Content line={line}>
 						<Label>{label || ''}</Label>
-						<h4>{title || ''}</h4>
-						<p>{description || ''}</p>
+						<Title>{title || ''}</Title>
+						<Description>{description || ''}</Description>
 
 					</Content>
 			}

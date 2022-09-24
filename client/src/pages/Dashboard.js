@@ -11,7 +11,7 @@ import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import CardDataPoint from '../components/CardDataPoint';
 
-
+import Chart from '../components/Chart';
 
 
 const Dashboard = () => {
@@ -136,6 +136,7 @@ const Dashboard = () => {
 
 			}
 
+			<Chart />
 
 
 		</Container>

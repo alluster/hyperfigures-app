@@ -89,7 +89,7 @@ const Footer = ({
 					<img src="/logo-text-light.svg" alt="Logo" />
 				</Logo>
 				<Description>
-					We help organizations to create Supersets™ from business data stored in online data providers.
+					We help organizations create Supersets™ from business data stored in online data providers.
 				</Description>
 				<Links>
 					<h6>info@helau.io</h6>

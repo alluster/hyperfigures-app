@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faDatabase, faTh, faColumns, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { useAuth0 } from '@auth0/auth0-react';
 
 const SideNav = styled.div`
 	position: fixed;
@@ -225,6 +226,8 @@ const ToggleIcon = styled(Icon)`
 	`;
 
 const Navigation = () => {
+	const { user } = useAuth0();
+
 	const routeList = [
 		{
 			link: '/datapoints',
@@ -267,36 +270,37 @@ const Navigation = () => {
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
 	return (
-		<div>
-			<MobileNavToggleContainer mobileNavOpen={mobileNavOpen}
-			>
-
-				<LogoMobile>
-					<LogoMobileImage src="/arm-logo-dark.svg" />
-				</LogoMobile>
-
-				<MobileNavToggler
-					mobileNavOpen={mobileNavOpen}
-					onClick={() => setMobileNavOpen(!mobileNavOpen)}
+		user ? 
+			<div>
+				<MobileNavToggleContainer mobileNavOpen={mobileNavOpen}
 				>
-					{!mobileNavOpen && <ToggleIcon icon={faBars} />}
-					{mobileNavOpen && <ToggleIcon icon={faTimes} />}
-				</MobileNavToggler>
-			</MobileNavToggleContainer>
 
-			<MobileNav mobileNavOpen={mobileNavOpen}>
+					<LogoMobile>
+						<LogoMobileImage src="/arm-logo-dark.svg" />
+					</LogoMobile>
 
-				<Links>
-					{
-						routeList.map((item, i) => {
-							return (
-								<LinkContainer key={i} to={item.link}
-									onClick={() => setMobileNavOpen(false)}
-								>
-									<IconContainer>
-										<Icon icon={item.icon} />
-									</IconContainer>
-									{
+					<MobileNavToggler
+						mobileNavOpen={mobileNavOpen}
+						onClick={() => setMobileNavOpen(!mobileNavOpen)}
+					>
+						{!mobileNavOpen && <ToggleIcon icon={faBars} />}
+						{mobileNavOpen && <ToggleIcon icon={faTimes} />}
+					</MobileNavToggler>
+				</MobileNavToggleContainer>
+
+				<MobileNav mobileNavOpen={mobileNavOpen}>
+
+					<Links>
+						{
+							routeList.map((item, i) => {
+								return (
+									<LinkContainer key={i} to={item.link}
+										onClick={() => setMobileNavOpen(false)}
+									>
+										<IconContainer>
+											<Icon icon={item.icon} />
+										</IconContainer>
+										{
 										// !sideBarOpen &&
 										// <Tooltip>
 										// 	<p style={{ fontWeight: 'bold' }}>
@@ -309,34 +313,34 @@ const Navigation = () => {
 										// 		{item.description}
 										// 	</p> */}
 										// </Tooltip>
-									}
-									{
-										mobileNavOpen && <LinkText>{item.title}</LinkText>
-									}
-								</LinkContainer>
-							);
-						})
-					}
+										}
+										{
+											mobileNavOpen && <LinkText>{item.title}</LinkText>
+										}
+									</LinkContainer>
+								);
+							})
+						}
 
-				</Links>
-			</MobileNav>
-			<SideNav open={sideBarOpen}>
-				<BarsIcon onClick={() => setSideBarOpen(!sideBarOpen)}>
-					{!sideBarOpen && <LogoIcon src="/arm.svg" />}
-					{sideBarOpen && <Logo src="/arm-logo-dark.svg" />}
+					</Links>
+				</MobileNav>
+				<SideNav open={sideBarOpen}>
+					<BarsIcon onClick={() => setSideBarOpen(!sideBarOpen)}>
+						{!sideBarOpen && <LogoIcon src="/arm.svg" />}
+						{sideBarOpen && <Logo src="/arm-logo-dark.svg" />}
 
-				</BarsIcon>
-				<Links>
-					{
-						routeList.map((item, i) => {
-							return (
-								<LinkContainer key={i} to={item.link}
+					</BarsIcon>
+					<Links>
+						{
+							routeList.map((item, i) => {
+								return (
+									<LinkContainer key={i} to={item.link}
 									// onClick={() => setSideBarOpen(false)}
-								>
-									<IconContainer>
-										<Icon icon={item.icon} />
-									</IconContainer>
-									{
+									>
+										<IconContainer>
+											<Icon icon={item.icon} />
+										</IconContainer>
+										{
 										// !sideBarOpen &&
 										// <Tooltip>
 										// 	<p style={{ fontWeight: 'bold' }}>
@@ -349,17 +353,17 @@ const Navigation = () => {
 										// 		{item.description}
 										// 	</p> */}
 										// </Tooltip>
-									}
-									{
-										sideBarOpen && <LinkText>{item.title}</LinkText>
-									}
-								</LinkContainer>
-							);
-						})
-					}
+										}
+										{
+											sideBarOpen && <LinkText>{item.title}</LinkText>
+										}
+									</LinkContainer>
+								);
+							})
+						}
 
-				</Links>
-				{/* <Phone to="/contact"
+					</Links>
+					{/* <Phone to="/contact"
 				onClick={() => setSideBarOpen(false)}
 
 			>
@@ -367,8 +371,10 @@ const Navigation = () => {
 				{!sideBarOpen && <Tooltip>Ota yhteyttä</Tooltip>}
 				{sideBarOpen && <LinkText>Ota yhteyttä</LinkText>}
 			</Phone> */}
-			</SideNav>
-		</div>
+				</SideNav>
+			</div>
+			:
+			null
 
 	);
 };
