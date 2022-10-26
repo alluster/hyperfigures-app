@@ -40,6 +40,7 @@ import {
 } from '@apollo/client';
 import { onError } from '@apollo/client/link/error';
 import DataSourceGoogle from './pages/DataSourceGoogle';
+import DashboardPublic from './pages/DashboardPublic';
 
 const errorLink = onError(({ graphqlErrors, networkError}) => {
 	if(graphqlErrors) {
@@ -233,6 +234,7 @@ const App = () => {
 							<Notification />
 							<Switch>
 								<Route exact path="/" component={() => <Home />} />
+								<Route exact path="/publicdashboard/:id" component={() => <DashboardPublic />} />
 								<PrivateRoute exact path="/user" component={Profile} />
 								<PrivateRoute exact path="/dashboards/:id" component={Dashboard} />
 								<PrivateRoute exact path="/dashboards" component={Dashboards} />

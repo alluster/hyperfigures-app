@@ -3,7 +3,6 @@ import styled from 'styled-components';
 import { device } from '../device';
 import { Link } from 'react-router-dom';
 import TextWithLabel from './TextWithLabel';
-import SpinnerSmall from './SpinnerSmall';
 
 const Wrapper = styled.div`
 	padding-top: ${props => props.theme.grid.divider_4} ;
@@ -57,60 +56,26 @@ const WrapperLink = styled(Link)`
 		margin-right: 0px;
 	}
 `;
-const CardDataPoint = ({ children, to, row, small, onClick, cell, spreadsheetId, sheetId, serviceAccount, org_id, title, description, value }) => {
+const CardPublicDataPoint = ({ row, small, onClick, value, title, description }) => {
 
-	// const [googleValue, setGoogleValue] = useState({
-	// 	value: 'No data found'
-	// });
-	// const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
-	// 	variables: {
-	// 		cell: `${cell}`,
-	// 		spreadsheetId: `${spreadsheetId}`,
-	// 		sheetId: `${sheetId}`,
-	// 		serviceAccount: `${serviceAccount}`,
-	// 		org_id: org_id
-	// 	}
-	// });
-	// useEffect(() => {
-	// 	if (googleData) {
-	// 		setGoogleValue({
-	// 			...googleValue,
-	// 			value: googleData.getValueFromGoogleSpreadsheet[0].value,
 
-	// 		});
-	// 	}
-	// }, [googleData]);
 	return (
 		<div onClick={onClick}>
-			{
-				to ?
-
-					<WrapperLink small={small} row={row} to={to || ''}>
+		
+			<Wrapper small={small} row={row}>
 						
-						<TextWithLabel 
-							title={value || ''}
-							label={title || ''}
-							description={description || ''}
-						/>
-
-						
-					</WrapperLink>
-					:
-					<Wrapper small={small} row={row}>
-					
-						<SpinnerSmall />:
-						<TextWithLabel 
-							title={value || ''}
-							label={title || ''}
-							description={description || ''}
-						/>
-									
-					</Wrapper>
-			}
+				<TextWithLabel 
+					title={value || ''}
+					label={title || ''}
+					description={description || ''}
+				/>
+								
+			</Wrapper>
+			
 
 		</div>
 
 	);
 };
 
-export default CardDataPoint;
+export default CardPublicDataPoint;

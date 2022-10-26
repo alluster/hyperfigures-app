@@ -20,6 +20,10 @@ const UpdateDataPointGoogleSpreadSheet = require('../SQL/UpdateDataPointGoogleSp
 const GetGoogleSheets = require('../SQL/GetGoogleSheets');
 const GetGoogleSheet = require('../SQL/GetGoogleSheet');
 const GetDataPointsGoogleSheetsDashboard = require('../SQL/GetDataPointsGoogleSheetsDashboard');
+const GetPublicDashboard = require('../SQL/GetPublicDashboard');
+const PublicDashboardType = require('./TypeDefs/PublicDashboardType');
+const GetPublicDashboards = require('../SQL/GetPublicDashboards');
+const CreatePublicDashboard = require('../SQL/CreatePublicDashboard');
 
 
  
@@ -129,6 +133,25 @@ const RootQuery = new GraphQLObjectType({
 				return data;
 			}
 		},
+	
+		getPublicDashboard: {
+			type: new GraphQLList(PublicDashboardType),
+			args: { 
+				id: { type: GraphQLInt }
+			},
+			resolve(parent, args) {
+				const data = GetPublicDashboard({ id: args.id });
+				return data;
+			}
+		},
+		getAllPublicDashboards: {
+			type: new GraphQLList(PublicDashboardType),
+			args: { org_id: { type: GraphQLString } },
+			resolve(parent, args) {
+				const data = GetPublicDashboards(args.org_id);
+				return data;
+			}
+		},
 		getAllGoogleSheets: {
 			type: new GraphQLList(GoogleSheetType),
 			args: { org_id: { type: GraphQLString }	},
@@ -216,6 +239,26 @@ const Mutation = new GraphQLObjectType({
 					org_id: args.org_id,
 					title: args.title,
 					description: args.description
+				});
+				return args;
+			}
+		},
+		createPublicDashboard: {
+			type: PublicDashboardType,
+			args: {
+				org_id: { type: GraphQLString },
+				title: { type: GraphQLString },
+				description: { type: GraphQLString },
+				dashboard_data: { type: GraphQLString },
+				dashboard_id: { type: GraphQLInt }
+			},
+			resolve(parent, args) {
+				CreatePublicDashboard ({
+					org_id: args.org_id,
+					title: args.title,
+					description: args.description,
+					dashboard_data: args.dashboard_data,
+					dashboard_id: args.dashboard_id
 				});
 				return args;
 			}

@@ -16,7 +16,26 @@ export const CREATE_DASHBOARD_MUTATION =gql`
 	}
 
 `;
+export const CREATE_PUBLIC_DASHBOARD_MUTATION =gql`
+	mutation createPublicDashboard(
+		$org_id: String!
+		$title: String! 
+		$description: String!
+		$dashboard_data: String!
+		$dashboard_id: Int
+		) {
+		createPublicDashboard(
+			org_id: $org_id
+			title: $title
+			description: $description
+			dashboard_data: $dashboard_data
+			dashboard_id: $dashboard_id
+		) {
+			id
+		}
+	}
 
+`;
 export const CREATE_GOOGLE_SHEET=gql`
 	mutation createGoogleSheet(
 		$org_id: String!

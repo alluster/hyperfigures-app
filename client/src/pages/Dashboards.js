@@ -113,7 +113,6 @@ const Dashboards = () => {
 
 		if (data) {
 			setDashboards(data.getAllDashboards);
-			console.log('dashboards from qraphql:', dashboards);
 		}
 	}, [data]);
 	return (

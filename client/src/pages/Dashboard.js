@@ -5,21 +5,27 @@ import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
 import { useForm } from 'react-hook-form';
-import { LOAD_DASHBOARD, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS_DASHBOARD } from '../GraphQL/Queries';
-import { useQuery } from '@apollo/client';
+import { LOAD_DASHBOARD, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS_DASHBOARD, LOAD_PUBLIC_DASHBOARDS } from '../GraphQL/Queries';
+import { useMutation, useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
 import CardDataPoint from '../components/CardDataPoint';
+import Modal from '../components/Modal';
+import FormCompiler from '../supportFunctions/FormComplier';
+import { CREATE_PUBLIC_DASHBOARD_MUTATION } from '../GraphQL/Mutations';
+import GoogleDataGetter from '../GraphQL/GetterFunctions/GoogleDataGetter';
 
-import Chart from '../components/Chart';
 
 
 const Dashboard = () => {
 	const [dataPoints, setDataPoints] = useState([]);
+	const [dataPointsGoogle, setDataPointsGoogle] = useState([]);
+	const [openModal, setOpenModal] = useState(false);
 	let { id } = useParams();
 	const { user } = useAuth0();
 	const {
 		setAppLocation,
+		setNotifyMessage
 	} = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_DASHBOARD, {
 		variables: { id: id, org_id: user.org_id }
@@ -28,6 +34,8 @@ const Dashboard = () => {
 		variables: {org_id: user.org_id, dashboard_id: parseInt(id) }
 
 	});
+	const [createPublicDashboard] = useMutation(CREATE_PUBLIC_DASHBOARD_MUTATION);
+
 	const [dashboard, setDashboard] = useState([]);
 	const {
 		control,
@@ -38,7 +46,7 @@ const Dashboard = () => {
 	} = useForm();
 
 
-
+	
 	const DataPoints = () => {
 
 		if (dataPointsLoading) {
@@ -52,7 +60,7 @@ const Dashboard = () => {
 				<div>
 					<CardGrid>
 						{
-							dataPoints.map((item, i) => {
+							dataPointsGoogle.map((item, i) => {
 							
 								return (
 									<CardDataPoint
@@ -65,6 +73,7 @@ const Dashboard = () => {
 										org_id={user.org_id}
 										title={item.title}
 										description={item.sheet_title}
+										value={item.value}
 									>
 										
 
@@ -79,7 +88,7 @@ const Dashboard = () => {
 			);
 		}
 	};
-
+	
 
 	const DashboardContent = () => {
 		if (loading) {
@@ -99,6 +108,8 @@ const Dashboard = () => {
 							<div>
 
 								<HeaderText
+									buttonTitle="Publish Dashboard"
+									onClickFunction={() => setOpenModal(!openModal)}
 									locationText="Dashboard"
 									title={dashboard[0].title || '-'}
 									description={dashboard[0].description || '-'}
@@ -116,7 +127,30 @@ const Dashboard = () => {
 		}
 	};
 
+	const onSubmit = async (data) => {
+		try {
+			createPublicDashboard({
+				variables: {
+					title: data.publicDashboardName,
+					description: data.publicDashboardDescription,
+					org_id: user.org_id,
+					dashboard_data: JSON.stringify(dataPoints)
+				},
+				refetchQueries: [LOAD_PUBLIC_DASHBOARDS]
 
+			});
+			setNotifyMessage(`New public dashboard ${data.publicDashboardName} added`);
+
+		}
+		catch (error) {
+			console.log(error);
+			setNotifyMessage('Something went wrong');
+		}
+		finally {
+			setOpenModal(false);
+			reset();
+		}
+	};
 	useEffect(() => {
 		window.scroll(0, 0);
 
@@ -129,6 +163,21 @@ const Dashboard = () => {
 			setDataPoints(dataPointsData.getAllGoogleSpreadsheetDataPointsDashboard);
 		}
 	}, [dataPointsData]);
+	useEffect(() => {
+		setDataPointsGoogle(dataPoints.map(dataPoint => ({ 
+			...dataPoint, 
+			value: <GoogleDataGetter
+				cell={ dataPoint.cell}
+				spreadsheetId={dataPoint.spreadsheetId}
+				sheetId={dataPoint.sheetId}
+				serviceAccount={dataPoint.serviceAccount}
+				org_id={dataPoint.org_id}
+			/>	
+		})));
+
+	}, [dataPoints]);
+	
+
 	return (
 		<Container>
 			{
@@ -136,8 +185,45 @@ const Dashboard = () => {
 
 			}
 
-			<Chart />
+			<Modal
+				open={openModal}
+				openModal={() => setOpenModal()}
+				modalTitle="Publish Dashboard"
+			>
+				<FormCompiler
+					reset={reset}
+					openModal={() => setOpenModal()}
+					errors={errors}
+					onSubmit={() => handleSubmit(onSubmit)}
+					register={register}
+					fields={
+						[
+							{
+								type: 'input',
+								name: 'publicDashboardName',
+								label: 'Public Dashboard name',
+								options: '',
+								required: true,
+								errorMessage: 'Dashboard name is required',
+								placeholder: 'Give your dashboard a name'
+							},
+							{
+								type: 'textarea',
+								name: 'publicDashboardDescription',
+								label: 'Dashboard Description',
+								options: '',
+								required: false,
+								errorMessage: '',
+								placeholder: 'Describe your dashboard'
+							}
+						]
+					}
 
+				>
+
+
+				</FormCompiler>
+			</Modal>
 
 		</Container>
 	);

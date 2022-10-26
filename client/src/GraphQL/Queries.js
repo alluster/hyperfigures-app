@@ -174,3 +174,40 @@ export const LOAD_DASHBOARD = gql`
 		}
 	}
 `;
+
+export const LOAD_PUBLIC_DASHBOARD = gql`
+	query getPublicDashboard(
+			$id: Int
+		)
+		{getPublicDashboard(
+				id: $id
+			) 
+		{
+			id
+			dashboard_data
+			dashboard_id
+			title
+			description
+			created_at
+			updated_at
+			deleted_at
+		}
+	}
+`;
+
+
+export const LOAD_PUBLIC_DASHBOARDS = gql`
+	query getAllPublicDashboards($org_id: String!)
+	{getAllPublicDashboards(org_id: $org_id) {
+		org_id
+		dashboard_data
+		dashboard_id
+		id
+		title
+		description
+		created_at
+		updated_at
+		deleted_at
+		
+	}}
+`;
