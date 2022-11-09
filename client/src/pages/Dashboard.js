@@ -46,7 +46,14 @@ const Dashboard = () => {
 	} = useForm();
 
 
-	
+	// const DataPointValueResolver = () => {
+	// 	setDataPoints(
+	// 		...dataPoints, {
+
+
+	// 		}
+	// 	)
+	// }
 	const DataPoints = () => {
 
 		if (dataPointsLoading) {
@@ -134,7 +141,7 @@ const Dashboard = () => {
 					title: data.publicDashboardName,
 					description: data.publicDashboardDescription,
 					org_id: user.org_id,
-					dashboard_data: JSON.stringify(dataPoints)
+					dashboard_data: JSON.stringify(dataPointsGoogle)
 				},
 				refetchQueries: [LOAD_PUBLIC_DASHBOARDS]
 
@@ -164,15 +171,19 @@ const Dashboard = () => {
 		}
 	}, [dataPointsData]);
 	useEffect(() => {
-		setDataPointsGoogle(dataPoints.map(dataPoint => ({ 
+		setDataPointsGoogle(dataPoints.map(dataPoint => ({
 			...dataPoint, 
-			value: <GoogleDataGetter
-				cell={ dataPoint.cell}
-				spreadsheetId={dataPoint.spreadsheetId}
-				sheetId={dataPoint.sheetId}
-				serviceAccount={dataPoint.serviceAccount}
-				org_id={dataPoint.org_id}
-			/>	
+			value: GoogleDataGetter({
+				
+				cell : dataPoint.cell,
+				spreadsheetId: dataPoint.spreadsheet_id,
+				sheetId: dataPoint.sheet_id,
+				serviceAccount: dataPoint.service_account,
+				org_id: dataPoint.org_id,
+			})
+				
+				
+			
 		})));
 
 	}, [dataPoints]);

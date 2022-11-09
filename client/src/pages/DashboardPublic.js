@@ -1,6 +1,5 @@
 import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../context/Context';
-import CardGrid from '../components/CardGrid';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import ButtonGoBack from '../components/ButtonGoBack';
@@ -9,6 +8,7 @@ import { LOAD_PUBLIC_DASHBOARD } from '../GraphQL/Queries';
 import { useQuery } from '@apollo/client';
 import { useParams } from 'react-router-dom';
 import { useAuth0 } from '@auth0/auth0-react';
+import CardGrid from '../components/CardGrid';
 import CardPublicDataPoint from '../components/CardPublicDataPoint';
 
 
@@ -40,7 +40,7 @@ const DashboardPublic = () => {
 
 	const DataPoints = () => {
 
-		if (loading) {
+		if (loading && dataPoints != {} && dataPoints.length > 0) {
 			return (
 				<p>Loading data...</p>
 			);
@@ -52,10 +52,11 @@ const DashboardPublic = () => {
 					<CardGrid>
 						{
 							dataPoints.length > 0 && dataPoints.map((item, i) => {
+								console.log(item);
 								return (
 									<CardPublicDataPoint
 										key={i}
-										value='ss'
+										value={item.value}
 										title={item.title}
 										description={item.sheet_title}
 									>
@@ -112,13 +113,16 @@ const DashboardPublic = () => {
 		window.scroll(0, 0);
 
 		if (data) {
-			setPublicDashboard(data.getPublicDashboard);
+			setPublicDashboard(data.getPublicDashboard[0].dashboard_data);
 		}
 	}, [data]);
 	useEffect(() => {
-		if(publicDashboard.length > 0)
-			setDataPoints(JSON.parse(publicDashboard[0].dashboard_data));
-		console.log(dataPoints);
+		
+		if(publicDashboard.length > 0){
+			setDataPoints(JSON.parse(publicDashboard));
+		}
+
+		
 	}, [publicDashboard]);
 	
 	return (
