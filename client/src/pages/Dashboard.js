@@ -20,6 +20,7 @@ import GoogleDataGetter from '../GraphQL/GetterFunctions/GoogleDataGetter';
 const Dashboard = () => {
 	const [dataPoints, setDataPoints] = useState([]);
 	const [dataPointsGoogle, setDataPointsGoogle] = useState([]);
+	const [fetchedDataValues, setFetchedDataValues] = useState({});
 	const [openModal, setOpenModal] = useState(false);
 	let { id } = useParams();
 	const { user } = useAuth0();
@@ -141,7 +142,7 @@ const Dashboard = () => {
 					title: data.publicDashboardName,
 					description: data.publicDashboardDescription,
 					org_id: user.org_id,
-					dashboard_data: JSON.stringify(dataPointsGoogle)
+					dashboard_data: JSON.stringify(dataPointsGoogle.map(item => ({...item, value: parseInt(fetchedDataValues[item.id])})))
 				},
 				refetchQueries: [LOAD_PUBLIC_DASHBOARDS]
 
@@ -158,6 +159,13 @@ const Dashboard = () => {
 			reset();
 		}
 	};
+
+	const setValueForDatapoint = (value, id) => {
+		setFetchedDataValues(prevState => ({
+			...prevState,
+			[id]: value
+		}));
+	};
 	useEffect(() => {
 		window.scroll(0, 0);
 
@@ -173,14 +181,14 @@ const Dashboard = () => {
 	useEffect(() => {
 		setDataPointsGoogle(dataPoints.map(dataPoint => ({
 			...dataPoint, 
-			value: GoogleDataGetter({
-				
-				cell : dataPoint.cell,
-				spreadsheetId: dataPoint.spreadsheet_id,
-				sheetId: dataPoint.sheet_id,
-				serviceAccount: dataPoint.service_account,
-				org_id: dataPoint.org_id,
-			})
+			value: <GoogleDataGetter
+				setterFunction ={(e) => { setValueForDatapoint(e, dataPoint.id);}}
+				cell={dataPoint.cell}
+				spreadsheetId={dataPoint.spreadsheet_id}
+				sheetId={dataPoint.sheet_id}
+				serviceAccount={dataPoint.service_account}
+				org_id={dataPoint.org_id}
+			/>
 				
 				
 			

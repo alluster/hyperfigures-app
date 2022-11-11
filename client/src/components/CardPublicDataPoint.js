@@ -63,7 +63,7 @@ const CardPublicDataPoint = ({ row, small, onClick, value, title, description })
 		<div onClick={onClick}>
 		
 			<Wrapper small={small} row={row}>
-				<p>{Object.entries(value)}</p>
+				<p>{value || ''}</p>
 				<TextWithLabel 
 					label={title || ''}
 					description={description || ''}
