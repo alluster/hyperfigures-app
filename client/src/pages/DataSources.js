@@ -11,6 +11,7 @@ import { useQuery } from '@apollo/client';
 import { useAuth0 } from '@auth0/auth0-react';
 import Button from '../components/Button';
 import DividerLine from '../components/DividerLine';
+import { MSLogin } from '../components/Forms/FormAddMSConnection';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -87,6 +88,7 @@ const DataSources = () => {
 		}
 	}, [data]);
 
+	//side-note, when clicking button in Container below, button handler fires twice
 	return (
 		<Container>
 			<ButtonGoBack text="Go Back" />
@@ -100,6 +102,7 @@ const DataSources = () => {
 			
 			</Wrapper>
 
+			<MSLogin />
 
 		</Container>
 	);

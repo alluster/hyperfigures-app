@@ -4,6 +4,16 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { Auth0Provider } from '@auth0/auth0-react';
 import './i18n';
+import { PublicClientApplication } from '@azure/msal-browser';
+import { MsalProvider } from '@azure/msal-react';
+
+const config = {
+	auth: {
+		clientId: process.env.REACT_APP_MS_CLIENT_ID
+	}
+}
+
+const publicClientApp = new PublicClientApplication(config)
 
 ReactDOM.render(
 	<React.StrictMode>
@@ -14,7 +24,9 @@ ReactDOM.render(
 			useRefreshTokens={true}
 			cacheLocation='localstorage'
 		>
-			<App />
+			<MsalProvider instance={publicClientApp}>
+				<App />
+			</MsalProvider>
 		</Auth0Provider>
 	</React.StrictMode>,
 	document.getElementById('root')

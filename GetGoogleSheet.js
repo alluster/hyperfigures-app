@@ -1,7 +1,5 @@
 require('dotenv').config()
-const express = require('express');
 const { GoogleSpreadsheet } = require('google-spreadsheet');
-const {promisify} = require("es6-promisify");
 
 const GoogleSpreadsheetIntegration = async ({ spreadsheetId, sheetId, org_id}) => {
 	const doc = new GoogleSpreadsheet(`${spreadsheetId}`);

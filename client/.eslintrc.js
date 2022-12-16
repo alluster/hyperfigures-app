@@ -28,16 +28,16 @@ module.exports = {
 	'rules': {
 		'react/prop-types': 0,
 		'indent': [
-			'error',
+			'warn',
 			'tab'
 		],
         'linebreak-style': ['error', process.platform === 'win32' ? 'windows' : 'unix'],
 		'quotes': [
-			'error',
+			'warn',
 			'single'
 		],
 		'semi': [
-			'error',
+			'warn',
 			'always'
 		],
 		'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
