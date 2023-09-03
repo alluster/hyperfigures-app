@@ -59,8 +59,10 @@ const Icon = styled(FontAwesomeIcon)`
 
 	`;
 
-const ModalTitle = styled.h4`
-	margin-bottom: ${props => props.theme.grid.divider_2};
+const ModalTitle = styled.h5`
+// margin-top: -55px;
+font-weight: 700;
+	margin-bottom: ${props => props.theme.grid.divider_1};
 	
 	`;
 

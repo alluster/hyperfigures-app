@@ -7,7 +7,8 @@ const GoogleDataGetter = ({
 	sheetId,
 	serviceAccount,
 	org_id,
-	setterFunction
+	setterFunction,
+	loadingFunction
 }) => {
 	const [data, setData] = useState('');
 	const { error: googleError, loading: googleLoading, data: googleData } = useQuery(GET_VALUE_FROM_GOOGLE_SPREADSHEET, {
@@ -21,13 +22,19 @@ const GoogleDataGetter = ({
 	});
 	useEffect(() => {
 		if (googleData) {
+			loadingFunction(googleLoading);
 			setterFunction(googleData.getValueFromGoogleSpreadsheet[0].value);
 			setData(googleData.getValueFromGoogleSpreadsheet[0].value);
-			console.log(googleData.getValueFromGoogleSpreadsheet[0].value);
-			console.log(googleError);
 		}
 	
 	}, [googleData]);
+
+	useEffect(() => {
+		if (googleLoading) {
+			loadingFunction(googleLoading);
+		}
+
+	}, [googleLoading]);
 	
 	return (
 		<div>

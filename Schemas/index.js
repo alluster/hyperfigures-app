@@ -24,13 +24,12 @@ const GetPublicDashboard = require('../SQL/GetPublicDashboard');
 const PublicDashboardType = require('./TypeDefs/PublicDashboardType');
 const GetPublicDashboards = require('../SQL/GetPublicDashboards');
 const CreatePublicDashboard = require('../SQL/CreatePublicDashboard');
+const GoogleSpreadsheetType = require('./TypeDefs/GoogleSpreadsheetType');
+const GoogleSpreadsheetGet = require('../GoogleSpreadsheetGet');
 
 
  
 
-// cell: "C32",
-// spreadsheetId: "1m-tkTPGZHyx5DVw9VP86uGckmeAc_CUaQHO6IuSmuIs",
-// sheetId: "154788337"
 
 const RootQuery = new GraphQLObjectType({
 	name: 'RootQueryType',
@@ -52,11 +51,26 @@ const RootQuery = new GraphQLObjectType({
 					serviceAccount: args.serviceAccount,
 					org_id: args.org_id
 				});
-				// 	return GoogleSpreadsheetDataPointData
-				
 				return res;
 			}
 		},
+		getGoogleSpreadsheet: {
+			type: new GraphQLList(GoogleSpreadsheetType),
+			args: { 
+				spreadsheetId: { type: GraphQLString },
+				sheetId: { type: GraphQLString },
+				org_id: { type: GraphQLString}
+			},
+			resolve(parent, args) {
+				const res = GoogleSpreadsheetGet({
+					spreadsheetId: args.spreadsheetId,
+					sheetId: args.sheetId,
+					org_id: args.org_id
+				});
+				return res;
+			}
+		},
+		
 		getAllGoogleSpreadsheetDataPoints: {
 			type: new GraphQLList(GoogleSpreadsheetDataPointType),
 			args: { org_id: { type: GraphQLString } },
@@ -126,7 +140,7 @@ const RootQuery = new GraphQLObjectType({
 			type: new GraphQLList(DashboardType),
 			args: { 
 				org_id: { type: GraphQLString },
-				id: { type: GraphQLString }
+				id: { type: GraphQLInt }
 			},
 			resolve(parent, args) {
 				const data = GetDashboard({ org_id: args.org_id, id: args.id });
@@ -146,9 +160,12 @@ const RootQuery = new GraphQLObjectType({
 		},
 		getAllPublicDashboards: {
 			type: new GraphQLList(PublicDashboardType),
-			args: { org_id: { type: GraphQLString } },
+			args: { 
+				org_id: { type: GraphQLString },
+				dashboard_id: { type: GraphQLInt }
+			},
 			resolve(parent, args) {
-				const data = GetPublicDashboards(args.org_id);
+				const data = GetPublicDashboards({ org_id: args.org_id, dashboard_id: args.dashboard_id });
 				return data;
 			}
 		},

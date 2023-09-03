@@ -8,7 +8,7 @@ const BackgroundOverlay = styled.div`
 	height: 100%;
 	width: 100%;
 	background: rgba(0, 0, 0, 0.5);
-	// z-index: 4;
+	z-index: 1;
 `;
 
 

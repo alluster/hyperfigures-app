@@ -23,7 +23,6 @@ const CardDataGroup = ({ dataPoints, title, description, updated_at }) => {
 	const [barChart, setBarChart] = useState(false);
 
 	useEffect(() => {
-		console.log('datapoints:', dataPoints);
 		setData(dataPoints);
 	}, [dataPoints]);
 	return (

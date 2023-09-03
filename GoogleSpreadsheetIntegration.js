@@ -14,9 +14,7 @@ const GoogleSpreadsheetIntegration = async ({serviceAccount, cell, spreadsheetId
 
 
 	await doc.loadInfo(); // loads document properties and worksheets
-	console.log(doc)
 	const sheet = doc.sheetsById[`${sheetId}`]; // or use doc.sheetsById[id]
-	console.log(sheet)
 	await sheet.loadCells()
 	const c6 = sheet.getCellByA1(`${cell}`); // or A1 style notation
 	return(

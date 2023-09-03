@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import { device } from '../device';
 import { Link } from 'react-router-dom';
@@ -57,7 +57,7 @@ const WrapperLink = styled(Link)`
 		margin-right: 0px;
 	}
 `;
-const CardDataPoint = ({ children, to, row, small, onClick, cell, spreadsheetId, sheetId, serviceAccount, org_id, title, description, value }) => {
+const CardDataPoint = ({ to, row, small, onClick, title, description, value, loading }) => {
 
 	// const [googleValue, setGoogleValue] = useState({
 	// 	value: 'No data found'
@@ -80,30 +80,41 @@ const CardDataPoint = ({ children, to, row, small, onClick, cell, spreadsheetId,
 	// 		});
 	// 	}
 	// }, [googleData]);
+	useEffect(() => {
+		// console.log('loader',loading);
+	}, [loading]);
+	
 	return (
 		<div onClick={onClick}>
 			{
 				to ?
 
 					<WrapperLink small={small} row={row} to={to || ''}>
-						
-						<TextWithLabel 
-							title={value || ''}
-							label={title || ''}
-							description={description || ''}
-						/>
-
+						{
+							loading ?
+								<SpinnerSmall />
+								:
+								<TextWithLabel 
+									title={value || ''}
+									label={title || ''}
+									description={description || ''}
+								/>
+						}
 						
 					</WrapperLink>
 					:
 					<Wrapper small={small} row={row}>
-					
-						<SpinnerSmall />:
-						<TextWithLabel 
-							title={value || ''}
-							label={title || ''}
-							description={description || ''}
-						/>
+						{
+							loading ?
+								<SpinnerSmall />
+								:
+								<TextWithLabel 
+									title={value || ''}
+									label={title || ''}
+									description={description || ''}
+								/>
+						}
+						
 									
 					</Wrapper>
 			}

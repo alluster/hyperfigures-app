@@ -15,6 +15,7 @@ import HeaderText from '../components/HeaderText';
 import Card from '../components/Card';
 import FormGoogleSheet from '../components/Forms/FormGoogleSheet';
 import Modal from '../components/Modal';
+import GoogleSheetGetter from '../GraphQL/GetterFunctions/GoogleSheetGetter';
 
 const Value = styled.h3`
 	font-weight: bold;
@@ -37,7 +38,7 @@ const DataSourceGoogle = () => {
 
 	const history = useHistory();
 	const { user } = useAuth0();
-	const { setNotifyMessage } = useContext(AppContext);
+	const { setNotifyMessage, setPath } = useContext(AppContext);
 	const [openModal, setOpenModal] = useState(false);
 
 	const { error, loading, data } = useQuery(LOAD_GOOGLE_SHEETS, {
@@ -56,13 +57,18 @@ const DataSourceGoogle = () => {
 
 
 	useEffect(() => {
-		window.scroll(0, 0);
 		GoogleSheetsList();
 		if (data) {
 			setGoogleSheets(data.getAllGoogleSheets);
 			console.log('sheets from qraphql:', googleSheets);
 		}
 	}, [data]);
+
+	useEffect(() => {
+		setPath('/dataSourceGoogle');
+		window.scroll(0, 0);
+	}, []);
+
 	const GoogleSheetsList = () => {
 		if (loading) {
 			return (
@@ -78,10 +84,17 @@ const DataSourceGoogle = () => {
 							key={i}
 							
 						>
+						
+							
 							<HeaderText
 								locationText="Google Sheet"
 								title={item.title}
 								description={item.description}
+							/>
+							<GoogleSheetGetter
+								spreadsheetId={item.spreadsheet_id}
+								sheetId={item.sheet_id}
+								org_id={item.org_id}
 							/>
 						</Card>
 					);
@@ -142,7 +155,8 @@ const DataSourceGoogle = () => {
 			>
 	
 
-				<FormGoogleSheet/>
+				<FormGoogleSheet 				openModal={() => setOpenModal()}
+				/>
 			</Modal>
 		</div>
 

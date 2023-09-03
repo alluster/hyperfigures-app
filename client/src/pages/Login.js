@@ -45,15 +45,15 @@ const Ingress = styled.h3`
 
 const Login = () => {
 	const {
-		setAppLocation
+		setPath
 	} = useContext(AppContext);
 	const handleClick = () => {
 		window.location = 'mailto:aleksanteri@helau.io';
 	};
 
 	useEffect(() => {
+		setPath('/login');
 		window.scroll(0, 0);
-		setAppLocation('Register');
 	}, []);
 	return (
 		<div>

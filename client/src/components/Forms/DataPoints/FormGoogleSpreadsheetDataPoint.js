@@ -17,14 +17,14 @@ const Title = styled.h4`
 
 `;
 const FormGoogleSpreadsheetDataPoint = ({
-	openModal,
+	openDataPointModal,
 	onSubmitFunction,
 	resetFunction,
 	fields,
 	buttonTitle,
 	googleSheetsList,
 	dashboardsList,
-	setOpenModal
+	setDataPointOpenModal
 }) => {
 	const {
 		control,
@@ -80,7 +80,7 @@ const FormGoogleSpreadsheetDataPoint = ({
 			setNotifyMessage(`Something went wrong, ${error}`);
 		}
 		finally {
-			setOpenModal(false);
+			setDataPointOpenModal(false);
 			reset();
 		}
 	};
@@ -107,13 +107,10 @@ const FormGoogleSpreadsheetDataPoint = ({
 	return (
 		<div>
 
-			<Title>Add Data Point</Title>
-	
-
 		
 			<FormCompiler
 				reset={reset}
-				openModal={() => setOpenModal()}
+				openModal={() => openDataPointModal()}
 				errors={errors}
 				onSubmit={() => handleSubmit(onSubmit)}
 				register={register}
@@ -137,30 +134,30 @@ const FormGoogleSpreadsheetDataPoint = ({
 							options: '',
 							required: true,
 							errorMessage: 'Data Point cell is required',
-							placeholder: 'Choose a Cell from spreadsheet'
+							placeholder: 'A1, C56 ... etc.'
 						},
 						{
 							type: 'input',
 							name: 'dataPointName',
-							label: 'Display Name',
+							label: 'Name',
 							options: '',
 							required: true,
 							errorMessage: 'Data Point name is required',
-							placeholder: 'Display name will be shown on the dashboard'
+							placeholder: 'Budget, Profit, Revenue ... etc.'
 						},
 						{
 							type: 'input',
 							name: 'dataPointDescription',
-							label: 'Data Point Description',
+							label: 'Description',
 							options: '',
 							required: false,
 							errorMessage: '',
-							placeholder: 'Describe your Data Point'
+							placeholder: 'Calculated profit for this month ... etc.'
 						},
 						{
 							type: 'select',
 							name: 'dashboard_id',
-							label: 'Select Dashboard',
+							label: 'Add to Dashboard',
 							options: dashboardsList,
 							placeholder: 'Select',
 							required: false,

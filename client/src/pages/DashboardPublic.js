@@ -2,7 +2,6 @@ import React, { useEffect, useContext, useState } from 'react';
 import { AppContext } from '../context/Context';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
-import ButtonGoBack from '../components/ButtonGoBack';
 import { useForm } from 'react-hook-form';
 import { LOAD_PUBLIC_DASHBOARD } from '../GraphQL/Queries';
 import { useQuery } from '@apollo/client';
@@ -15,19 +14,23 @@ import CardPublicDataPoint from '../components/CardPublicDataPoint';
 
 const DashboardPublic = () => {
 	const [dataPoints, setDataPoints] = useState([]);
-	const [openModal, ] = useState(false);
+	const [openModal,] = useState(false);
 	let { id } = useParams();
 	const { user } = useAuth0();
 	const {
 		setAppLocation,
-		setNotifyMessage
+		setNotifyMessage,
+		setPath
 	} = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_PUBLIC_DASHBOARD, {
 		variables: { id: parseInt(id) }
 	});
-	
 
-	const [publicDashboard, setPublicDashboard] = useState([]);
+
+	const [publicDashboardData, setPublicDashboardData] = useState([]);
+	const [title, setTitle] = useState('');
+	const [description, setDescription] = useState('');
+	const [publicDashboardid, setPublicDashboardId] = useState('');
 	const {
 		control,
 		register,
@@ -52,7 +55,6 @@ const DashboardPublic = () => {
 					<CardGrid>
 						{
 							dataPoints.length > 0 && dataPoints.map((item, i) => {
-								console.log(item);
 								return (
 									<CardPublicDataPoint
 										key={i}
@@ -60,10 +62,10 @@ const DashboardPublic = () => {
 										title={item.title}
 										description={item.sheet_title}
 									>
-										
+
 
 									</CardPublicDataPoint>
-										
+
 								);
 							})
 						}
@@ -85,15 +87,15 @@ const DashboardPublic = () => {
 		else {
 			return (
 				<div>
-					<ButtonGoBack text="Go Back" />
+				
 					{
-						publicDashboard.length > 0 ?
+						publicDashboardData.length > 0 ?
 							<div>
 
 								<HeaderText
 									locationText="Public Dashboard"
-									title={publicDashboard[0].title || '-'}
-									description={publicDashboard[0].description || '-'}
+									title={title}
+									description={description}
 								/>
 								{DataPoints()}
 							</div>
@@ -108,23 +110,28 @@ const DashboardPublic = () => {
 		}
 	};
 
-	
+
 	useEffect(() => {
 		window.scroll(0, 0);
 
 		if (data) {
-			setPublicDashboard(data.getPublicDashboard[0].dashboard_data);
+			setPublicDashboardData(data.getPublicDashboard[0].dashboard_data);
+			setTitle(data.getPublicDashboard[0].title || '');
+			setDescription(data.getPublicDashboard[0].description || '');
+			setPublicDashboardId(data.getPublicDashboard[0].id || '');
 		}
 	}, [data]);
 	useEffect(() => {
-		
-		if(publicDashboard.length > 0){
-			setDataPoints(JSON.parse(publicDashboard));
+
+		if (publicDashboardData.length > 0) {
+			setDataPoints(JSON.parse(publicDashboardData));
 		}
 
-		
-	}, [publicDashboard]);
-	
+
+	}, [publicDashboardData]);
+	useEffect(() => {
+		setPath('/dashboardPublic');
+	}, []);
 	return (
 		<Container>
 			{
@@ -132,7 +139,7 @@ const DashboardPublic = () => {
 
 			}
 
-			
+
 
 		</Container>
 	);

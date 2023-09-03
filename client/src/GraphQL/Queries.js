@@ -4,16 +4,16 @@ import { gql } from '@apollo/client';
 
 export const GET_VALUE_FROM_GOOGLE_SPREADSHEET = gql`
 	query getValueFromGoogleSpreadsheet(
-		$cell: String!,
-		$sheetId: String!,
+		$cell: String!
+		$sheetId: String!
 		$spreadsheetId: String!
 		$serviceAccount: String!
 		$org_id: String!
 	)
 	{getValueFromGoogleSpreadsheet(
 		serviceAccount: $serviceAccount
-		cell: $cell,
-		sheetId: $sheetId,
+		cell: $cell
+		sheetId: $sheetId
 		spreadsheetId: $spreadsheetId
 		org_id: $org_id
 	){
@@ -24,6 +24,23 @@ export const GET_VALUE_FROM_GOOGLE_SPREADSHEET = gql`
 
 `;
 
+export const GET_GOOGLE_SHEET = gql`
+	query getGoogleSpreadsheet(
+		$sheetId: String!
+		$spreadsheetId: String!
+		$org_id: String!
+	)
+	{getGoogleSpreadsheet(
+		sheetId: $sheetId
+		spreadsheetId: $spreadsheetId
+		org_id: $org_id
+	){
+		sheet
+	}
+	
+	}
+
+`;
 export const LOAD_GOOGLE_SPREADSHEET_DATA_POINT = gql`
 	query getGoogleSpreadsheetDataPoint(
 		$id: String!
@@ -157,7 +174,7 @@ export const LOAD_DASHBOARDS = gql`
 
 export const LOAD_DASHBOARD = gql`
 	query getDashboard(
-			$id: String!
+			$id: Int
 			$org_id: String!
 		)
 		{getDashboard(
@@ -197,8 +214,14 @@ export const LOAD_PUBLIC_DASHBOARD = gql`
 
 
 export const LOAD_PUBLIC_DASHBOARDS = gql`
-	query getAllPublicDashboards($org_id: String!)
-	{getAllPublicDashboards(org_id: $org_id) {
+	query getAllPublicDashboards(
+		$org_id: String!
+		$dashboard_id: Int
+		)
+	{getAllPublicDashboards(
+		org_id: $org_id
+		dashboard_id: $dashboard_id
+		) {
 		org_id
 		dashboard_data
 		dashboard_id

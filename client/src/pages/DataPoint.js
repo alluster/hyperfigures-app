@@ -41,7 +41,7 @@ const DataPoint = () => {
 
 	const history = useHistory();
 	const { user } = useAuth0();
-	const { setNotifyMessage } = useContext(AppContext);
+	const { setNotifyMessage, setPath } = useContext(AppContext);
 
 	let { id } = useParams();
 	const [googleValue, setGoogleValue] = useState({
@@ -133,7 +133,9 @@ const DataPoint = () => {
 			});
 		}
 	}, [googleData]);
+
 	useEffect(() => {
+		setPath('/dataPoint');
 		window.scroll(0, 0);
 	}, []);
 	const {

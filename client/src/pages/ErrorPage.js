@@ -50,6 +50,10 @@ const ErrorPage = () => {
 		context.setAppLocation('Error');
 
 	}, []);
+	useEffect(() => {
+		context.setPath('/error');
+		window.scroll(0, 0);
+	}, []);
 	return (
 		<Container>
 			<WelcomeTitle>

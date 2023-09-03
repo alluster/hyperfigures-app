@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import CardDataPoint from '../components/CardDataPoint';
 import Card from '../components/Card';
@@ -7,7 +7,6 @@ import CardGrid from '../components/CardGrid';
 import HeaderText from '../components/HeaderText';
 import Container from '../components/Container';
 import { useForm } from 'react-hook-form';
-import TextWithLabel from '../components/TextWithLabel';
 import Modal from '../components/Modal';
 import { useQuery } from '@apollo/client';
 import { LOAD_DASHBOARDS, LOAD_GOOGLE_SHEETS, LOAD_GOOGLE_SPREADSHEET_DATA_POINTS } from '../GraphQL/Queries';
@@ -16,6 +15,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faArrowLeft } from '@fortawesome/free-solid-svg-icons';
 import DividerLine from '../components/DividerLine';
 import { useAuth0 } from '@auth0/auth0-react';
+import { AppContext } from '../context/Context';
 
 const Logo = styled.div`
    	max-width: 40px;
@@ -52,18 +52,19 @@ const Text = styled.h5`
 	}
 `;
 const DataPoints = () => {
+	const {setPath} = useContext(AppContext);
 	const { user } = useAuth0();
 	const { error, loading, data } = useQuery(LOAD_GOOGLE_SPREADSHEET_DATA_POINTS, {
-		variables: {org_id: user.org_id }
+		variables: { org_id: user.org_id }
 
 	});
 	const { error: sheetError, loading: sheetLoading, data: sheetData } = useQuery(LOAD_GOOGLE_SHEETS, {
-		variables: { org_id: user.org_id  }
-	});
-	const {  data: dashboardsData, error: dashboardsError, loading: dashboardsLoading } = useQuery(LOAD_DASHBOARDS, {
 		variables: { org_id: user.org_id }
 	});
-	const [openModal, setOpenModal] = useState(false);
+	const { data: dashboardsData, error: dashboardsError, loading: dashboardsLoading } = useQuery(LOAD_DASHBOARDS, {
+		variables: { org_id: user.org_id }
+	});
+	const [openDataPointModal, setOpenDataPointModal] = useState(false);
 	const [dataPoints, setDataPoints] = useState([]);
 	const [dataPointSelector, setDataPointSelector] = useState('');
 	const [googleSheets, setGoogleSheets] = useState([]);
@@ -84,14 +85,17 @@ const DataPoints = () => {
 	const DataPointSelectorHandler = () => {
 		switch (dataPointSelector) {
 		case 'Google Sheets':
-			return <FormGoogleSpreadsheetDataPoint setOpenModal={setOpenModal} googleSheetsList={googleSheets && googleSheets || []} dashboardsList={dashboards && dashboards || []} />;
+			return <FormGoogleSpreadsheetDataPoint setOpenDataPointModal={setOpenDataPointModal} googleSheetsList={googleSheets && googleSheets || []} dashboardsList={dashboards && dashboards || []} />;
+		case 'Google Sheets with Spreadsheet':
+			return <FormGoogleSpreadsheetDataPoint setOpenDataPointModal={setOpenDataPointModal} googleSheetsList={googleSheets && googleSheets || []} dashboardsList={dashboards && dashboards || []} />;
+			
 		default:
 			return;
 		}
 
 	};
 
-	
+
 	const DataPoints = () => {
 
 		if (loading) {
@@ -106,12 +110,12 @@ const DataPoints = () => {
 					<CardGrid>
 						{
 							dataPoints.map((item, i) => {
-							
+
 								return (
 									<CardDataPoint
 										key={i}
 										to={`/datapoints/${item.id}`}
-										cell={ item.cell || ''}
+										cell={item.cell || ''}
 										spreadsheetId={item.spreadsheet_id || ''}
 										sheetId={item.sheet_id || ''}
 										serviceAccount={item.service_account || ''}
@@ -119,10 +123,10 @@ const DataPoints = () => {
 										title={item.title}
 										description={item.sheet_title}
 									>
-										
+
 
 									</CardDataPoint>
-										
+
 								);
 							})
 						}
@@ -151,6 +155,7 @@ const DataPoints = () => {
 		}
 	}, [dashboardsData]);
 	useEffect(() => {
+		setPath('/dataPoints');
 		window.scroll(0, 0);
 	}, []);
 	return (
@@ -159,7 +164,7 @@ const DataPoints = () => {
 			<Container>
 				<HeaderText
 					buttonTitle="Connect to a new Data Point"
-					onClickFunction={() => setOpenModal(!openModal)}
+					onClickFunction={() => setOpenDataPointModal(!openDataPointModal)}
 					locationText="Business Data Superset™"
 					title="Hyperfigures"
 					description="All your organization Hyperfigures in one dashboard"
@@ -170,8 +175,8 @@ const DataPoints = () => {
 
 			</Container>
 			<Modal
-				open={openModal}
-				openModal={() => setOpenModal()}
+				open={openDataPointModal}
+				openDataPointModal={() => setOpenDataPointModal()}
 				modalTitle="New Data Point"
 			>
 				{
@@ -189,11 +194,35 @@ const DataPoints = () => {
 								<Logo>
 									<img src="/google_sheets.png" alt="Google Sheets" />
 								</Logo>
-								<TextWithLabel
-									title="Google Sheets"
-									label="Integration"
-									small="true"
-								/>
+								<div>
+
+									<p>
+										integration
+									</p>
+									<h5>
+										Google Sheets with selected Cell
+									</h5>
+								</div>
+
+							</Card>
+							<Card
+								onClick={() => setDataPointSelector('Google Sheets with Spreadsheet')}
+								row
+							>
+								<Logo>
+									<img src="/google_sheets.png" alt="Google Sheets" />
+								</Logo>
+								<div>
+									<p>
+										integration
+									</p>
+									<h5>
+										Google Sheets with Spreadsheet
+									</h5>
+								</div>
+
+
+
 							</Card>
 						</div>
 						:

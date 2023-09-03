@@ -34,11 +34,19 @@ const Label = styled.p`
 const Dashboards = () => {
 	const { user } = useAuth0();
 	var currentDate = (dateData) => new window.Date(dateData);
-	const { setNotifyMessage } = useContext(AppContext);
+	const { setNotifyMessage, setPath } = useContext(AppContext);
 	const { error, loading, data } = useQuery(LOAD_DASHBOARDS, {
 		variables: { org_id: user.org_id  }
 	});
-	const [createDashboard] = useMutation(CREATE_DASHBOARD_MUTATION);
+	const [createDashboard] = useMutation(CREATE_DASHBOARD_MUTATION, {
+		refetchQueries: () => [{
+			query: LOAD_DASHBOARDS,
+			variables: {
+				org_id: user.org_id
+			}
+		}],
+		awaitRefetchQueries: true,
+	});
 	const [dashboards, setDashboards] = useState([]);
 	const [openModal, setOpenModal] = useState(false);
 	const {
@@ -115,6 +123,9 @@ const Dashboards = () => {
 			setDashboards(data.getAllDashboards);
 		}
 	}, [data]);
+	useEffect(() => {
+		setPath('/dashboards');
+	}, []);
 	return (
 		<div>
 			<Container>

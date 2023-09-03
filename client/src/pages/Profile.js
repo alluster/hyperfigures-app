@@ -15,10 +15,10 @@ const Profile = () => {
 	const { logout, loginWithRedirect, user, isAuthenticated, isLoading } = useAuth0();
 
 	const context = useContext(AppContext);
+	
 	useEffect(() => {
+		context.setPath('/profile');
 		window.scroll(0, 0);
-		context.setAppLocation('Profiili');
-
 	}, []);
 	return (
 		<Container>

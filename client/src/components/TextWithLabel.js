@@ -14,6 +14,13 @@ const Label = styled.p`
 	// text-transform: uppercase;
 	margin-bottom: ${props => props.theme.grid.divider_2}
 `;
+const LabelSmall = styled.p`
+	// color: ${props => props.theme.colors.gray_80};
+	font-size: 14px;
+	font-weight: 400;
+	// text-transform: uppercase;
+	margin-bottom: ${props => props.theme.grid.divider_1}
+`;
 const Title = styled.h3`
 	// color: ${props => props.theme.colors.gray_80};
 	font-weight: 400;
@@ -22,10 +29,10 @@ const Title = styled.h3`
 `;
 const TitleSmall = styled.h5`
 	// color: ${props => props.theme.colors.gray_80};
-	font-size: 18px;
+	font-size: 23px;
 	font-weight: 400;
 	// text-transform: uppercase;
-	margin-bottom: ${props => props.theme.grid.divider_2}
+	margin-bottom: ${props => props.theme.grid.divider_1}
 `;
 const Description = styled.p`
 	color: ${props => props.theme.colors.gray_80};
@@ -59,7 +66,7 @@ const TextWithLabel = ({
 			{
 				small ?
 					<Content line={line}>
-						<Label>{label || ''}</Label>
+						<LabelSmall>{label || ''}</LabelSmall>
 						<TitleSmall>{title || ''}</TitleSmall>
 						<Description>{description || ''}</Description>
 					</Content>

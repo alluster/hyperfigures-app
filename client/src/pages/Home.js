@@ -88,15 +88,15 @@ const Image = styled.img`
 
 const Home = () => {
 	const {
-		setAppLocation
+		setPath
 	} = useContext(AppContext);
 	const handleClick = () => {
 		window.location = 'mailto:aleksanteri@helau.io';
 	};
 
 	useEffect(() => {
+		setPath('/');
 		window.scroll(0, 0);
-		setAppLocation('Home');
 	}, []);
 	return (
 		<Background>

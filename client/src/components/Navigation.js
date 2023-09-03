@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import styled from 'styled-components';
 import { Link } from 'react-router-dom';
 import { device } from '../device';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faDatabase, faTh, faColumns, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
+import { faDatabase, faTh, faUser, faBars, faTimes } from '@fortawesome/free-solid-svg-icons';
 import { useAuth0 } from '@auth0/auth0-react';
+import { AppContext } from '../context/Context';
 
 const SideNav = styled.div`
 	position: fixed;
@@ -18,6 +19,7 @@ const SideNav = styled.div`
 	top: 0px;
 	display: flex;
 	flex-direction: column;
+	box-sizing: border-box;
 	z-index: 10000000;
 	${({ open }) => open && `
 		width: 220px;
@@ -62,7 +64,6 @@ const Links = styled.div`
 	flex-direction: column;
 	padding-top: 60px;
 	align-items: left;
-	margin-top: 100px;
 	@media ${device.laptop} {
 		margin-top: ${props => props.theme.grid.divider_2};
 	}
@@ -226,19 +227,24 @@ const ToggleIcon = styled(Icon)`
 	`;
 
 const Navigation = () => {
+	const {
+		setNavigationOpen,
+		navigationOpen
+	} = useContext(AppContext);
+
 	const { user } = useAuth0();
 
 	const routeList = [
-		{
-			link: '/datapoints',
-			icon: faTh,
-			title: 'Hyperfigures',
-			ingress: 'Welcome to Hyperfigures!',
-			description: 'Business Data Supersets'
-		},
+		// {
+		// 	link: '/datapoints',
+		// 	icon: faTh,
+		// 	title: 'Hyperfigures',
+		// 	ingress: 'Welcome to Hyperfigures!',
+		// 	description: 'Business Data Supersets'
+		// },
 		{
 			link: '/dashboards',
-			icon: faColumns,
+			icon: faTh,
 			title: 'Dashboards',
 			ingress: 'All data in one view!',
 			description: 'Connect data points from various sources'
@@ -266,7 +272,6 @@ const Navigation = () => {
 		}
 
 	];
-	const [sideBarOpen, setSideBarOpen] = useState(true);
 	const [mobileNavOpen, setMobileNavOpen] = useState(false);
 
 	return (
@@ -324,10 +329,10 @@ const Navigation = () => {
 
 					</Links>
 				</MobileNav>
-				<SideNav open={sideBarOpen}>
-					<BarsIcon onClick={() => setSideBarOpen(!sideBarOpen)}>
-						{!sideBarOpen && <LogoIcon src="/arm.svg" />}
-						{sideBarOpen && <Logo src="/arm-logo-dark.svg" />}
+				<SideNav open={navigationOpen}>
+					<BarsIcon onClick={() => setNavigationOpen(!navigationOpen)}>
+						{!navigationOpen && <LogoIcon src="/arm.svg" />}
+						{navigationOpen && <Logo src="/arm-logo-dark.svg" />}
 
 					</BarsIcon>
 					<Links>
@@ -355,7 +360,7 @@ const Navigation = () => {
 										// </Tooltip>
 										}
 										{
-											sideBarOpen && <LinkText>{item.title}</LinkText>
+											navigationOpen && <LinkText>{item.title}</LinkText>
 										}
 									</LinkContainer>
 								);

@@ -15,9 +15,9 @@ const Wrapper = styled.div`
 	flex-direction: row;
 	padding-left: ${props => props.theme.grid.divider_10};
 	padding-right: ${props => props.theme.grid.divider_4};
-	@media ${device.laptop} {
-		display: none;
-	}
+	// @media ${device.laptop} {
+	// 	display: none;
+	// }
 `;
 const Header = styled.h5`
 	line-height: ${props => props.theme.grid.divider_8};
